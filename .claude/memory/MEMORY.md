@@ -3,8 +3,8 @@
 ## Project Overview
 - **Domain**: wishlistcart.com
 - **Type**: Universal Wishlist + Gift Registry SaaS
-- **Stack**: Next.js 15 (App Router) + Supabase + Vercel
-- **Stage**: Pre-development (planning complete, ready to code)
+- **Stack**: Next.js 16 (App Router, Turbopack) + Supabase + Vercel
+- **Stage**: Phase 1A in progress — Weeks 1–4 complete, Week 5–6 remaining
 
 ## Key Documents
 - `BUSINESS_PLAN.md` — full product vision, personas, features, monetization
@@ -37,17 +37,44 @@ All skills live in `.claude/skills/`:
 - No separate backend — Next.js Server Actions + API routes + Supabase handles everything
 - Auth: Supabase Auth (`getUser()` not `getSession()` for server-side)
 - Background jobs: Inngest (not BullMQ — serverless-friendly)
-- Affiliate: `/api/affiliate/redirect?item={id}` → logs click → 302 redirect
-- Surprise mode: enforced at DB query level, not just UI
+- Affiliate: `/api/affiliate/redirect?id={itemId}` → logs click → 302 redirect
+- Surprise mode: enforced at DB query level via two separate query fns (owner vs public view)
 - Server Actions for mutations, API Routes for webhooks/streaming/external services
+- Prisma 7: requires `prisma.config.ts` for datasource URL + `@prisma/adapter-pg` driver adapter
+- Price field type: `Decimal` in Prisma — always cast to `Number()` before passing to formatPrice()
 
-## Current Phase
-- **Status**: Phase 1A not yet started
-- **Next step**: Initialize Next.js project (Week 1, Day 1)
-- See `IMPLEMENTATION_PLAN.md` → "Phase Progress Tracker" for full checklist
+## Critical Gotchas
+- `ZodError.issues` not `.errors` — Prisma 7 changed this
+- `prisma.config.ts` holds `DATABASE_URL`, not `schema.prisma`
+- Prisma client needs `PrismaPg` adapter from `@prisma/adapter-pg` — conditional on DATABASE_URL at build time
+- `item.priority` is `Int` (1–5) in schema, not a string enum like 'HIGH'
+- `item.price` is `Decimal` — use `Number(item.price)` before arithmetic or formatPrice()
+- Middleware deprecation warning: Next.js 16 uses "proxy" but "middleware" still works
+
+## Current Progress (as of March 2026)
+### Completed
+- **Week 1**: Next.js 15 app, Prisma schema (12 models), Supabase clients, auth middleware, auth pages (login/signup/reset), layouts (marketing/app/auth), mobile nav
+- **Week 2**: Wishlist CRUD (create/update/delete/archive), item CRUD (create/delete/reorder), ItemCard (grid+list), AddItemDialog (manual tab + URL tab), WishlistGrid, CreateWishlistDialog
+- **Week 3**: URL scraper (`/api/scrape`), extractors (Schema.org, OpenGraph, DOM heuristic, meta tags), Amazon adapter, generic adapter, SSRF protection, rate limiting (Upstash, gracefully optional), ScrapedPreview in AddItemDialog
+- **Week 4**: Public wishlist page (`/@username/slug`), PublicItemGrid, ClaimDialog, ShareButtons, ShareDialog, sharing actions (generateShareLink/makePublic), claiming actions (claimItem/unclaimItem), wishlist queries (owner + public), affiliate network registry, buildAffiliateUrl, `/api/affiliate/redirect`
+
+### Git (local only — no remote yet)
+4 commits on `master` branch. GitHub + Vercel setup pending.
+
+### Next Up (Week 5–6)
+1. Wire affiliate redirect into item-card buy links
+2. Edit item dialog
+3. Wishlist settings edit form
+4. `/api/og-image` implementation (@vercel/og or satori)
+5. Pricing page
+6. robots.txt + sitemap.ts
+7. Sentry + PostHog setup
+8. Supabase project creation + real `.env.local`
+9. GitHub repo + Vercel first deploy
 
 ## Conventions
 - Mark completed tasks in IMPLEMENTATION_PLAN.md with `[x]`
 - Mark in-progress with `[~]`
 - Always read a file before editing it
 - Load relevant skills before implementing any feature
+- Commit at end of each week with `feat: Week N — ...` message

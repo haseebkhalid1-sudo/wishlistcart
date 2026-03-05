@@ -4,13 +4,34 @@ description: Use when building any Next.js feature for WishlistCart.com — page
 license: MIT
 metadata:
   source: claude-skills-main (tailored for WishlistCart.com)
-  version: "1.0.0"
+  version: "2.0.0"
   triggers: Next.js, App Router, Server Components, Server Actions, API route, page, layout, loading, error, middleware, Vercel, deployment, data fetching, ISR, SSR, SSG
 ---
 
 # Next.js Developer — WishlistCart.com
 
-Senior Next.js developer building the WishlistCart.com platform: a universal wishlist + gift registry platform on Next.js 15 + Supabase + Vercel.
+Senior Next.js developer building the WishlistCart.com platform: a universal wishlist + gift registry platform on **Next.js 16** (Turbopack) + Supabase + Vercel.
+
+## ⚠️ Confirmed Runtime Behaviour (Weeks 1–4)
+
+- Framework is **Next.js 16.1.6** (not 15) — Turbopack is the default build tool
+- Middleware file is `src/middleware.ts` — Next.js 16 shows a deprecation warning ("use proxy") but middleware still works fine, ignore the warning
+- Route group `(public)` with `@[username]/[slug]` renders in the route table as `/[slug]` — that's correct parallel route behaviour
+- `createServerClient()` must be `async` — `cookies()` from `next/headers` is async in Next.js 15+:
+  ```typescript
+  export async function createServerClient() {
+    const cookieStore = await cookies()
+    // ...
+  }
+  ```
+- `params` in page components is a **Promise** in Next.js 15+:
+  ```typescript
+  interface Props { params: Promise<{ id: string }> }
+  export default async function Page({ params }: Props) {
+    const { id } = await params
+  }
+  ```
+- `generateMetadata` also receives `params` as Promise — always `await params`
 
 ## Project Stack
 
@@ -115,29 +136,48 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-### Supabase Auth Middleware
+### Supabase Auth Middleware (actual working pattern)
 ```tsx
-// src/middleware.ts
-import { createMiddlewareClient } from '@/lib/supabase/middleware'
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+// src/middleware.ts — WORKING pattern as of Weeks 1-4
+import { createServerClient } from '@supabase/ssr'
+import { NextResponse, type NextRequest } from 'next/server'
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
-  const supabase = createMiddlewareClient(req, res)
-  await supabase.auth.getSession() // Refresh session
+export async function middleware(request: NextRequest) {
+  let supabaseResponse = NextResponse.next({ request })
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => request.cookies.getAll(),
+        setAll: (cookiesToSet) => {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            supabaseResponse.cookies.set(name, value, options)
+          })
+        },
+      },
+    }
+  )
 
   const { data: { user } } = await supabase.auth.getUser()
-  const isAppRoute = req.nextUrl.pathname.startsWith('/dashboard')
 
-  if (isAppRoute && !user) {
-    return NextResponse.redirect(new URL('/login', req.url))
+  const isProtected = request.nextUrl.pathname.startsWith('/dashboard') ||
+                      request.nextUrl.pathname.startsWith('/settings')
+  const isAuthRoute = ['/login', '/signup', '/reset-password'].includes(request.nextUrl.pathname)
+
+  if (isProtected && !user) {
+    return NextResponse.redirect(new URL('/login', request.url))
   }
-  return res
+  if (isAuthRoute && user) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  return supabaseResponse
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)'],
 }
 ```
 
@@ -204,7 +244,10 @@ export default async function PublicWishlistPage({ params }) {
 ## WishlistCart-Specific Patterns
 
 ### Affiliate Redirect Route
-All "Buy" buttons MUST go through `/api/affiliate/redirect?item={id}` — never link directly to retailer.
+All "Buy" buttons MUST go through `/api/affiliate/redirect?id={itemId}` — never link directly to retailer.
+- Route: `src/app/api/affiliate/redirect/route.ts`
+- Logs to `AffiliateClick` table (fields: `itemId`, `affiliateNetwork`, `retailer`)
+- Use fire-and-forget `.catch(() => null)` for the DB write so redirect is never blocked
 
 ### Share Tokens
 Public wishlists have a `shareToken` in URL for SHARED privacy lists. Never expose userId in public URLs.

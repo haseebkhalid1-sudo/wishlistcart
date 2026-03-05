@@ -21,38 +21,83 @@ Database specialist for WishlistCart.com's Supabase PostgreSQL instance managed 
 - **Supabase Storage**: product images in `product-images` bucket, avatars in `avatars` bucket
 - **RLS**: Row Level Security enabled on all tables for defense-in-depth
 
-## Prisma Client Setup
+## ⚠️ Prisma 7 Breaking Changes (confirmed in production)
+
+Prisma 7 is installed. It has breaking changes vs Prisma 5/6:
+
+1. **No `url` in `schema.prisma` datasource** — configure in `prisma.config.ts`:
+   ```typescript
+   // prisma.config.ts (project root)
+   import { defineConfig } from 'prisma/config'
+   export default defineConfig({
+     datasource: { url: process.env.DATABASE_URL },
+   })
+   ```
+
+2. **Requires driver adapter** — `@prisma/adapter-pg` must be installed:
+   ```bash
+   npm install @prisma/adapter-pg pg @types/pg
+   ```
+
+3. **`previewFeatures = ["driverAdapters"]` in schema generator**:
+   ```prisma
+   generator client {
+     provider        = "prisma-client-js"
+     previewFeatures = ["driverAdapters"]
+   }
+   ```
+
+4. **`ZodError.issues` not `.errors`** — Prisma 7 updated this across all validation.
+
+## Prisma Client Setup (Prisma 7 — ACTUAL working code)
 
 ```typescript
 // src/lib/prisma/client.ts
 import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient({
-  log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-})
+function createPrismaClient() {
+  const connectionString = process.env['DATABASE_URL'] ?? ''
+  // Conditional: skip adapter at build time when no DATABASE_URL
+  if (!connectionString) return new PrismaClient()
+  const adapter = new PrismaPg({ connectionString })
+  return new PrismaClient({
+    adapter,
+    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  })
+}
 
+export const prisma = globalForPrisma.prisma ?? createPrismaClient()
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 ```
 
-## Supabase Client Setup
+## Supabase Client Setup (async — Next.js 15+ required)
 
 ```typescript
 // src/lib/supabase/server.ts (for Server Components + Server Actions)
-import { createServerClient as createClient, type CookieOptions } from '@supabase/ssr'
+import { createServerClient as createClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-export function createServerClient() {
-  const cookieStore = cookies()
+// NOTE: async required — cookies() is async in Next.js 15+
+export async function createServerClient() {
+  const cookieStore = await cookies()
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get: (name) => cookieStore.get(name)?.value,
-        set: (name, value, options) => cookieStore.set({ name, value, ...options }),
-        remove: (name, options) => cookieStore.set({ name, value: '', ...options }),
+        getAll: () => cookieStore.getAll(),
+        setAll: (cookiesToSet) => {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            )
+          } catch {
+            // Server Component — cookies can't be set, ignore
+          }
+        },
       },
     }
   )

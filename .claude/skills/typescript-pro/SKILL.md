@@ -236,6 +236,59 @@ const NETWORK_CONFIG: Record<string, AffiliateNetworkConfig> = {
 } as const satisfies Record<string, AffiliateNetworkConfig>
 ```
 
+## ⚠️ WishlistCart Prisma Type Gotchas (confirmed in Weeks 1–4)
+
+### Decimal fields — always cast to Number
+`price`, `originalPrice`, `commissionAmount` are `Decimal` in Prisma schema.
+TypeScript type is `Prisma.Decimal`, NOT `number`. Always cast before use:
+```typescript
+// ❌ WRONG — TypeScript error
+formatPrice(item.price, item.currency)
+
+// ✅ CORRECT
+formatPrice(Number(item.price), item.currency ?? 'USD')
+
+// ✅ In Zod comparison
+const priceNum = item.price != null ? Number(item.price) : null
+```
+
+### Priority is Int (1–5), not a string enum
+`priority` field is `Int @default(3)` in the schema. Range is 1 (highest) to 5 (lowest).
+```typescript
+// ❌ WRONG
+item.priority === 'HIGH'
+
+// ✅ CORRECT
+item.priority === 1  // 1 = top priority
+```
+
+### ZodError — use `.issues` not `.errors`
+```typescript
+// ❌ WRONG (old Zod API)
+parsed.error.errors[0]?.message
+
+// ✅ CORRECT
+parsed.error.issues[0]?.message
+```
+
+### Schema.org extractor type assertions
+When dealing with union types from unknown JSON, use intermediate variable + `unknown` cast:
+```typescript
+// ❌ Causes TS error
+const img = (product.image[0] as { url?: string })?.url
+
+// ✅ Works
+const imgItem = product.image[0]
+const url = (imgItem as unknown as { url?: string })?.url ?? null
+```
+
+### ActionResult pattern — actual definition in src/types/index.ts
+```typescript
+export type ActionResult<T> =
+  | { success: true; data: T }
+  | { success: false; error: string; fieldErrors?: Record<string, string[]> }
+```
+
 ## Constraints
 
 ### MUST DO
@@ -245,6 +298,7 @@ const NETWORK_CONFIG: Record<string, AffiliateNetworkConfig> = {
 - Use discriminated unions for state machines (ActionResult, scraper results)
 - Use `satisfies` operator for config objects
 - Type all server action return values
+- Cast `Decimal` → `Number()` before passing to any numeric function
 
 ### MUST NOT DO
 - Use `any` (use `unknown` and narrow)
@@ -252,3 +306,4 @@ const NETWORK_CONFIG: Record<string, AffiliateNetworkConfig> = {
 - Define types that duplicate Prisma schema (derive instead)
 - Use `@ts-ignore` (fix the type error)
 - Import types that are only needed at runtime (use `import type`)
+- Compare `item.priority` to string values — it's an Int

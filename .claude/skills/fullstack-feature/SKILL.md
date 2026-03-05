@@ -195,16 +195,29 @@ export async function claimItem(
 }
 ```
 
-## Phase 1A Features to Build (in order)
+## Phase 1A Features — Status
 
-1. **Auth flow** (login, signup, password reset, middleware)
-2. **Wishlist CRUD** (create, list, edit, delete, archive)
-3. **Manual item add** (form with Zod validation)
-4. **URL scraper** (paste URL → auto-extract → preview → save)
-5. **Wishlist sharing** (share token, public page, privacy control)
-6. **Gift claiming** (claim/unclaim, surprise mode)
-7. **Affiliate redirect** (every buy click → /api/affiliate/redirect)
-8. **Landing page** (marketing homepage)
+| # | Feature | Status | Key Files |
+|---|---------|--------|-----------|
+| 1 | Auth flow (login, signup, reset, middleware) | ✅ Done | `src/app/(auth)/`, `src/lib/actions/auth.ts`, `src/middleware.ts` |
+| 2 | Wishlist CRUD (create, list, edit, delete, archive) | ✅ Done | `src/lib/actions/wishlists.ts`, `src/components/wishlist/` |
+| 3 | Manual item add (Zod-validated form) | ✅ Done | `src/lib/actions/items.ts`, `src/components/wishlist/add-item-dialog.tsx` |
+| 4 | URL scraper (paste URL → extract → preview → save) | ✅ Done | `src/lib/scraper/`, `src/app/api/scrape/route.ts` |
+| 5 | Wishlist sharing (tokens, public page, privacy) | ✅ Done | `src/lib/actions/sharing.ts`, `src/app/(public)/@[username]/[slug]/` |
+| 6 | Gift claiming (claim/unclaim, surprise mode) | ✅ Done | `src/lib/actions/claiming.ts`, `src/lib/queries/wishlist.ts` |
+| 7 | Affiliate redirect (buy click tracking) | ✅ Done | `src/app/api/affiliate/redirect/route.ts`, `src/lib/affiliate/` |
+| 8 | Landing page (marketing homepage) | ✅ Basic | `src/app/(marketing)/page.tsx` — needs polish |
+
+## Next Features to Build (Week 5–6 remaining)
+
+9. **Wire affiliate links into item-card** — replace direct buy links with `/api/affiliate/redirect?id={itemId}`
+10. **Edit item dialog** — reuse AddItemDialog form, pre-fill with item data
+11. **Wishlist settings page** — edit form at `/dashboard/wishlists/[id]/settings`
+12. **OG image API** — `src/app/api/og-image/route.ts` using `@vercel/og`
+13. **Pricing page** — `/pricing` under (marketing) route group
+14. **robots.txt + sitemap.ts** — in `src/app/`
+15. **Sentry setup** — `npm install @sentry/nextjs`, run `npx @sentry/wizard`
+16. **PostHog setup** — `npm install posthog-js`, create `src/lib/analytics/posthog.ts`
 
 ## WishlistCart Domain Concepts
 

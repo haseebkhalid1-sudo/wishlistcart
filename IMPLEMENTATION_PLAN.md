@@ -897,6 +897,27 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 > **Tracking**: Use `[x]` for completed, `[~]` for in-progress, `[ ]` for not started.
 > Update this tracker as you finish each deliverable.
 
+### Last Session Summary
+> **Date**: March 2026 | **Completed through**: Week 4 (Sharing + Gift Coordination + Affiliate foundation)
+>
+> **Git status**: Local repo only (no remote yet). 4 commits total:
+> - `feat: Week 1 — Project bootstrap, Prisma schema, auth pages, layouts`
+> - `feat: Week 2 — Wishlist CRUD, item cards, dialogs`
+> - `feat: Week 3 — URL scraper, OpenGraph/Schema.org/DOM extractors, /api/scrape`
+> - `feat: Week 4 — sharing, gift claiming, affiliate system`
+>
+> **Resume from**: Week 5 remaining tasks + Week 6 Beta Launch Prep
+>
+> **Pending before launch**:
+> 1. Wire affiliate redirect into item-card buy links (`/api/affiliate/redirect?id=...`)
+> 2. Edit item dialog (quick win from Week 2)
+> 3. Wishlist settings page (edit form)
+> 4. `/api/og-image` actual implementation (satori or @vercel/og)
+> 5. Pricing page + robots.txt + sitemap.ts
+> 6. Sentry + PostHog setup
+> 7. Supabase project + real `.env.local` credentials
+> 8. GitHub repo + Vercel deploy
+
 ### Phase Progress Tracker
 
 #### PHASE 1A — Foundation & MVP Core (Weeks 1–6)
@@ -936,46 +957,49 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 - [x] Empty states + toast notifications
 
 **Week 3: URL Scraper & Auto-Add**
-- [ ] POST /api/scrape route (accepts URL, returns product data)
-- [ ] Schema.org / JSON-LD extractor
-- [ ] OpenGraph meta tag extractor
-- [ ] Standard meta tag extractor
-- [ ] DOM heuristic fallback extractor
-- [ ] Amazon adapter (handle auth walls + ASINs)
-- [ ] Walmart adapter
-- [ ] Target adapter
-- [ ] Generic adapter
-- [ ] Scraper orchestrator (confidence scoring, extractor priority)
-- [ ] URL paste field in Add Item dialog (auto-populate form)
-- [ ] Product preview card before saving
-- [ ] Image proxy/storage (save to Supabase Storage)
-- [ ] SSRF protection on URL input
+- [x] POST /api/scrape route (accepts URL, returns product data)
+- [x] Schema.org / JSON-LD extractor
+- [x] OpenGraph meta tag extractor
+- [x] Standard meta tag extractor
+- [x] DOM heuristic fallback extractor
+- [x] Amazon adapter (handle auth walls + ASINs)
+- [ ] Walmart adapter (skipped — generic adapter handles it)
+- [ ] Target adapter (skipped — generic adapter handles it)
+- [x] Generic adapter (store name from hostname)
+- [x] Scraper orchestrator (confidence scoring, extractor priority)
+- [x] URL paste field in Add Item dialog (auto-populate form)
+- [x] Product preview card before saving
+- [ ] Image proxy/storage (save to Supabase Storage) — deferred to Phase 1B
+- [x] SSRF protection on URL input
 
 **Week 4: Sharing & Gift Coordination**
-- [ ] Share token generation (nanoid, stored on wishlist)
-- [ ] Privacy controls: PRIVATE / SHARED / PUBLIC
-- [ ] Public wishlist page (SSR) at /@username/[slug]
-- [ ] Share dialog (copy link + QR code)
-- [ ] Gift-giver view of shared wishlist
-- [ ] Claim item action (for gift-givers)
-- [ ] Unclaim item action
-- [ ] Surprise mode: owner cannot see claim data (enforced at query level)
-- [ ] Anonymous claiming support
-- [ ] "Already claimed" indicator (visible to non-owner)
+- [x] Share token generation (nanoid, stored on wishlist)
+- [x] Privacy controls: PRIVATE / SHARED / PUBLIC
+- [x] Public wishlist page (SSR) at /@username/[slug]
+- [x] Share dialog (copy link, make public — no QR code yet)
+- [x] Gift-giver view of shared wishlist (PublicItemGrid)
+- [x] Claim item action (for gift-givers, no auth required)
+- [x] Unclaim item action (requires auth + ownership)
+- [x] Surprise mode: owner cannot see claim data (enforced at query level)
+- [x] Anonymous claiming support
+- [x] "Already claimed" indicator (visible to non-owner)
 
 **Week 5: Affiliate Integration**
-- [ ] /api/affiliate/redirect route (item ID → affiliate URL → 302)
-- [ ] Amazon Associates tag integration
-- [ ] URL rewriting at item save time (generateAffiliateUrl)
-- [ ] Affiliate click logging (AffiliateClick table)
-- [ ] All "Buy Now" / "Buy" links use affiliate redirect
+- [x] /api/affiliate/redirect route (item ID → affiliate URL → 302)
+- [x] Amazon Associates tag integration
+- [x] URL rewriting at item save time (buildAffiliateUrl)
+- [x] Affiliate click logging (AffiliateClick table)
+- [ ] All "Buy Now" / "Buy" links routed through affiliate redirect — wire up in item-card
+- [ ] Walmart / Target / Best Buy affiliate tags (env vars ready, tags TBD)
 
 **Week 6: Beta Launch Prep**
-- [ ] Landing page (hero, features, how it works, CTA)
+- [x] Landing page (hero, features, how it works, CTA) — basic version from Week 1
+- [ ] Landing page polish (testimonials, screenshots, animations)
 - [ ] Pricing page
 - [ ] robots.txt + sitemap.ts
 - [ ] Metadata API on all pages (title, description, OG, Twitter)
-- [ ] Dynamic OG image (/api/og-image)
+- [x] Dynamic OG image API stub (/api/og-image referenced in public wishlist page)
+- [ ] Dynamic OG image implementation (actual rendering)
 - [ ] Organization JSON-LD schema on homepage
 - [ ] Core Web Vitals ≥ 90 (Lighthouse)
 - [ ] Sentry error monitoring configured

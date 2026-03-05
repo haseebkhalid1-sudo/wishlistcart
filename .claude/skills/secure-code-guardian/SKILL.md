@@ -146,33 +146,37 @@ export function validateScrapeUrl(rawUrl: string): URL {
 
 ## Affiliate Redirect (Open Redirect Prevention)
 
-```typescript
-// src/app/api/affiliate/redirect/route.ts
-import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma/client'
-import { generateAffiliateUrl } from '@/lib/affiliate'
+Query param is `?id=` (not `?item=`). Route: `src/app/api/affiliate/redirect/route.ts`
 
-export async function GET(req: NextRequest) {
-  const itemId = req.nextUrl.searchParams.get('item')
-  if (!itemId) return NextResponse.json({ error: 'Missing item' }, { status: 400 })
+```typescript
+// ACTUAL working pattern — param is ?id=, not ?item=
+export async function GET(request: NextRequest) {
+  const itemId = request.nextUrl.searchParams.get('id')  // ← ?id= not ?item=
+  if (!itemId) return NextResponse.json({ error: 'Missing item id' }, { status: 400 })
 
   const item = await prisma.wishlistItem.findUnique({
     where: { id: itemId },
-    select: { url: true, storeDomain: true },
+    select: { url: true, affiliateUrl: true, storeDomain: true, storeName: true,
+              wishlist: { select: { privacy: true } } },
   })
 
-  if (!item?.url) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  // Check item exists, has a URL, and wishlist is not private
+  if (!item || !item.url || item.wishlist.privacy === 'PRIVATE') {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
 
-  // Generate affiliate URL (we control this, not user input)
-  const affiliateUrl = generateAffiliateUrl(item.url, item.storeDomain)
+  const destination = item.affiliateUrl ?? buildAffiliateUrl(item.url)
 
-  // Log click (fire and forget — don't delay redirect)
+  // Fire-and-forget — never block redirect with DB write
   prisma.affiliateClick.create({
-    data: { itemId, retailer: item.storeDomain ?? 'unknown', affiliateNetwork: 'unknown' },
-  }).catch(console.error)
+    data: {
+      itemId,
+      affiliateNetwork: getNetworkName(item.url),   // from src/lib/affiliate
+      retailer: item.storeName ?? item.storeDomain ?? new URL(destination).hostname,
+    },
+  }).catch(() => null)   // ← catch(() => null) not catch(console.error)
 
-  // Redirect to verified affiliate URL (never redirect to arbitrary user URLs)
-  return NextResponse.redirect(affiliateUrl)
+  return NextResponse.redirect(destination, { status: 302 })
 }
 ```
 
@@ -217,31 +221,28 @@ export async function getWishlistForGiftGiver(wishlistId: string) {
 }
 ```
 
-## Rate Limiting (Upstash Redis)
+## Rate Limiting (Upstash Redis — graceful fallback)
+
+Rate limiting is **optional** — app works without Upstash configured (dev-friendly).
+The scraper route at `src/app/api/scrape/route.ts` uses this pattern:
 
 ```typescript
-// src/lib/utils/rate-limit.ts
+// Graceful fallback if Upstash not configured
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
-const redis = Redis.fromEnv()
+let ratelimit: Ratelimit | null = null
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(20, '1 m'),  // 20 req/min per user
+  })
+}
 
-export const scraperLimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(10, '1 m'),   // 10 scrapes/min free
-  prefix: 'rl:scrape',
-})
-
-export const authLimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(5, '15 m'),   // 5 login attempts/15min
-  prefix: 'rl:auth',
-})
-
-export async function rateLimit(identifier: string, type: 'scrape' | 'auth') {
-  const limiter = type === 'scrape' ? scraperLimit : authLimit
-  const { success } = await limiter.limit(identifier)
-  return !success  // returns true if rate-limited
+// In route handler:
+if (ratelimit) {
+  const { success } = await ratelimit.limit(user.id)
+  if (!success) return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
 }
 ```
 
