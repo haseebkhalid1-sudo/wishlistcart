@@ -1,0 +1,185 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   WishlistCart Design System — Modern Minimalism
+   White/ash backgrounds · Black text · No decorative color
+   ============================================================ */
+
+:root {
+  /* === Surfaces === */
+  --background: oklch(1 0 0);             /* Pure white */
+  --bg-subtle: oklch(0.978 0.003 75);     /* Warm ash #F8F8F7 */
+  --bg-muted: oklch(0.957 0.005 75);      /* Cool ash #F2F1EF */
+  --bg-overlay: oklch(0.934 0.006 75);    /* Dividers #ECEAE6 */
+
+  /* === Text === */
+  --foreground: oklch(0.12 0 0);          /* Near-black #0F0F0F */
+  --text-secondary: oklch(0.38 0 0);      /* Dark gray #4A4A4A */
+  --text-muted: oklch(0.60 0 0);          /* Mid gray #8A8A8A */
+  --text-disabled: oklch(0.78 0 0);       /* Light gray #C0C0C0 */
+
+  /* === Borders === */
+  --border: oklch(0.906 0.003 75);        /* Subtle border #E4E4E0 */
+  --border-strong: oklch(0.808 0.004 75); /* Strong border #C8C8C2 */
+  --input: oklch(0.906 0.003 75);
+
+  /* === Primary (shadcn compat) === */
+  --primary: oklch(0.12 0 0);             /* Black */
+  --primary-foreground: oklch(1 0 0);     /* White */
+
+  /* === Secondary (shadcn compat) === */
+  --secondary: oklch(0.957 0.005 75);     /* Ash */
+  --secondary-foreground: oklch(0.12 0 0);
+
+  /* === Card, Popover === */
+  --card: oklch(0.978 0.003 75);          /* Warm ash for cards */
+  --card-foreground: oklch(0.12 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0 0);
+
+  /* === Accent (hover backgrounds) === */
+  --accent: oklch(0.957 0.005 75);
+  --accent-foreground: oklch(0.12 0 0);
+
+  /* === Muted === */
+  --muted: oklch(0.957 0.005 75);
+  --muted-foreground: oklch(0.60 0 0);
+
+  /* === Semantic === */
+  --destructive: oklch(0.50 0.18 25);     /* Error red */
+  --ring: oklch(0.12 0 0);                /* Focus ring = black */
+
+  /* === Radius === */
+  --radius: 0.5rem;                       /* Base = 8px */
+
+  /* === Shadows === */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.05);
+  --shadow-dialog: 0 24px 64px rgba(0,0,0,0.12);
+
+  /* === Semantic colors === */
+  --color-success: oklch(0.42 0.13 148);
+  --color-success-bg: oklch(0.97 0.03 148);
+  --color-warning: oklch(0.52 0.12 65);
+  --color-warning-bg: oklch(0.98 0.03 80);
+  --color-sale: oklch(0.47 0.19 25);
+  --color-sale-bg: oklch(0.97 0.04 25);
+
+  /* Sidebar (same aesthetic) */
+  --sidebar: oklch(0.978 0.003 75);
+  --sidebar-foreground: oklch(0.12 0 0);
+  --sidebar-primary: oklch(0.12 0 0);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.934 0.006 75);
+  --sidebar-accent-foreground: oklch(0.12 0 0);
+  --sidebar-border: oklch(0.906 0.003 75);
+  --sidebar-ring: oklch(0.12 0 0);
+
+  /* Chart colors (minimal, grayscale-first) */
+  --chart-1: oklch(0.20 0 0);
+  --chart-2: oklch(0.40 0 0);
+  --chart-3: oklch(0.60 0 0);
+  --chart-4: oklch(0.75 0 0);
+  --chart-5: oklch(0.88 0 0);
+}
+
+/* No dark mode by default — minimalist light-only design */
+/* Dark mode support can be added in Phase 3 */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Consistent focus styles */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring rounded-sm;
+  }
+}
+
+@layer utilities {
+  /* Typography helpers */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Line clamp (Tailwind 4 has these but explicit is fine) */
+  .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+  .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  .line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+
+  /* Semantic color utilities */
+  .text-success    { color: var(--color-success); }
+  .bg-success-soft { background-color: var(--color-success-bg); }
+  .text-warning    { color: var(--color-warning); }
+  .bg-warning-soft { background-color: var(--color-warning-bg); }
+  .text-sale       { color: var(--color-sale); }
+  .bg-sale-soft    { background-color: var(--color-sale-bg); }
+
+  /* Surface utilities */
+  .bg-subtle  { background-color: var(--bg-subtle); }
+  .bg-muted-surface  { background-color: var(--bg-muted); }
+  .bg-overlay { background-color: var(--bg-overlay); }
+
+  /* Shadow utilities */
+  .shadow-xs     { box-shadow: var(--shadow-xs); }
+  .shadow-card   { box-shadow: var(--shadow-sm); }
+  .shadow-raised { box-shadow: var(--shadow-md); }
+  .shadow-float  { box-shadow: var(--shadow-lg); }
+  .shadow-dialog { box-shadow: var(--shadow-dialog); }
+}

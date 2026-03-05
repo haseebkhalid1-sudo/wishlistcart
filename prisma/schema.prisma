@@ -1,0 +1,340 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Connection URLs are configured in prisma.config.ts (Prisma 7+)
+}
+
+// ============================================================
+// USER & AUTH
+// ============================================================
+
+model User {
+  id               String   @id @default(uuid()) @db.Uuid
+  email            String   @unique
+  name             String?
+  username         String?  @unique
+  avatarUrl        String?  @map("avatar_url")
+  bio              String?
+  plan             Plan     @default(FREE)
+  stripeCustomerId String?  @unique @map("stripe_customer_id")
+  emailVerified    Boolean  @default(false) @map("email_verified")
+  settings         Json     @default("{}") // notifications, privacy, theme
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  wishlists       Wishlist[]
+  items           WishlistItem[]          @relation("ItemOwner")
+  purchasedItems  WishlistItem[]          @relation("ItemPurchaser")
+  priceAlerts     PriceAlert[]
+  reminders       OccasionReminder[]
+  affiliateClicks AffiliateClick[]
+  contributions   GroupGiftContribution[]
+  notifications   Notification[]
+  followers       Follow[]                @relation("Following")
+  following       Follow[]                @relation("Follower")
+
+  @@map("users")
+}
+
+enum Plan {
+  FREE
+  PRO
+}
+
+// ============================================================
+// WISHLISTS & ITEMS
+// ============================================================
+
+model Wishlist {
+  id            String       @id @default(uuid()) @db.Uuid
+  userId        String       @map("user_id") @db.Uuid
+  name          String
+  slug          String
+  description   String?
+  type          WishlistType @default(PERSONAL)
+  coverImage    String?      @map("cover_image")
+  privacy       Privacy      @default(PRIVATE)
+  shareToken    String?      @unique @map("share_token")
+  sharePassword String?      @map("share_password") // hashed
+
+  // Registry-specific fields
+  eventType     EventType? @map("event_type")
+  eventDate     DateTime?  @map("event_date")
+  eventLocation String?    @map("event_location")
+
+  isArchived Boolean  @default(false) @map("is_archived")
+  position   Int      @default(0)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items    WishlistItem[]
+  cashFund CashFund?
+
+  @@unique([userId, slug])
+  @@index([userId])
+  @@index([shareToken])
+  @@index([privacy])
+  @@map("wishlists")
+}
+
+enum WishlistType {
+  PERSONAL
+  REGISTRY
+  COLLABORATIVE
+}
+
+enum Privacy {
+  PRIVATE
+  SHARED // accessible via share link only
+  PUBLIC // discoverable
+}
+
+enum EventType {
+  WEDDING
+  BABY_SHOWER
+  BIRTHDAY
+  HOLIDAY
+  HOUSEWARMING
+  GRADUATION
+  ANNIVERSARY
+  BACK_TO_SCHOOL
+  CUSTOM
+}
+
+model WishlistItem {
+  id           String  @id @default(uuid()) @db.Uuid
+  wishlistId   String  @map("wishlist_id") @db.Uuid
+  userId       String  @map("user_id") @db.Uuid // who added it
+  // Product data
+  title        String
+  description  String?
+  url          String? // original product URL
+  affiliateUrl String? @map("affiliate_url")
+  storeName    String? @map("store_name")
+  storeDomain  String? @map("store_domain")
+  imageUrl     String? @map("image_url")
+
+  price         Decimal? @db.Decimal(10, 2)
+  currency      String   @default("USD")
+  originalPrice Decimal? @map("original_price") @db.Decimal(10, 2) // before sale
+
+  // Organization
+  priority Int      @default(3) // 1-5
+  position Int      @default(0)
+  notes    String? // personal notes
+  category String?
+  tags     String[] @default([])
+
+  // Gift coordination
+  isPurchased Boolean   @default(false) @map("is_purchased")
+  purchasedBy String?   @map("purchased_by") @db.Uuid
+  purchasedAt DateTime? @map("purchased_at")
+  giftMessage String?   @map("gift_message")
+  isAnonymous Boolean   @default(false) @map("is_anonymous")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  wishlist        Wishlist         @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+  owner           User             @relation("ItemOwner", fields: [userId], references: [id])
+  purchaser       User?            @relation("ItemPurchaser", fields: [purchasedBy], references: [id])
+  priceHistory    PriceHistory[]
+  priceAlerts     PriceAlert[]
+  groupGiftPool   GroupGiftPool?
+  affiliateClicks AffiliateClick[]
+
+  @@index([wishlistId])
+  @@index([userId])
+  @@index([storeDomain])
+  @@map("wishlist_items")
+}
+
+// ============================================================
+// PRICE TRACKING
+// ============================================================
+
+model PriceHistory {
+  id        String   @id @default(uuid()) @db.Uuid
+  itemId    String   @map("item_id") @db.Uuid
+  price     Decimal  @db.Decimal(10, 2)
+  currency  String   @default("USD")
+  checkedAt DateTime @default(now()) @map("checked_at")
+
+  item WishlistItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([itemId, checkedAt])
+  @@map("price_history")
+}
+
+model PriceAlert {
+  id             String    @id @default(uuid()) @db.Uuid
+  userId         String    @map("user_id") @db.Uuid
+  itemId         String    @map("item_id") @db.Uuid
+  targetPrice    Decimal?  @map("target_price") @db.Decimal(10, 2) // null = any drop
+  percentageDrop Int?      @map("percentage_drop") // for PERCENTAGE_DROP type
+  alertType      AlertType @default(ANY_DROP) @map("alert_type")
+  isActive       Boolean   @default(true) @map("is_active")
+  lastTriggered  DateTime? @map("last_triggered")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item WishlistItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemId])
+  @@map("price_alerts")
+}
+
+enum AlertType {
+  ANY_DROP
+  TARGET_PRICE
+  PERCENTAGE_DROP
+}
+
+// ============================================================
+// GROUP GIFTING & CASH FUNDS
+// ============================================================
+
+model GroupGiftPool {
+  id            String     @id @default(uuid()) @db.Uuid
+  itemId        String     @unique @map("item_id") @db.Uuid
+  organizerId   String     @map("organizer_id") @db.Uuid
+  goalAmount    Decimal    @map("goal_amount") @db.Decimal(10, 2)
+  currentAmount Decimal    @default(0) @map("current_amount") @db.Decimal(10, 2)
+  deadline      DateTime?
+  status        PoolStatus @default(ACTIVE)
+  createdAt     DateTime   @default(now()) @map("created_at")
+
+  item          WishlistItem            @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  contributions GroupGiftContribution[]
+
+  @@map("group_gift_pools")
+}
+
+enum PoolStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model GroupGiftContribution {
+  id               String   @id @default(uuid()) @db.Uuid
+  poolId           String   @map("pool_id") @db.Uuid
+  contributorId    String?  @map("contributor_id") @db.Uuid // null for guests
+  contributorName  String   @map("contributor_name")
+  contributorEmail String   @map("contributor_email")
+  amount           Decimal  @db.Decimal(10, 2)
+  message          String?
+  isAnonymous      Boolean  @default(false) @map("is_anonymous")
+  stripeChargeId   String?  @map("stripe_charge_id")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  pool        GroupGiftPool @relation(fields: [poolId], references: [id], onDelete: Cascade)
+  contributor User?         @relation(fields: [contributorId], references: [id])
+
+  @@map("group_gift_contributions")
+}
+
+model CashFund {
+  id            String   @id @default(uuid()) @db.Uuid
+  wishlistId    String   @unique @map("wishlist_id") @db.Uuid
+  title         String // "Honeymoon Fund"
+  description   String?
+  goalAmount    Decimal? @map("goal_amount") @db.Decimal(10, 2)
+  currentAmount Decimal  @default(0) @map("current_amount") @db.Decimal(10, 2)
+  isActive      Boolean  @default(true) @map("is_active")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  wishlist Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+
+  @@map("cash_funds")
+}
+
+// ============================================================
+// OCCASIONS & REMINDERS
+// ============================================================
+
+model OccasionReminder {
+  id                 String   @id @default(uuid()) @db.Uuid
+  userId             String   @map("user_id") @db.Uuid
+  personName         String   @map("person_name")
+  occasionType       String   @map("occasion_type") // birthday, anniversary, custom
+  date               DateTime
+  isRecurring        Boolean  @default(true) @map("is_recurring")
+  reminderDaysBefore Int      @default(14) @map("reminder_days_before")
+  linkedWishlistId   String?  @map("linked_wishlist_id") @db.Uuid
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("occasion_reminders")
+}
+
+// ============================================================
+// SOCIAL
+// ============================================================
+
+model Follow {
+  followerId  String   @map("follower_id") @db.Uuid
+  followingId String   @map("following_id") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  follower  User @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+  @@map("follows")
+}
+
+// ============================================================
+// MONETIZATION & TRACKING
+// ============================================================
+
+model AffiliateClick {
+  id               String   @id @default(uuid()) @db.Uuid
+  itemId           String   @map("item_id") @db.Uuid
+  userId           String?  @map("user_id") @db.Uuid // null for anonymous visitors
+  affiliateNetwork String   @map("affiliate_network")
+  retailer         String
+  clickedAt        DateTime @default(now()) @map("clicked_at")
+  converted        Boolean  @default(false)
+  commissionAmount Decimal? @map("commission_amount") @db.Decimal(10, 2)
+  orderId          String?  @map("order_id")
+
+  item WishlistItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  user User?        @relation(fields: [userId], references: [id])
+
+  @@index([itemId])
+  @@index([clickedAt])
+  @@map("affiliate_clicks")
+}
+
+// ============================================================
+// NOTIFICATIONS
+// ============================================================
+
+model Notification {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  type      String // price_drop, gift_claimed, reminder, etc.
+  title     String
+  body      String
+  data      Json      @default("{}") // arbitrary payload
+  readAt    DateTime? @map("read_at")
+  sentVia   String    @default("in_app") @map("sent_via") // in_app, email, push
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+  @@index([userId, createdAt])
+  @@map("notifications")
+}
