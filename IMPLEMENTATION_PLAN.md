@@ -920,20 +920,20 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 - [x] Mobile responsive navigation (hamburger menu)
 
 **Week 2: Wishlist CRUD**
-- [ ] Dashboard page (grid of wishlist cards)
-- [ ] Create Wishlist dialog (name, description, privacy, cover image)
-- [ ] Wishlist detail page (items + empty state)
-- [ ] Edit wishlist settings
-- [ ] Delete wishlist (with confirmation)
-- [ ] Archive/unarchive wishlist
-- [ ] Server Actions for all wishlist mutations
-- [ ] Manual Add Item dialog (title, price, image, link, notes, priority)
-- [ ] Item card component (image, title, price, store, priority badge)
-- [ ] Grid + List view toggle
-- [ ] Edit item / Delete item
-- [ ] Drag-and-drop reorder (dnd-kit)
-- [ ] Sort items (price, date, priority, store)
-- [ ] Loading skeletons + empty states + toast notifications
+- [x] Dashboard page (grid of wishlist cards)
+- [x] Create Wishlist dialog (name, description, privacy, occasion type)
+- [x] Wishlist detail page (items + empty state)
+- [ ] Edit wishlist settings (page stub exists, form TBD)
+- [x] Delete wishlist (server action)
+- [x] Archive/unarchive wishlist (server action)
+- [x] Server Actions for all wishlist mutations
+- [x] Manual Add Item dialog (title, price, currency, URL, store, image, priority, notes)
+- [x] Item card component (grid + list view, buy link, delete)
+- [x] Grid + List view toggle
+- [x] Delete item
+- [ ] Edit item (dialog TBD in polish pass)
+- [ ] Drag-and-drop reorder (dnd-kit — Phase 1B polish)
+- [x] Empty states + toast notifications
 
 **Week 3: URL Scraper & Auto-Add**
 - [ ] POST /api/scrape route (accepts URL, returns product data)
