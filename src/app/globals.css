@@ -131,11 +131,43 @@
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
+
+  /* ============================================================
+     Golden Ratio Typography Scale — φ = 1.618
+     Professional clean tech style (Plus Jakarta Sans headings)
+     Base: 17px | Each display step ≈ previous × φ
+     18 → 30 → 48 → 76 → 120
+     ============================================================ */
+
+  /* Body extensions */
+  --text-body-lg: 1.125rem;                    /* 18px — lead text, subtitles */
+  --text-body-lg--line-height: 1.65;
+
+  /* Display scale — pure golden ratio */
+  --text-display-sm: 1.875rem;                 /* 30px = 18 × 1.618 ≈ 29 */
+  --text-display-sm--line-height: 1.2;
+  --text-display-sm--font-weight: 700;
+
+  --text-display-md: 3rem;                     /* 48px = 30 × 1.618 ≈ 48.5 */
+  --text-display-md--line-height: 1.1;
+  --text-display-md--font-weight: 700;
+
+  --text-display-lg: 4.75rem;                  /* 76px = 48 × 1.618 ≈ 77.7 */
+  --text-display-lg--line-height: 1.0;
+  --text-display-lg--font-weight: 800;
+
+  --text-display-xl: 7.5rem;                   /* 120px = 76 × 1.618 ≈ 122.9 */
+  --text-display-xl--line-height: 0.95;
+  --text-display-xl--font-weight: 800;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  html {
+    font-size: 106.25%; /* 17px base — golden ratio foundation */
   }
 
   body {
@@ -144,6 +176,24 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Heading defaults — Plus Jakarta Sans, heavier weights */
+  .font-serif {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .text-display-xl,
+  .text-display-lg {
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+
+  .text-display-md,
+  .text-display-sm {
+    font-weight: 700;
+    letter-spacing: -0.03em;
   }
 
   /* Consistent focus styles */
