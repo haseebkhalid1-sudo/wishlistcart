@@ -902,18 +902,21 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 #### PHASE 1A — Foundation & MVP Core (Weeks 1–6)
 
 **Week 1: Project Bootstrap**
-- [ ] Project created with Next.js 15, TypeScript, Tailwind, App Router
-- [ ] Prisma initialized and connected to Supabase
-- [ ] Supabase project configured (Auth: Google OAuth + email/password)
-- [ ] shadcn/ui initialized and base components installed
-- [ ] Environment variables configured (.env.local)
+- [x] Project created with Next.js 15, TypeScript, Tailwind, App Router
+- [x] Prisma initialized and schema written (12 models, Prisma 7 config)
+- [ ] Supabase project configured (Auth: Google OAuth + email/password) — needs Supabase dashboard
+- [x] shadcn/ui initialized and base components installed
+- [ ] Environment variables configured (.env.local) — needs real Supabase credentials
 - [ ] GitHub repo created, Vercel project linked
-- [ ] ESLint + Prettier configured
+- [x] ESLint + Prettier configured
 - [ ] First deploy verified (CI pipeline green)
 - [ ] Login page built (email + Google OAuth)
 - [ ] Signup page built
 - [ ] Password reset flow built
-- [ ] Root layout + marketing layout + app layout created
+- [x] Root layout created (fonts, metadata, Toaster)
+- [x] Auth middleware (protected routes, redirect logic)
+- [x] All route directories scaffolded
+- [ ] Marketing layout + app layout (sidebar) created
 - [ ] Mobile responsive navigation (hamburger menu)
 
 **Week 2: Wishlist CRUD**
