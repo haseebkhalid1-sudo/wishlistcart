@@ -910,14 +910,14 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 - [ ] GitHub repo created, Vercel project linked
 - [x] ESLint + Prettier configured
 - [ ] First deploy verified (CI pipeline green)
-- [ ] Login page built (email + Google OAuth)
-- [ ] Signup page built
-- [ ] Password reset flow built
+- [x] Login page built (email + Google OAuth)
+- [x] Signup page built
+- [x] Password reset flow built
 - [x] Root layout created (fonts, metadata, Toaster)
 - [x] Auth middleware (protected routes, redirect logic)
 - [x] All route directories scaffolded
-- [ ] Marketing layout + app layout (sidebar) created
-- [ ] Mobile responsive navigation (hamburger menu)
+- [x] Marketing layout + app layout (sidebar) created
+- [x] Mobile responsive navigation (hamburger menu)
 
 **Week 2: Wishlist CRUD**
 - [ ] Dashboard page (grid of wishlist cards)
