@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: [
         {
-          url: `/api/og-image?title=${encodeURIComponent(wishlist.name)}&user=${encodeURIComponent(owner)}&type=wishlist`,
+          url: `/api/og-image?title=${encodeURIComponent(wishlist.name)}&subtitle=${encodeURIComponent(`by ${owner}`)}&items=${wishlist._count.items}`,
           width: 1200,
           height: 630,
         },

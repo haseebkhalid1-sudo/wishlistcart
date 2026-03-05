@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     select: { url: true, affiliateUrl: true, storeDomain: true, storeName: true, wishlist: { select: { privacy: true } } },
   })
 
-  if (!item || !item.url || item.wishlist.privacy === 'PRIVATE') {
+  if (!item || !item.url) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }
 

@@ -944,7 +944,7 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 - [x] Dashboard page (grid of wishlist cards)
 - [x] Create Wishlist dialog (name, description, privacy, occasion type)
 - [x] Wishlist detail page (items + empty state)
-- [ ] Edit wishlist settings (page stub exists, form TBD)
+- [x] Edit wishlist settings (full page with edit form, share section, danger zone)
 - [x] Delete wishlist (server action)
 - [x] Archive/unarchive wishlist (server action)
 - [x] Server Actions for all wishlist mutations
@@ -952,7 +952,7 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 - [x] Item card component (grid + list view, buy link, delete)
 - [x] Grid + List view toggle
 - [x] Delete item
-- [ ] Edit item (dialog TBD in polish pass)
+- [x] Edit item (dialog with full pre-fill — done Week 5)
 - [ ] Drag-and-drop reorder (dnd-kit — Phase 1B polish)
 - [x] Empty states + toast notifications
 
@@ -989,19 +989,22 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 - [x] Amazon Associates tag integration
 - [x] URL rewriting at item save time (buildAffiliateUrl)
 - [x] Affiliate click logging (AffiliateClick table)
-- [ ] All "Buy Now" / "Buy" links routed through affiliate redirect — wire up in item-card
+- [x] All "Buy Now" / "Buy" links routed through affiliate redirect — wired in item-card
 - [ ] Walmart / Target / Best Buy affiliate tags (env vars ready, tags TBD)
+
+**Week 5 extras (done this session)**
+- [x] Edit item dialog (pre-filled form, updateItem server action)
+- [x] Wishlist settings page (edit form + share section + danger zone)
 
 **Week 6: Beta Launch Prep**
 - [x] Landing page (hero, features, how it works, CTA) — basic version from Week 1
 - [ ] Landing page polish (testimonials, screenshots, animations)
-- [ ] Pricing page
-- [ ] robots.txt + sitemap.ts
-- [ ] Metadata API on all pages (title, description, OG, Twitter)
-- [x] Dynamic OG image API stub (/api/og-image referenced in public wishlist page)
-- [ ] Dynamic OG image implementation (actual rendering)
-- [ ] Organization JSON-LD schema on homepage
-- [ ] Core Web Vitals ≥ 90 (Lighthouse)
+- [x] Pricing page (Free vs Pro, FAQ section)
+- [x] robots.txt + sitemap.ts
+- [x] Metadata API on all pages (title, description, OG, Twitter) — root + app layouts + auth pages + public wishlist
+- [x] Dynamic OG image implementation (next/og, edge runtime, title/subtitle/items params)
+- [x] Organization JSON-LD schema on homepage
+- [ ] Core Web Vitals ≥ 90 (Lighthouse) — needs real Supabase deploy
 - [ ] Sentry error monitoring configured
 - [ ] PostHog analytics configured
 - [ ] Beta invite system (or open signup)

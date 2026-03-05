@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { deleteItem } from '@/lib/actions/items'
+import { EditItemDialog } from '@/components/wishlist/edit-item-dialog'
 import { formatPrice } from '@/lib/utils'
 import { toast } from 'sonner'
 
@@ -30,6 +31,7 @@ interface ItemCardProps {
 
 export function ItemCard({ item, view = 'grid' }: ItemCardProps) {
   const [isPending, startTransition] = useTransition()
+  const [editOpen, setEditOpen] = useState(false)
 
   function handleDelete() {
     startTransition(async () => {
@@ -42,48 +44,52 @@ export function ItemCard({ item, view = 'grid' }: ItemCardProps) {
     })
   }
 
-  const buyUrl = item.affiliateUrl ?? item.url
+  // Always route buy clicks through the affiliate redirect for click tracking
+  const buyUrl = item.url ? `/api/affiliate/redirect?id=${item.id}` : null
 
   if (view === 'list') {
     return (
-      <div className={`flex items-center gap-4 rounded-lg border border-border bg-subtle p-4 transition-opacity ${isPending ? 'opacity-50' : ''}`}>
-        {/* Thumbnail */}
-        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-bg-overlay">
-          {item.imageUrl ? (
-            <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
-          ) : (
-            <div className="flex h-full items-center justify-center text-lg">🎁</div>
-          )}
-        </div>
+      <>
+        <div className={`flex items-center gap-4 rounded-lg border border-border bg-subtle p-4 transition-opacity ${isPending ? 'opacity-50' : ''}`}>
+          {/* Thumbnail */}
+          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-bg-overlay">
+            {item.imageUrl ? (
+              <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
+            ) : (
+              <div className="flex h-full items-center justify-center text-lg">🎁</div>
+            )}
+          </div>
 
-        <div className="flex-1 min-w-0">
-          <p className="font-medium text-foreground line-clamp-1">{item.title}</p>
-          {item.storeName && (
-            <p className="text-xs text-muted-foreground uppercase tracking-wide mt-0.5">
-              {item.storeName}
-            </p>
-          )}
-        </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-medium text-foreground line-clamp-1">{item.title}</p>
+            {item.storeName && (
+              <p className="text-xs text-muted-foreground uppercase tracking-wide mt-0.5">
+                {item.storeName}
+              </p>
+            )}
+          </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          {item.price != null && (
-            <span className="font-semibold text-foreground">
-              {formatPrice(Number(item.price), item.currency)}
-            </span>
-          )}
-          {buyUrl && (
-            <a
-              href={buyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
-            >
-              Buy <ExternalLink className="h-3 w-3" />
-            </a>
-          )}
-          <ItemMenu onDelete={handleDelete} isPending={isPending} />
+          <div className="flex items-center gap-3 shrink-0">
+            {item.price != null && (
+              <span className="font-semibold text-foreground">
+                {formatPrice(Number(item.price), item.currency)}
+              </span>
+            )}
+            {buyUrl && (
+              <a
+                href={buyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+              >
+                Buy <ExternalLink className="h-3 w-3" />
+              </a>
+            )}
+            <ItemMenu onDelete={handleDelete} onEdit={() => setEditOpen(true)} isPending={isPending} />
+          </div>
         </div>
-      </div>
+        <EditItemDialog item={item} open={editOpen} onOpenChange={setEditOpen} />
+      </>
     )
   }
 
@@ -116,7 +122,7 @@ export function ItemCard({ item, view = 'grid' }: ItemCardProps) {
             </a>
           )}
           <div className="ml-auto">
-            <ItemMenu onDelete={handleDelete} isPending={isPending} />
+            <ItemMenu onDelete={handleDelete} onEdit={() => setEditOpen(true)} isPending={isPending} />
           </div>
         </div>
       </div>
@@ -145,15 +151,18 @@ export function ItemCard({ item, view = 'grid' }: ItemCardProps) {
           )}
         </div>
       </div>
+      <EditItemDialog item={item} open={editOpen} onOpenChange={setEditOpen} />
     </div>
   )
 }
 
 function ItemMenu({
   onDelete,
+  onEdit,
   isPending,
 }: {
   onDelete: () => void
+  onEdit: () => void
   isPending: boolean
 }) {
   return (
@@ -168,7 +177,7 @@ function ItemMenu({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onEdit}>
           <Pencil className="mr-2 h-4 w-4" />
           Edit
         </DropdownMenuItem>
