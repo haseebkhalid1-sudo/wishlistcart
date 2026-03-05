@@ -43,3 +43,11 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# Claude / AI tooling — not for repo
+.claude/
+
+# Docs — keep local only
+BUSINESS_PLAN.md
+IDEAS.md
+IMPLEMENTATION_PLAN.md
