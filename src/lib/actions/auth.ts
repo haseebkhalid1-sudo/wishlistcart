@@ -33,7 +33,7 @@ export async function signUp(formData: FormData) {
     password: parsed.data.password,
     options: {
       data: { name: parsed.data.name },
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/callback`,
     },
   })
 
@@ -73,7 +73,7 @@ export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/callback`,
     },
   })
 
@@ -96,7 +96,7 @@ export async function resetPassword(formData: FormData) {
 
   const supabase = await createServerClient()
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/update-password`,
+    redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/reset-password`,
   })
 
   if (error) {

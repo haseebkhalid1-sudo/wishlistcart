@@ -46,7 +46,7 @@ export default function LandingPage() {
               <Link href="/signup">Create your free wishlist</Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/explore">See example wishlists</Link>
+              <Link href="/pricing">See pricing</Link>
             </Button>
           </div>
         </div>

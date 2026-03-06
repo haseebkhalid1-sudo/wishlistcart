@@ -17,6 +17,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishlistcart.com'),
   title: {
     default: 'WishlistCart — Save Products from Any Store, Share with Everyone',
     template: '%s | WishlistCart',
