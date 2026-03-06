@@ -9,13 +9,21 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+    return { title: 'Not found' }
+  }
   const wishlist = await getWishlistById(id)
   if (!wishlist) return { title: 'Not found' }
   return { title: wishlist.name }
 }
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 export default async function WishlistDetailPage({ params }: Props) {
   const { id } = await params
+
+  if (!UUID_REGEX.test(id)) notFound()
+
   const wishlist = await getWishlistById(id)
 
   if (!wishlist) notFound()
