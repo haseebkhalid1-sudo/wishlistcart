@@ -8,6 +8,7 @@ import { createWishlistSchema, updateWishlistSchema } from '@/lib/validators/wis
 import type { ActionResult } from '@/types'
 import type { Prisma } from '@prisma/client'
 import { slugify } from '@/lib/utils'
+import { ensureUser } from '@/lib/auth/ensure-user'
 
 export type WishlistWithCount = Prisma.WishlistGetPayload<{
   include: {
@@ -32,6 +33,9 @@ export async function createWishlist(
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'Unauthorized' }
+
+  // Ensure user row exists in our DB (Supabase Auth → Prisma Postgres sync)
+  await ensureUser(user)
 
   const raw = {
     name: formData.get('name'),
@@ -186,6 +190,9 @@ export async function getUserWishlists(): Promise<WishlistWithCount[]> {
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) return []
+
+  // Ensure user row exists in our DB
+  await ensureUser(user)
 
   const wishlists = await prisma.wishlist.findMany({
     where: { userId: user.id, isArchived: false },

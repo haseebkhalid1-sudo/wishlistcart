@@ -6,6 +6,7 @@ import { prisma } from '@/lib/prisma/client'
 import { createItemSchema, updateItemSchema } from '@/lib/validators/item'
 import type { ActionResult } from '@/types'
 import type { Prisma } from '@prisma/client'
+import { ensureUser } from '@/lib/auth/ensure-user'
 
 export type WishlistItemFull = Prisma.WishlistItemGetPayload<Record<string, never>>
 
@@ -20,6 +21,8 @@ export async function createItem(
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'Unauthorized' }
+
+  await ensureUser(user)
 
   // Verify ownership
   const wishlist = await prisma.wishlist.findUnique({
