@@ -2,7 +2,11 @@
 
 import { useState, useTransition } from 'react'
 import Image from 'next/image'
-import { MoreHorizontal, Trash2, Pencil, ExternalLink } from 'lucide-react'
+import { MoreHorizontal, Trash2, Pencil, ExternalLink, GripVertical } from 'lucide-react'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import type { DraggableAttributes } from '@dnd-kit/core'
+import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import type { WishlistItem } from '@prisma/client'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -24,12 +28,19 @@ const PRIORITY_LABELS: Record<number, string> = {
   5: 'Must have',
 }
 
+interface DragHandleProps {
+  attributes: DraggableAttributes
+  listeners: SyntheticListenerMap | undefined
+  isDragging: boolean
+}
+
 interface ItemCardProps {
   item: WishlistItem
   view?: 'grid' | 'list'
+  dragHandleProps?: DragHandleProps
 }
 
-export function ItemCard({ item, view = 'grid' }: ItemCardProps) {
+export function ItemCard({ item, view = 'grid', dragHandleProps }: ItemCardProps) {
   const [isPending, startTransition] = useTransition()
   const [editOpen, setEditOpen] = useState(false)
 
@@ -94,7 +105,18 @@ export function ItemCard({ item, view = 'grid' }: ItemCardProps) {
   }
 
   return (
-    <div className={`group relative flex flex-col rounded-xl border border-border bg-subtle overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-raised ${isPending ? 'opacity-50' : ''}`}>
+    <div className={`group relative flex flex-col rounded-xl border border-border bg-subtle overflow-hidden transition-all duration-200 ${dragHandleProps?.isDragging ? 'shadow-raised opacity-90 scale-[1.02]' : 'hover:-translate-y-0.5 hover:shadow-raised'} ${isPending ? 'opacity-50' : ''}`}>
+      {/* Drag handle */}
+      {dragHandleProps && (
+        <button
+          className="absolute top-2 left-2 z-10 rounded-md bg-background/80 p-1 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity hover:text-foreground cursor-grab active:cursor-grabbing"
+          aria-label="Drag to reorder"
+          {...dragHandleProps.attributes}
+          {...dragHandleProps.listeners}
+        >
+          <GripVertical className="h-4 w-4" />
+        </button>
+      )}
       {/* Image */}
       <div className="relative aspect-square w-full overflow-hidden bg-bg-overlay">
         {item.imageUrl ? (
@@ -152,6 +174,30 @@ export function ItemCard({ item, view = 'grid' }: ItemCardProps) {
         </div>
       </div>
       <EditItemDialog item={item} open={editOpen} onOpenChange={setEditOpen} />
+    </div>
+  )
+}
+
+export function SortableItemCard({ item, view = 'grid' }: ItemCardProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: item.id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    zIndex: isDragging ? 50 : undefined,
+    position: 'relative' as const,
+  }
+
+  return (
+    <div ref={setNodeRef} style={style}>
+      <ItemCard item={item} view={view} dragHandleProps={{ attributes, listeners, isDragging }} />
     </div>
   )
 }

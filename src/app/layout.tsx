@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
+import { PostHogProvider } from '@/components/providers/posthog-provider'
 import './globals.css'
 
 const inter = Inter({
@@ -48,7 +49,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`}>
       <body className="font-sans antialiased">
-        {children}
+        <PostHogProvider>
+          {children}
+        </PostHogProvider>
         <Toaster richColors position="bottom-right" />
       </body>
     </html>
