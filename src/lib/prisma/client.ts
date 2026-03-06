@@ -1,22 +1,14 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
+import { withAccelerate } from '@prisma/extension-accelerate'
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
+const globalForPrisma = globalThis as unknown as {
+  prisma: ReturnType<typeof createPrismaClient>
+}
 
 function createPrismaClient() {
-  const connectionString = process.env['DATABASE_URL'] ?? ''
-
-  if (!connectionString) {
-    // During build/type-check without DB, return a client without adapter
-    // This will fail at runtime if actually used without DATABASE_URL
-    return new PrismaClient()
-  }
-
-  const adapter = new PrismaPg({ connectionString })
   return new PrismaClient({
-    adapter,
-    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
-  })
+    log: process.env.NODE_ENV === 'development' ? ['error', 'warn'] : ['error'],
+  }).$extends(withAccelerate())
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient()

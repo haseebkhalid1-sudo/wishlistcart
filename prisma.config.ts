@@ -11,6 +11,7 @@ export default defineConfig({
     path: 'prisma/migrations',
   },
   datasource: {
-    url: process.env['DATABASE_URL'] ?? '',
+    // CLI (migrate/db push) uses the direct postgres URL, not Accelerate
+    url: process.env['DIRECT_URL'] ?? process.env['DATABASE_URL'] ?? '',
   },
 })
