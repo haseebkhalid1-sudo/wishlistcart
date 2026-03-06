@@ -32,14 +32,19 @@ export function CreateWishlistDialog({ disabled }: { disabled?: boolean }) {
   function handleSubmit(formData: FormData) {
     setError(null)
     startTransition(async () => {
-      const result = await createWishlist(formData)
-      if (!result.success) {
-        setError(result.error)
-        return
+      try {
+        const result = await createWishlist(formData)
+        if (!result.success) {
+          setError(result.error)
+          return
+        }
+        toast.success('Wishlist created!')
+        setOpen(false)
+        router.push(`/dashboard/wishlists/${result.data.id}`)
+      } catch (err) {
+        console.error('[CreateWishlistDialog]', err)
+        setError('Something went wrong. Please try again.')
       }
-      toast.success('Wishlist created!')
-      setOpen(false)
-      router.push(`/dashboard/wishlists/${result.data.id}`)
     })
   }
 

@@ -35,64 +35,69 @@ export async function createWishlist(
   } = await supabase.auth.getUser()
   if (!user) return { success: false, error: 'Unauthorized' }
 
-  // Ensure user row exists in our DB (Supabase Auth → Prisma Postgres sync)
-  await ensureUser(user)
+  try {
+    // Ensure user row exists in our DB (Supabase Auth → Prisma Postgres sync)
+    await ensureUser(user)
 
-  // Enforce free-tier wishlist limit
-  const dbUser = await prisma.user.findUnique({
-    where: { id: user.id },
-    select: { plan: true },
-  })
-  const wishlistCount = await prisma.wishlist.count({
-    where: { userId: user.id, isArchived: false },
-  })
-  if (!canCreateWishlist((dbUser?.plan ?? 'FREE') as 'FREE' | 'PRO', wishlistCount)) {
-    return {
-      success: false,
-      error: `Free plan is limited to ${FREE_WISHLIST_LIMIT} wishlists. Upgrade to Pro for unlimited.`,
+    // Enforce free-tier wishlist limit
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { plan: true },
+    })
+    const wishlistCount = await prisma.wishlist.count({
+      where: { userId: user.id, isArchived: false },
+    })
+    if (!canCreateWishlist((dbUser?.plan ?? 'FREE') as 'FREE' | 'PRO', wishlistCount)) {
+      return {
+        success: false,
+        error: `Free plan is limited to ${FREE_WISHLIST_LIMIT} wishlists. Upgrade to Pro for unlimited.`,
+      }
     }
-  }
 
-  const raw = {
-    name: formData.get('name'),
-    description: formData.get('description') || undefined,
-    privacy: formData.get('privacy') || 'PRIVATE',
-    eventType: formData.get('eventType') || undefined,
-    eventDate: formData.get('eventDate') || undefined,
-  }
-
-  const parsed = createWishlistSchema.safeParse(raw)
-  if (!parsed.success) {
-    return {
-      success: false,
-      error: 'Validation failed',
-      fieldErrors: parsed.error.flatten().fieldErrors,
+    const raw = {
+      name: formData.get('name'),
+      description: formData.get('description') || undefined,
+      privacy: formData.get('privacy') || 'PRIVATE',
+      eventType: formData.get('eventType') || undefined,
+      eventDate: formData.get('eventDate') || undefined,
     }
+
+    const parsed = createWishlistSchema.safeParse(raw)
+    if (!parsed.success) {
+      return {
+        success: false,
+        error: 'Validation failed',
+        fieldErrors: parsed.error.flatten().fieldErrors,
+      }
+    }
+
+    // Generate a unique slug
+    const baseSlug = slugify(parsed.data.name)
+    const existing = await prisma.wishlist.findMany({
+      where: { userId: user.id, slug: { startsWith: baseSlug } },
+      select: { slug: true },
+    })
+    const slug = existing.length === 0 ? baseSlug : `${baseSlug}-${existing.length + 1}`
+
+    const wishlist = await prisma.wishlist.create({
+      data: {
+        userId: user.id,
+        name: parsed.data.name,
+        slug,
+        description: parsed.data.description,
+        privacy: parsed.data.privacy,
+        eventType: parsed.data.eventType ?? null,
+        eventDate: parsed.data.eventDate ?? null,
+      },
+      select: { id: true, slug: true },
+    })
+
+    revalidatePath('/dashboard/wishlists')
+    return { success: true, data: wishlist }
+  } catch (err) {
+    console.error('[createWishlist]', err)
+    return { success: false, error: 'Failed to create wishlist. Please try again.' }
   }
-
-  // Generate a unique slug
-  const baseSlug = slugify(parsed.data.name)
-  const existing = await prisma.wishlist.findMany({
-    where: { userId: user.id, slug: { startsWith: baseSlug } },
-    select: { slug: true },
-  })
-  const slug = existing.length === 0 ? baseSlug : `${baseSlug}-${existing.length + 1}`
-
-  const wishlist = await prisma.wishlist.create({
-    data: {
-      userId: user.id,
-      name: parsed.data.name,
-      slug,
-      description: parsed.data.description,
-      privacy: parsed.data.privacy,
-      eventType: parsed.data.eventType ?? null,
-      eventDate: parsed.data.eventDate ?? null,
-    },
-    select: { id: true, slug: true },
-  })
-
-  revalidatePath('/dashboard/wishlists')
-  return { success: true, data: wishlist }
 }
 
 // ---- Update ----
