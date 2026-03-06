@@ -2,6 +2,8 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma/client'
 import { buildAffiliateUrl, getNetworkName } from '@/lib/affiliate'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   const itemId = request.nextUrl.searchParams.get('id')
 

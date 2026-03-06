@@ -4,6 +4,8 @@ import { scrapeProduct, validateScraperUrl } from '@/lib/scraper'
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
+export const dynamic = 'force-dynamic'
+
 // Rate limiter — only instantiated if Redis is configured
 function getRatelimiter() {
   if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
