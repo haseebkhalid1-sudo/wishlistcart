@@ -7,11 +7,63 @@ import type { Prisma } from '@prisma/client'
 // Gift-givers CAN see isPurchased but NOT who purchased
 // ============================================================
 
+export type PublicWishlistItem = Prisma.WishlistItemGetPayload<{
+  select: {
+    id: true; title: true; description: true; url: true; affiliateUrl: true;
+    storeName: true; storeDomain: true; imageUrl: true; price: true; currency: true;
+    originalPrice: true; priority: true; position: true; category: true; tags: true;
+    isPurchased: true; isAnonymous: true;
+  }
+}>
+
+export type PublicWishlist = Prisma.WishlistGetPayload<{
+  include: {
+    items: {
+      select: {
+        id: true; title: true; description: true; url: true; affiliateUrl: true;
+        storeName: true; storeDomain: true; imageUrl: true; price: true; currency: true;
+        originalPrice: true; priority: true; position: true; category: true; tags: true;
+        isPurchased: true; isAnonymous: true;
+      }
+    }
+    _count: { select: { items: true } }
+    user: { select: { name: true; username: true; avatarUrl: true } }
+    cashFund: true
+  }
+}>
+
+type OwnerWishlistItem = Prisma.WishlistItemGetPayload<{
+  select: {
+    id: true; title: true; description: true; url: true; affiliateUrl: true;
+    storeName: true; storeDomain: true; imageUrl: true; price: true; currency: true;
+    originalPrice: true; priority: true; position: true; notes: true; category: true;
+    tags: true; createdAt: true; updatedAt: true; wishlistId: true; userId: true;
+  }
+}>
+
+export type OwnerWishlist = Prisma.WishlistGetPayload<{
+  include: {
+    items: {
+      select: {
+        id: true; title: true; description: true; url: true; affiliateUrl: true;
+        storeName: true; storeDomain: true; imageUrl: true; price: true; currency: true;
+        originalPrice: true; priority: true; position: true; notes: true; category: true;
+        tags: true; createdAt: true; updatedAt: true; wishlistId: true; userId: true;
+      }
+    }
+    _count: { select: { items: true } }
+    user: { select: { name: true; username: true; avatarUrl: true } }
+  }
+}>
+
 /**
  * Owner view — strips ALL gift coordination fields.
  * Call this when the authenticated user IS the wishlist owner.
  */
-export async function getWishlistForOwner(wishlistId: string, ownerId: string) {
+export async function getWishlistForOwner(
+  wishlistId: string,
+  ownerId: string
+): Promise<OwnerWishlist | null> {
   const wishlist = await prisma.wishlist.findUnique({
     where: { id: wishlistId, userId: ownerId },
     include: {
@@ -45,14 +97,17 @@ export async function getWishlistForOwner(wishlistId: string, ownerId: string) {
       user: { select: { name: true, username: true, avatarUrl: true } },
     },
   })
-  return wishlist
+  return wishlist as unknown as OwnerWishlist | null
 }
 
 /**
  * Public / gift-giver view — includes isPurchased so items can show "claimed"
  * but NEVER reveals who purchased (purchasedBy is excluded).
  */
-export async function getPublicWishlist(username: string, slug: string) {
+export async function getPublicWishlist(
+  username: string,
+  slug: string
+): Promise<PublicWishlist | null> {
   const wishlist = await prisma.wishlist.findFirst({
     where: {
       slug,
@@ -89,14 +144,5 @@ export async function getPublicWishlist(username: string, slug: string) {
       cashFund: true,
     },
   })
-  return wishlist
+  return wishlist as unknown as PublicWishlist | null
 }
-
-export type PublicWishlistItem = Prisma.WishlistItemGetPayload<{
-  select: {
-    id: true; title: true; description: true; url: true; affiliateUrl: true;
-    storeName: true; storeDomain: true; imageUrl: true; price: true; currency: true;
-    originalPrice: true; priority: true; position: true; category: true; tags: true;
-    isPurchased: true; isAnonymous: true;
-  }
-}>

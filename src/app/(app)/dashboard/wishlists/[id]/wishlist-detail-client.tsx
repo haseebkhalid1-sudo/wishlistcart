@@ -3,17 +3,10 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Settings, LayoutGrid, List } from 'lucide-react'
-import type { Prisma } from '@prisma/client'
+import type { WishlistWithItems } from '@/lib/actions/wishlists'
 import { Button } from '@/components/ui/button'
 import { ItemGrid } from '@/components/wishlist/item-grid'
 import { AddItemDialog } from '@/components/wishlist/add-item-dialog'
-
-type WishlistWithItems = Prisma.WishlistGetPayload<{
-  include: {
-    items: true
-    _count: { select: { items: true } }
-  }
-}>
 
 interface Props {
   wishlist: WishlistWithItems

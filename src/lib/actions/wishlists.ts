@@ -15,6 +15,13 @@ export type WishlistWithCount = Prisma.WishlistGetPayload<{
   }
 }>
 
+export type WishlistWithItems = Prisma.WishlistGetPayload<{
+  include: {
+    items: true
+    _count: { select: { items: true } }
+  }
+}>
+
 // ---- Create ----
 
 export async function createWishlist(
@@ -173,21 +180,22 @@ export async function toggleArchiveWishlist(
 
 // ---- Queries ----
 
-export async function getUserWishlists() {
+export async function getUserWishlists(): Promise<WishlistWithCount[]> {
   const supabase = await createServerClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) return []
 
-  return prisma.wishlist.findMany({
+  const wishlists = await prisma.wishlist.findMany({
     where: { userId: user.id, isArchived: false },
     include: { _count: { select: { items: true } } },
     orderBy: [{ position: 'asc' }, { updatedAt: 'desc' }],
   })
+  return wishlists as unknown as WishlistWithCount[]
 }
 
-export async function getWishlistById(wishlistId: string) {
+export async function getWishlistById(wishlistId: string): Promise<WishlistWithItems | null> {
   const supabase = await createServerClient()
   const {
     data: { user },
@@ -205,5 +213,5 @@ export async function getWishlistById(wishlistId: string) {
   })
 
   if (!wishlist || wishlist.userId !== user.id) return null
-  return wishlist
+  return wishlist as unknown as WishlistWithItems
 }
