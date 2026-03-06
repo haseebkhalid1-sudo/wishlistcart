@@ -23,7 +23,7 @@ import {
 import { createWishlist } from '@/lib/actions/wishlists'
 import { toast } from 'sonner'
 
-export function CreateWishlistDialog() {
+export function CreateWishlistDialog({ disabled }: { disabled?: boolean }) {
   const [open, setOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -46,7 +46,9 @@ export function CreateWishlistDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>+ New Wishlist</Button>
+        <Button disabled={disabled} title={disabled ? 'Upgrade to Pro for unlimited wishlists' : undefined}>
+          + New Wishlist
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">

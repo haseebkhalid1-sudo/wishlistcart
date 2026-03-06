@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { deleteItem } from '@/lib/actions/items'
 import { EditItemDialog } from '@/components/wishlist/edit-item-dialog'
+import { ItemDetailSheet } from '@/components/wishlist/item-detail-sheet'
 import { formatPrice } from '@/lib/utils'
 import { toast } from 'sonner'
 
@@ -43,6 +44,7 @@ interface ItemCardProps {
 export function ItemCard({ item, view = 'grid', dragHandleProps }: ItemCardProps) {
   const [isPending, startTransition] = useTransition()
   const [editOpen, setEditOpen] = useState(false)
+  const [detailOpen, setDetailOpen] = useState(false)
 
   function handleDelete() {
     startTransition(async () => {
@@ -62,17 +64,25 @@ export function ItemCard({ item, view = 'grid', dragHandleProps }: ItemCardProps
     return (
       <>
         <div className={`flex items-center gap-4 rounded-lg border border-border bg-subtle p-4 transition-opacity ${isPending ? 'opacity-50' : ''}`}>
-          {/* Thumbnail */}
-          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-bg-overlay">
+          {/* Thumbnail — click to open detail */}
+          <button
+            onClick={() => setDetailOpen(true)}
+            className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md bg-bg-overlay hover:opacity-80 transition-opacity"
+          >
             {item.imageUrl ? (
               <Image src={item.imageUrl} alt={item.title} fill className="object-cover" />
             ) : (
               <div className="flex h-full items-center justify-center text-lg">🎁</div>
             )}
-          </div>
+          </button>
 
           <div className="flex-1 min-w-0">
-            <p className="font-medium text-foreground line-clamp-1">{item.title}</p>
+            <button
+              onClick={() => setDetailOpen(true)}
+              className="font-medium text-foreground line-clamp-1 hover:underline text-left"
+            >
+              {item.title}
+            </button>
             {item.storeName && (
               <p className="text-xs text-muted-foreground uppercase tracking-wide mt-0.5">
                 {item.storeName}
@@ -100,6 +110,7 @@ export function ItemCard({ item, view = 'grid', dragHandleProps }: ItemCardProps
           </div>
         </div>
         <EditItemDialog item={item} open={editOpen} onOpenChange={setEditOpen} />
+        <ItemDetailSheet item={item} open={detailOpen} onOpenChange={setDetailOpen} />
       </>
     )
   }
@@ -149,8 +160,11 @@ export function ItemCard({ item, view = 'grid', dragHandleProps }: ItemCardProps
         </div>
       </div>
 
-      {/* Body */}
-      <div className="flex flex-1 flex-col p-3">
+      {/* Body — click to open detail sheet */}
+      <button
+        onClick={() => setDetailOpen(true)}
+        className="flex flex-1 flex-col p-3 text-left w-full"
+      >
         {item.storeName && (
           <p className="text-micro text-muted-foreground uppercase tracking-wide mb-1">
             {item.storeName}
@@ -172,8 +186,9 @@ export function ItemCard({ item, view = 'grid', dragHandleProps }: ItemCardProps
             </Badge>
           )}
         </div>
-      </div>
+      </button>
       <EditItemDialog item={item} open={editOpen} onOpenChange={setEditOpen} />
+      <ItemDetailSheet item={item} open={detailOpen} onOpenChange={setDetailOpen} />
     </div>
   )
 }

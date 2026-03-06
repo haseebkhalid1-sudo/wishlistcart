@@ -32,9 +32,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // TODO: Phase 1B — add public wishlist pages from DB once we have enough users
+  const personaGuides: MetadataRoute.Sitemap = [
+    'mom', 'dad', 'wife', 'husband', 'boyfriend', 'girlfriend', 'kids', 'teens', 'coworker',
+  ].map((person) => ({
+    url: `${BASE_URL}/gift-ideas/for/${person}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.9,
+  }))
+
+  const budgetGuides: MetadataRoute.Sitemap = ['25', '50', '100'].map((price) => ({
+    url: `${BASE_URL}/gift-ideas/under/${price}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
+
+  // TODO: add public wishlist pages from DB once we have enough users
   // const publicWishlists = await prisma.wishlist.findMany({ where: { privacy: 'PUBLIC' }, ... })
   // return [...staticPages, ...publicWishlists.map(w => ({ url: `${BASE_URL}/@${w.username}/${w.slug}`, ... }))]
 
-  return staticPages
+  return [...staticPages, ...personaGuides, ...budgetGuides]
 }

@@ -9,6 +9,7 @@ import type { ActionResult } from '@/types'
 import type { Prisma } from '@prisma/client'
 import { slugify } from '@/lib/utils'
 import { ensureUser } from '@/lib/auth/ensure-user'
+import { canCreateWishlist, FREE_WISHLIST_LIMIT } from '@/lib/plans'
 
 export type WishlistWithCount = Prisma.WishlistGetPayload<{
   include: {
@@ -36,6 +37,21 @@ export async function createWishlist(
 
   // Ensure user row exists in our DB (Supabase Auth → Prisma Postgres sync)
   await ensureUser(user)
+
+  // Enforce free-tier wishlist limit
+  const dbUser = await prisma.user.findUnique({
+    where: { id: user.id },
+    select: { plan: true },
+  })
+  const wishlistCount = await prisma.wishlist.count({
+    where: { userId: user.id, isArchived: false },
+  })
+  if (!canCreateWishlist((dbUser?.plan ?? 'FREE') as 'FREE' | 'PRO', wishlistCount)) {
+    return {
+      success: false,
+      error: `Free plan is limited to ${FREE_WISHLIST_LIMIT} wishlists. Upgrade to Pro for unlimited.`,
+    }
+  }
 
   const raw = {
     name: formData.get('name'),
