@@ -101,12 +101,12 @@ export function CreateWishlistDialog({ disabled }: { disabled?: boolean }) {
 
             <div className="space-y-1.5">
               <Label htmlFor="eventType">Occasion</Label>
-              <Select name="eventType" defaultValue="">
+              <Select name="eventType" defaultValue="NONE">
                 <SelectTrigger id="eventType">
                   <SelectValue placeholder="None" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None</SelectItem>
+                  <SelectItem value="NONE">None</SelectItem>
                   <SelectItem value="BIRTHDAY">Birthday</SelectItem>
                   <SelectItem value="WEDDING">Wedding</SelectItem>
                   <SelectItem value="BABY_SHOWER">Baby shower</SelectItem>

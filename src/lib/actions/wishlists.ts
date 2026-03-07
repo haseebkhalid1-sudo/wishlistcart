@@ -60,7 +60,7 @@ export async function createWishlist(
       name: formData.get('name'),
       description: formData.get('description') || undefined,
       privacy: formData.get('privacy') || 'PRIVATE',
-      eventType: formData.get('eventType') || undefined,
+      eventType: (formData.get('eventType') === 'NONE' ? undefined : formData.get('eventType')) || undefined,
       eventDate: formData.get('eventDate') || undefined,
     }
 
