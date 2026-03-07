@@ -37,6 +37,62 @@ export async function POST(req: Request) {
             where: { id: userId },
             data: { plan: 'PRO' },
           })
+        } else if (session.mode === 'payment') {
+          const type = session.metadata?.type
+          const paymentIntentId = typeof session.payment_intent === 'string'
+            ? session.payment_intent
+            : (session.payment_intent as { id: string } | null)?.id ?? null
+
+          if (type === 'group_gift_contribution') {
+            const poolId = session.metadata?.poolId
+            const name = session.metadata?.contributorName ?? 'Anonymous'
+            const email = session.metadata?.contributorEmail ?? ''
+            const message = session.metadata?.message || null
+            const isAnonymous = session.metadata?.isAnonymous === 'true'
+            const amount = session.amount_total ? session.amount_total / 100 : 0
+
+            if (poolId && amount > 0) {
+              await prisma.$transaction([
+                prisma.groupGiftContribution.create({
+                  data: {
+                    poolId,
+                    contributorName: name,
+                    contributorEmail: email,
+                    amount,
+                    message,
+                    isAnonymous,
+                    stripeChargeId: paymentIntentId,
+                  },
+                }),
+                prisma.groupGiftPool.update({
+                  where: { id: poolId },
+                  data: { currentAmount: { increment: amount } },
+                }),
+              ])
+
+              // Check if goal reached and mark COMPLETED
+              const pool = await prisma.groupGiftPool.findUnique({
+                where: { id: poolId },
+                select: { goalAmount: true, currentAmount: true },
+              })
+              if (pool && Number(pool.currentAmount) >= Number(pool.goalAmount)) {
+                await prisma.groupGiftPool.update({
+                  where: { id: poolId },
+                  data: { status: 'COMPLETED' },
+                })
+              }
+            }
+          } else if (type === 'cash_fund_contribution') {
+            const fundId = session.metadata?.fundId
+            const amount = session.amount_total ? session.amount_total / 100 : 0
+
+            if (fundId && amount > 0) {
+              await prisma.cashFund.update({
+                where: { id: fundId },
+                data: { currentAmount: { increment: amount } },
+              })
+            }
+          }
         }
         break
       }

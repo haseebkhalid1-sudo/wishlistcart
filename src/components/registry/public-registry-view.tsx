@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ClaimDialog } from '@/components/wishlist/claim-dialog'
 import { ShareButtons } from '@/components/shared/share-buttons'
+import { RsvpForm } from '@/components/registry/rsvp-form'
+import { CashFundCard } from '@/components/registry/cash-fund-card'
 import { formatPrice } from '@/lib/utils'
 import type { PublicRegistry, PublicRegistryItem } from '@/lib/queries/registry'
 import type { EventType } from '@prisma/client'
@@ -197,6 +199,21 @@ export function PublicRegistryView({ registry, shareToken }: PublicRegistryViewP
             ))}
           </div>
         )}
+      </div>
+
+      {/* ---- Cash fund section ---- */}
+      {registry.cashFund && registry.cashFund.isActive && (
+        <div className="mx-auto max-w-4xl px-4 pb-8 md:px-6">
+          <h2 className="mb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Cash Fund
+          </h2>
+          <CashFundCard fund={registry.cashFund} showContributeButton={true} />
+        </div>
+      )}
+
+      {/* ---- RSVP section ---- */}
+      <div className="mx-auto max-w-md px-4 pb-10 md:px-6">
+        <RsvpForm shareToken={shareToken} registryName={registry.name} />
       </div>
 
       {/* ---- Footer branding ---- */}

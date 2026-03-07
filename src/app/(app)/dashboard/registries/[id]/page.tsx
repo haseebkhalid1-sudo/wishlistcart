@@ -9,11 +9,20 @@ import {
   ExternalLink,
   CheckCircle2,
   Gift,
+  Settings,
 } from 'lucide-react'
 import type { Prisma } from '@prisma/client'
 import { getRegistryById } from '@/lib/actions/registries'
+import { prisma } from '@/lib/prisma/client'
 import { Button } from '@/components/ui/button'
 import { CopyInput } from './copy-input'
+import { InviteDialog } from '@/components/registry/invite-dialog'
+import { QrShare } from '@/components/registry/qr-share'
+import { ThankYouTracker } from '@/components/registry/thankyou-tracker'
+import { StartPoolDialog } from '@/components/group-gift/start-pool-dialog'
+import { PoolStatusCard } from '@/components/group-gift/pool-status-card'
+import { CashFundCard } from '@/components/registry/cash-fund-card'
+import { CreateCashFundDialog } from '@/components/registry/create-cash-fund-dialog'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -26,6 +35,16 @@ type RegistryWithItems = Prisma.WishlistGetPayload<{
 }>
 
 type RegistryItem = RegistryWithItems['items'][number]
+
+type PoolSummary = {
+  id: string
+  itemId: string
+  goalAmount: Prisma.Decimal
+  currentAmount: Prisma.Decimal
+  status: 'ACTIVE' | 'COMPLETED' | 'CANCELLED'
+  deadline: Date | null
+  _count: { contributions: number }
+}
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -87,10 +106,11 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishlistcart.com'
 
 // ─── Item row ─────────────────────────────────────────────────────────────────
 
-function RegistryItemRow({ item }: { item: RegistryItem }) {
+function RegistryItemRow({ item, pool }: { item: RegistryItem; pool: PoolSummary | null }) {
   const price = formatPrice(item.price)
 
   return (
+  <div>
     <div className="flex items-center gap-3 rounded-lg border border-border bg-subtle px-4 py-3">
       {/* Thumbnail */}
       <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-md bg-bg-overlay">
@@ -141,6 +161,22 @@ function RegistryItemRow({ item }: { item: RegistryItem }) {
         )}
       </div>
     </div>
+
+    {/* Pool section */}
+    {pool ? (
+      <PoolStatusCard pool={pool} />
+    ) : (
+      !item.isPurchased && item.price != null && (
+        <div className="mt-1.5">
+          <StartPoolDialog
+            itemId={item.id}
+            itemTitle={item.title}
+            itemPrice={Number(item.price)}
+          />
+        </div>
+      )
+    )}
+  </div>
   )
 }
 
@@ -169,6 +205,19 @@ export default async function RegistryDashboardPage({ params }: Props) {
   const purchasedItems = items.filter((i) => i.isPurchased).length
   const remainingItems = totalItems - purchasedItems
   const grouped = groupItemsByCategory(items)
+
+  // Batch-fetch group gift pools for all items
+  const itemIds = items.map((i) => i.id)
+  const itemPools = itemIds.length > 0
+    ? await prisma.groupGiftPool.findMany({
+        where: { itemId: { in: itemIds } },
+        select: {
+          id: true, itemId: true, goalAmount: true, currentAmount: true,
+          status: true, deadline: true, _count: { select: { contributions: true } },
+        },
+      })
+    : []
+  const poolByItemId = new Map(itemPools.map((p) => [p.itemId, p] as const))
 
   const shareUrl = registry.shareToken
     ? `${APP_URL}/registry/${registry.shareToken}`
@@ -233,11 +282,24 @@ export default async function RegistryDashboardPage({ params }: Props) {
 
           {/* Right: action buttons */}
           <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
+            <Button variant="outline" size="sm" asChild>
+              <Link href={`/dashboard/registries/${registry.id}/settings`}>
+                <Settings className="h-4 w-4" />
+                Settings
+              </Link>
+            </Button>
+            {shareUrl && (
+              <InviteDialog
+                registryId={registry.id}
+                registryName={registry.name}
+                shareUrl={shareUrl}
+              />
+            )}
             {shareUrl && (
               <Button variant="outline" size="sm" asChild>
                 <a href={shareUrl} target="_blank" rel="noopener noreferrer">
                   <Share2 className="h-4 w-4" />
-                  Share Registry
+                  View public page
                 </a>
               </Button>
             )}
@@ -247,13 +309,21 @@ export default async function RegistryDashboardPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Share URL copy input */}
+        {/* Share URL copy input + QR */}
         {shareUrl && (
-          <div className="mt-4">
-            <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Share link
-            </p>
-            <CopyInput value={shareUrl} />
+          <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-start">
+            <div className="flex-1">
+              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Share link
+              </p>
+              <CopyInput value={shareUrl} />
+            </div>
+            <div className="shrink-0">
+              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                QR code
+              </p>
+              <QrShare url={shareUrl} size={120} />
+            </div>
           </div>
         )}
       </div>
@@ -277,6 +347,43 @@ export default async function RegistryDashboardPage({ params }: Props) {
         ))}
       </div>
 
+      {/* ── Cash fund section ── */}
+      {registry.cashFund ? (
+        <div className="mb-8">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            Cash Fund
+          </p>
+          <CashFundCard fund={registry.cashFund} showContributeButton={false} />
+        </div>
+      ) : (
+        <div className="mb-8 flex items-center justify-between rounded-xl border border-border bg-subtle px-5 py-4">
+          <div>
+            <p className="text-sm font-medium text-foreground">Add a Cash Fund</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              Let guests contribute money directly — honeymoon fund, diaper fund, etc.
+            </p>
+          </div>
+          <CreateCashFundDialog registryId={registry.id} />
+        </div>
+      )}
+
+      {/* ── Thank-you tracker (purchased items only) ── */}
+      {purchasedItems > 0 && (
+        <ThankYouTracker
+          registryId={registry.id}
+          items={items
+            .filter((i) => i.isPurchased)
+            .map((i) => ({
+              id: i.id,
+              title: i.title,
+              imageUrl: i.imageUrl,
+              storeName: i.storeName,
+              price: i.price != null ? Number(i.price) : null,
+              purchasedAt: i.purchasedAt,
+            }))}
+        />
+      )}
+
       {/* ── Items grouped by category ── */}
       {totalItems === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-xl border border-border bg-subtle py-20 text-center">
@@ -298,7 +405,7 @@ export default async function RegistryDashboardPage({ params }: Props) {
               </h2>
               <div className="space-y-2">
                 {categoryItems.map((item) => (
-                  <RegistryItemRow key={item.id} item={item} />
+                  <RegistryItemRow key={item.id} item={item} pool={poolByItemId.get(item.id) ?? null} />
                 ))}
               </div>
             </section>
