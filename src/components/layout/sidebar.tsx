@@ -10,6 +10,7 @@ import {
   Settings,
   Gift,
   Calendar,
+  History,
 } from 'lucide-react'
 
 const navItems = [
@@ -18,6 +19,7 @@ const navItems = [
   { href: '/dashboard/registries', label: 'Registries', icon: Gift },
   { href: '/dashboard/reminders', label: 'Reminders', icon: Calendar },
   { href: '/dashboard/price-alerts', label: 'Price Alerts', icon: Bell },
+  { href: '/dashboard/gift-history', label: 'Gift History', icon: History },
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ]
 
