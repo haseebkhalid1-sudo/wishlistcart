@@ -36,18 +36,18 @@ export default function LandingPage() {
       />
 
       {/* Hero */}
-      <section className="flex min-h-[calc(100vh-56px)] flex-col items-center justify-center px-4 py-24 text-center md:py-32">
+      <section className="flex min-h-[calc(100vh-56px)] flex-col items-center justify-center px-4 py-16 text-center md:py-24 lg:py-32">
         <div className="mx-auto max-w-3xl">
           <div className="mb-4 inline-flex items-center rounded-full border border-border bg-subtle px-3 py-1 text-xs font-medium text-muted-foreground">
             Free to get started · No credit card required
           </div>
 
-          <h1 className="font-serif text-display-xl text-balance text-foreground">
+          <h1 className="font-serif text-display-sm sm:text-display-md lg:text-display-lg text-balance text-foreground">
             Save anything.{' '}
             <span className="text-muted-foreground">Share with everyone.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-body-lg text-muted-foreground text-balance">
+          <p className="mx-auto mt-6 max-w-xl text-base sm:text-body-lg text-muted-foreground text-balance">
             WishlistCart lets you save products from any online store, track prices automatically,
             and coordinate gifts for every occasion.
           </p>

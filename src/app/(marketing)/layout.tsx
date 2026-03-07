@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { MarketingMobileNav } from '@/components/layout/marketing-mobile-nav'
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="relative sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 md:px-6">
           <Link href="/" className="font-serif text-xl text-foreground">
             WishlistCart
@@ -20,7 +21,8 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
               About
             </Link>
           </nav>
-          <div className="flex items-center gap-2">
+          {/* Desktop auth buttons */}
+          <div className="hidden items-center gap-2 md:flex">
             <Button variant="ghost" size="sm" asChild>
               <Link href="/login">Sign in</Link>
             </Button>
@@ -28,6 +30,8 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
               <Link href="/signup">Get started</Link>
             </Button>
           </div>
+          {/* Mobile hamburger */}
+          <MarketingMobileNav />
         </div>
       </header>
 

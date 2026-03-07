@@ -1,18 +1,28 @@
 import type { Metadata } from 'next'
-import { Gift } from 'lucide-react'
+import { getUserRegistries } from '@/lib/actions/registries'
+import { RegistryGrid } from '@/components/registry/registry-card'
+import { CreateRegistryDialog } from '@/components/registry/create-registry-dialog'
 
-export const metadata: Metadata = { title: 'Registries' }
+export const metadata: Metadata = {
+  title: 'My Registries',
+}
 
-export default function RegistriesPage() {
+export default async function RegistriesPage() {
+  const registries = await getUserRegistries()
+
   return (
-    <div className="flex flex-col items-center justify-center py-24 text-center">
-      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-subtle border border-border">
-        <Gift className="h-6 w-6 text-muted-foreground" />
+    <div>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="font-serif text-display-md text-foreground">My Registries</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {registries.length} {registries.length === 1 ? 'registry' : 'registries'}
+          </p>
+        </div>
+        <CreateRegistryDialog />
       </div>
-      <h1 className="font-serif text-2xl text-foreground">Gift Registries</h1>
-      <p className="mt-2 text-sm text-muted-foreground max-w-sm">
-        Create event registries for weddings, baby showers, and more. Coming soon.
-      </p>
+
+      <RegistryGrid registries={registries} />
     </div>
   )
 }
