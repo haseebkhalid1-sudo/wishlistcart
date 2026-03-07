@@ -29,12 +29,10 @@ export type WishlistWithItems = Prisma.WishlistGetPayload<{
 export async function createWishlist(
   formData: FormData
 ): Promise<ActionResult<{ id: string; slug: string }>> {
-  console.log('[createWishlist] called, name=', formData.get('name'))
   const supabase = await createServerClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()
-  console.log('[createWishlist] auth user=', user?.id ?? 'null')
   if (!user) return { success: false, error: 'Unauthorized' }
 
   try {
@@ -96,8 +94,7 @@ export async function createWishlist(
 
     revalidatePath('/dashboard/wishlists')
     return { success: true, data: wishlist }
-  } catch (err) {
-    console.error('[createWishlist]', err)
+  } catch {
     return { success: false, error: 'Failed to create wishlist. Please try again.' }
   }
 }

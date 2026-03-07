@@ -59,6 +59,27 @@ export function ItemDetailSheet({ item, open, onOpenChange }: ItemDetailSheetPro
   const isSale =
     price != null && highestHistorical != null && price < highestHistorical * 0.95
 
+  // Deal score: 0–100 based on how close current price is to the lowest vs. range
+  const dealScore =
+    price != null &&
+    lowestHistorical != null &&
+    highestHistorical != null &&
+    highestHistorical > lowestHistorical &&
+    priceHistory.length >= 3
+      ? Math.round(((highestHistorical - price) / (highestHistorical - lowestHistorical)) * 100)
+      : null
+
+  const dealLabel =
+    dealScore == null
+      ? null
+      : dealScore >= 70
+        ? 'Great deal'
+        : dealScore >= 40
+          ? 'Good deal'
+          : dealScore >= 20
+            ? 'Fair price'
+            : null
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="w-full sm:max-w-md overflow-y-auto">
@@ -95,6 +116,11 @@ export function ItemDetailSheet({ item, open, onOpenChange }: ItemDetailSheetPro
           {highestHistorical != null && price === highestHistorical && priceHistory.length > 1 && (
             <Badge className="bg-subtle text-muted-foreground border border-border text-xs">
               Highest price
+            </Badge>
+          )}
+          {dealLabel != null && (
+            <Badge className="bg-foreground text-background border-0 text-xs">
+              {dealLabel} · {dealScore}%
             </Badge>
           )}
         </div>

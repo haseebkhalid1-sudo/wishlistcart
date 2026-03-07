@@ -13,6 +13,12 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Pricing
             </Link>
+            <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Blog
+            </Link>
+            <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              About
+            </Link>
           </nav>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="sm" asChild>
@@ -38,6 +44,8 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             </div>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
               <Link href="/pricing" className="hover:text-foreground transition-colors">Pricing</Link>
+              <Link href="/blog" className="hover:text-foreground transition-colors">Blog</Link>
+              <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
               <Link href="/signup" className="hover:text-foreground transition-colors">Get Started</Link>
             </div>
           </div>
