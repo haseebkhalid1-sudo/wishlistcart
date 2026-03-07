@@ -15,9 +15,14 @@ export default function DashboardError({
       <p className="mt-2 max-w-sm text-sm text-muted-foreground">
         An unexpected error occurred. Please try again.
       </p>
+      {error.message && (
+        <p className="mt-2 max-w-sm font-mono text-xs text-muted-foreground/60 break-all">
+          {error.message}
+        </p>
+      )}
       {error.digest && (
-        <p className="mt-2 font-mono text-xs text-muted-foreground/60">
-          Error ID: {error.digest}
+        <p className="mt-1 font-mono text-xs text-muted-foreground/40">
+          ID: {error.digest}
         </p>
       )}
       <Button className="mt-6" onClick={reset}>
