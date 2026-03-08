@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { MarketingMobileNav } from '@/components/layout/marketing-mobile-nav'
+import { SearchBar } from '@/components/search/search-bar'
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -24,6 +25,10 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
               About
             </Link>
           </nav>
+          {/* Desktop search */}
+          <div className="hidden w-56 md:block">
+            <SearchBar />
+          </div>
           {/* Desktop auth buttons */}
           <div className="hidden items-center gap-2 md:flex">
             <Button variant="ghost" size="sm" asChild>

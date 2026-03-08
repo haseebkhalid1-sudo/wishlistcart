@@ -14,6 +14,7 @@ import {
   Rss,
   Compass,
 } from 'lucide-react'
+import { SearchBar } from '@/components/search/search-bar'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutGrid, exact: true },
@@ -37,6 +38,11 @@ export function Sidebar() {
         <Link href="/dashboard" className="font-serif text-xl text-foreground">
           WishlistCart
         </Link>
+      </div>
+
+      {/* Search */}
+      <div className="border-b border-border px-3 py-2.5">
+        <SearchBar compact />
       </div>
 
       {/* Navigation */}

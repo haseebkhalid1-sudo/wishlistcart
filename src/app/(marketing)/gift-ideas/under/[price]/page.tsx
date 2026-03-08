@@ -181,6 +181,42 @@ const BUDGET_GUIDES: Record<string, BudgetGuide> = {
       },
     ],
   },
+  '10': {
+    amount: 10,
+    title: 'Best Gifts Under $10 in 2026',
+    description: 'Thoughtful gifts under $10 that don\'t look cheap — for Secret Santa, stocking stuffers, coworkers, and last-minute occasions.',
+    intro: "Under $10 is a real constraint — but it\'s not a death sentence. The key is picking one thing that\'s genuinely nice rather than a basket of filler. These picks punch above their weight.",
+    categories: [
+      {
+        heading: 'For Everyone',
+        items: [
+          { name: 'Magnetic Bookmark Set', price: '$5–$9', why: 'Clever, practical, and feels like a premium find. Book lovers will use these on every read.', searchUrl: 'https://www.amazon.com/s?k=magnetic+bookmark+set' },
+          { name: 'Mini Succulent Plant', price: '$5–$9', why: 'A tiny living gift. Hard to kill, easy to love, and brightens any desk immediately.', searchUrl: 'https://www.amazon.com/s?k=mini+succulent+plant+gift' },
+          { name: 'Pocket Notebook (3-Pack)', price: '$6–$10', why: 'Small notebooks people carry everywhere. Great for lists, notes, and impromptu sketches.', searchUrl: 'https://www.amazon.com/s?k=pocket+notebook+3+pack' },
+        ],
+      },
+      {
+        heading: 'Food & Drink',
+        items: [
+          { name: 'Specialty Hot Cocoa Packet Set', price: '$5–$10', why: 'Artisan hot chocolate packets in fun flavors. Cozy, consumable, and universally loved.', searchUrl: 'https://www.amazon.com/s?k=specialty+hot+cocoa+gift+set' },
+          { name: 'Tea Sampler (Individual Bags)', price: '$6–$10', why: 'A handful of interesting flavors from Harney & Sons or Twinings. Simple and always appreciated.', searchUrl: 'https://www.amazon.com/s?k=tea+sampler+gift+set+variety' },
+        ],
+      },
+      {
+        heading: 'Fun & Stocking Stuffers',
+        items: [
+          { name: 'Deck of Playing Cards (Nice Design)', price: '$5–$10', why: 'Bicycle or a novelty design they\'ll keep on the coffee table. Universally fun.', searchUrl: 'https://www.amazon.com/s?k=playing+cards+nice+design+gift' },
+          { name: 'Silicone Cable Ties Set', price: '$4–$8', why: 'The gift that solves the cable drawer problem. Shockingly satisfying to use.', searchUrl: 'https://www.amazon.com/s?k=silicone+cable+ties+set' },
+          { name: 'Lip Balm Set (SPF)', price: '$5–$9', why: 'EOS or Burt\'s Bees multi-pack. Used daily, always runs out, always welcome.', searchUrl: 'https://www.amazon.com/s?k=lip+balm+set+spf+gift' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What can I get as a gift for under $10?', a: 'Under $10, focus on consumables or small practicalities: a specialty tea or cocoa sampler, a nice set of playing cards, a mini succulent, magnetic bookmarks, or silicone cable ties. One thoughtful item beats a pile of cheap filler.' },
+      { q: 'What are good stocking stuffers under $10?', a: 'The best stocking stuffers under $10: lip balm sets, magnetic bookmarks, pocket notebooks, playing cards, fun socks, specialty snacks, silicone cable ties, and mini hand lotions. Mix practical with fun for the best stocking.' },
+      { q: 'Can under $10 gifts feel thoughtful?', a: 'Absolutely. A $7 magnetic bookmark with a handwritten note about a book you both love is more thoughtful than a $50 generic gift basket. The note and the context are what make a small gift feel significant.' },
+    ],
+  },
   '100': {
     amount: 100,
     title: 'Best Gifts Under $100 in 2026',
@@ -264,6 +300,81 @@ const BUDGET_GUIDES: Record<string, BudgetGuide> = {
         q: 'What are luxury gifts under $100?',
         a: "Gifts that feel luxurious under $100: Diptyque or Maison Margiela candles ($50–$70), a silk pillowcase, a Kindle Paperwhite, a bottle of quality wine or whiskey, or a cashmere beanie. The key is brand — a $60 item from the right brand feels more luxurious than a $90 generic.",
       },
+    ],
+  },
+  '200': {
+    amount: 200,
+    title: 'Best Gifts Under $200 in 2026',
+    description: 'Premium gifts under $200 — the range where you can give something truly special. Quality picks for every type of person.',
+    intro: "Under $200 is where gifting gets genuinely exciting. You can afford something that lasts, something that impresses, or something they\'ve been wanting but haven\'t justified for themselves.",
+    categories: [
+      {
+        heading: 'Tech',
+        items: [
+          { name: 'AirPods (3rd Gen) or Galaxy Buds', price: '$130–$180', why: 'Wireless earbuds they\'ll use every single day. AirPods for iPhone users, Galaxy Buds for Android.', searchUrl: 'https://www.amazon.com/s?k=airpods+3rd+generation+wireless+earbuds' },
+          { name: 'Kindle Paperwhite (Signature Edition)', price: '$140–$190', why: 'The upgraded Kindle with wireless charging and auto-adjusting front light. A genuine delight for any reader.', searchUrl: 'https://www.amazon.com/s?k=kindle+paperwhite+signature+edition' },
+          { name: 'Portable Projector (Mini)', price: '$100–$180', why: 'Movie nights anywhere. Connects to a phone or laptop in seconds. A crowd-pleasing tech gift.', searchUrl: 'https://www.amazon.com/s?k=portable+mini+projector+1080p' },
+        ],
+      },
+      {
+        heading: 'Experiences & Luxury',
+        items: [
+          { name: 'Spa Day Gift Certificate', price: '$100–$200', why: 'Book it at a local spa. A full massage or facial is the luxury gift most people won\'t buy for themselves.', searchUrl: 'https://www.spafinder.com' },
+          { name: 'Fine Dining Gift Card', price: '$100–$200', why: 'A gift card to a restaurant they\'ve been wanting to try. The gift of a special night out.', searchUrl: 'https://www.amazon.com/s?k=restaurant+gift+card+fine+dining' },
+          { name: 'Wine Club Subscription (3 months)', price: '$120–$180', why: 'Curated bottles delivered monthly. Naked Wines or Firstleaf are great starting points.', searchUrl: 'https://www.amazon.com/s?k=wine+club+subscription+gift+3+months' },
+        ],
+      },
+      {
+        heading: 'Home & Lifestyle',
+        items: [
+          { name: 'Le Creuset Signature Skillet', price: '$120–$180', why: 'The enameled cast iron upgrade that lasts a lifetime. A kitchen heirloom in the right color.', searchUrl: 'https://www.amazon.com/s?k=le+creuset+signature+skillet' },
+          { name: 'Dyson Supersonic Hair Dryer', price: '$150–$200', why: 'The professional hair dryer that converts skeptics in one use. A real luxury splurge.', searchUrl: 'https://www.amazon.com/s?k=dyson+supersonic+hair+dryer' },
+          { name: 'Cashmere Throw Blanket', price: '$80–$180', why: 'A genuine cashmere or cashmere-blend throw. Softer and warmer than anything else — and it shows.', searchUrl: 'https://www.amazon.com/s?k=cashmere+throw+blanket+gift' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What are good gifts in the $100–$200 range?', a: 'The $100–$200 range covers truly special gifts: wireless earbuds, a Kindle Paperwhite, a spa day, a fine dining gift card, a Le Creuset skillet, or a cashmere throw. This is the range for milestone birthdays, anniversaries, and people you want to impress.' },
+      { q: 'What is a luxurious gift under $200?', a: 'Luxury gifts under $200: Dyson hair tools, AirPods, a wine club subscription, a spa gift certificate, a cashmere blanket, or a piece of quality jewelry. The key at this price point is brand and quality — one premium item beats a bundle of average ones.' },
+      { q: 'What are romantic gifts under $200?', a: 'Romantic gifts in this range: a spa day for two ($150–$200), a fine dining reservation with a small meaningful gift, a weekend getaway deposit, a custom piece of jewelry ($80–$150), or a wine and cheese tasting experience.' },
+    ],
+  },
+  '500': {
+    amount: 500,
+    title: 'Best Gifts Under $500 in 2026',
+    description: 'Impressive gifts under $500 — for milestone birthdays, anniversaries, weddings, and people you truly want to celebrate.',
+    intro: "Under $500, you\'re in genuinely special territory. These are the gifts people remember, the ones that get used for years, and the ones that say 'I really thought about this.'",
+    categories: [
+      {
+        heading: 'Premium Tech',
+        items: [
+          { name: 'Apple Watch Series 10', price: '$350–$450', why: 'The health, fitness, and productivity tracker on your wrist. The gift tech lovers actually want.', searchUrl: 'https://www.amazon.com/s?k=apple+watch+series+10' },
+          { name: 'Sony WH-1000XM5 Headphones', price: '$300–$380', why: 'The best noise-cancelling headphones available. Used daily for years. A life-quality upgrade.', searchUrl: 'https://www.amazon.com/s?k=sony+wh1000xm5+headphones' },
+          { name: 'iPad (10th Gen)', price: '$350–$450', why: 'For art, reading, video calls, and everything in between. The most versatile device in Apple\'s lineup.', searchUrl: 'https://www.amazon.com/s?k=ipad+10th+generation' },
+          { name: 'Instant Camera (Fujifilm Instax Wide)', price: '$100–$200', why: 'Prints wide-format instant photos. Perfect for parties, travel, and anyone who loves tangible memories.', searchUrl: 'https://www.amazon.com/s?k=fujifilm+instax+wide+camera' },
+        ],
+      },
+      {
+        heading: 'Experiences',
+        items: [
+          { name: 'Weekend Getaway (Airbnb Gift Card)', price: '$200–$500', why: 'The experience gift at scale. An Airbnb or hotel booking deposit for a trip they\'ve been planning.', searchUrl: 'https://www.amazon.com/s?k=airbnb+gift+card' },
+          { name: 'Cooking Vacation or Class Trip', price: '$200–$500', why: 'A cooking school experience, a food tour in another city, or an immersive culinary trip. For the foodie who has everything.', searchUrl: 'https://www.airbnb.com/experiences' },
+          { name: 'Concert or Sports VIP Tickets', price: '$150–$500', why: 'Front-row or suite-level tickets to a game or concert they\'d love. The memory is the gift.', searchUrl: 'https://www.ticketmaster.com' },
+        ],
+      },
+      {
+        heading: 'Luxury Home & Fashion',
+        items: [
+          { name: 'Dyson Airwrap Styler', price: '$400–$480', why: 'The viral hair styling tool that does everything. On every beauty lover\'s wishlist every year.', searchUrl: 'https://www.amazon.com/s?k=dyson+airwrap+styler' },
+          { name: 'Le Creuset Dutch Oven (5.5 Qt)', price: '$350–$440', why: 'The kitchen heirloom. In the right color, it\'s the most beautiful and functional pot in any kitchen.', searchUrl: 'https://www.amazon.com/s?k=le+creuset+dutch+oven+5+quart' },
+          { name: 'Quality Leather Handbag', price: '$200–$500', why: 'Tory Burch, Coach, or a mid-luxury brand. A leather bag used daily for years is genuinely cost-per-use efficient.', searchUrl: 'https://www.amazon.com/s?k=quality+leather+handbag+women' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What are impressive gifts under $500?', a: 'Under $500, you can give gifts that feel genuinely luxurious: an Apple Watch, Sony XM5 headphones, a Dyson Airwrap, a Le Creuset Dutch oven, a weekend trip deposit, or VIP concert tickets. These are the gifts people talk about.' },
+      { q: 'What is a good anniversary gift under $500?', a: 'Anniversary gifts in this range: a weekend trip together ($300–$500 on Airbnb), a piece of jewelry ($150–$400), a Dyson Airwrap or Apple Watch, or a private cooking or wine tasting experience. Lean toward experiences for milestone anniversaries.' },
+      { q: 'What is a good graduation gift under $500?', a: 'For graduates: an Apple Watch or iPad for their new chapter, a quality leather work bag, a weekend trip, a generous restaurant gift card, or a contribution toward their next adventure. Think about what will serve them in their next life phase.' },
     ],
   },
 }

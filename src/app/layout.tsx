@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import { PostHogProvider } from '@/components/providers/posthog-provider'
+import { ServiceWorkerRegistration } from '@/components/pwa/sw-registration'
+import { InstallPrompt } from '@/components/pwa/install-prompt'
 import './globals.css'
 
 const inter = Inter({
@@ -43,16 +45,31 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://wishlistcart.com' },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black',
+    title: 'WishlistCart',
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`}>
+      <head>
+        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+        <meta name="theme-color" content="#0F0F0F" />
+      </head>
       <body className="font-sans antialiased">
         <PostHogProvider>
           {children}
         </PostHogProvider>
         <Toaster richColors position="bottom-right" />
+        <ServiceWorkerRegistration />
+        <InstallPrompt />
       </body>
     </html>
   )
