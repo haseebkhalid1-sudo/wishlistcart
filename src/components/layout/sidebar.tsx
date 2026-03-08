@@ -14,6 +14,7 @@ import {
   Rss,
   Compass,
   Star,
+  Shield,
 } from 'lucide-react'
 import { SearchBar } from '@/components/search/search-bar'
 
@@ -30,7 +31,18 @@ const navItems = [
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ]
 
-export function Sidebar() {
+const adminNavItems = [
+  { href: '/dashboard/admin', label: 'Overview', icon: Shield, exact: true },
+  { href: '/dashboard/admin/creators', label: 'Creator Apps', icon: Star },
+  { href: '/dashboard/admin/affiliate', label: 'Affiliate', icon: Compass },
+  { href: '/dashboard/admin/system', label: 'System', icon: Settings },
+]
+
+interface SidebarProps {
+  isAdmin?: boolean
+}
+
+export function Sidebar({ isAdmin = false }: SidebarProps) {
   const pathname = usePathname()
 
   return (
@@ -48,7 +60,7 @@ export function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-0.5 p-3">
+      <nav className="flex-1 space-y-0.5 overflow-y-auto p-3">
         {navItems.map((item) => {
           const isActive = item.exact
             ? pathname === item.href
@@ -70,6 +82,36 @@ export function Sidebar() {
             </Link>
           )
         })}
+
+        {/* Admin section */}
+        {isAdmin && (
+          <div className="mt-4">
+            <p className="mb-1 px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+              Admin
+            </p>
+            {adminNavItems.map((item) => {
+              const isActive = item.exact
+                ? pathname === item.href
+                : pathname.startsWith(item.href)
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    'flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors',
+                    isActive
+                      ? 'bg-background font-medium text-foreground shadow-xs'
+                      : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                  )}
+                >
+                  <item.icon className="h-4 w-4 shrink-0" />
+                  {item.label}
+                </Link>
+              )
+            })}
+          </div>
+        )}
       </nav>
 
       {/* Bottom: quick add */}

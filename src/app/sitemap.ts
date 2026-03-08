@@ -59,6 +59,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }))
 
+  const occasionGuides: MetadataRoute.Sitemap = [
+    'wedding', 'baby-shower', 'birthday', 'christmas', 'valentines-day',
+    'mothers-day', 'fathers-day', 'graduation', 'housewarming', 'anniversary',
+  ].map((occasion) => ({
+    url: `${BASE_URL}/gift-ideas/for/${occasion}`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }))
+
   const budgetGuides: MetadataRoute.Sitemap = ['25', '50', '100'].map((price) => ({
     url: `${BASE_URL}/gift-ideas/under/${price}`,
     lastModified: now,
@@ -70,5 +80,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // const publicWishlists = await prisma.wishlist.findMany({ where: { privacy: 'PUBLIC' }, ... })
   // return [...staticPages, ...publicWishlists.map(w => ({ url: `${BASE_URL}/@${w.username}/${w.slug}`, ... }))]
 
-  return [...staticPages, ...personaGuides, ...budgetGuides]
+  return [...staticPages, ...personaGuides, ...occasionGuides, ...budgetGuides]
 }

@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { Crown, User, CreditCard, Check } from 'lucide-react'
+import Link from 'next/link'
+import { Crown, User, CreditCard, Check, Bell } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { createCheckoutSession, createPortalSession } from '@/lib/actions/billing'
@@ -20,7 +21,7 @@ interface Props {
 }
 
 export function SettingsClient({ billingStatus }: Props) {
-  const [activeTab, setActiveTab] = useState<'profile' | 'billing'>('profile')
+  const [activeTab, setActiveTab] = useState<'profile' | 'billing' | 'notifications'>('profile')
   const [isPending, startTransition] = useTransition()
 
   function handleUpgrade() {
@@ -56,7 +57,7 @@ export function SettingsClient({ billingStatus }: Props) {
 
       {/* Tabs */}
       <div className="mb-6 flex border-b border-border">
-        {(['profile', 'billing'] as const).map((tab) => (
+        {(['profile', 'billing', 'notifications'] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -167,6 +168,26 @@ export function SettingsClient({ billingStatus }: Props) {
               </p>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Notifications tab — links through to the dedicated page */}
+      {activeTab === 'notifications' && (
+        <div className="space-y-6">
+          <div className="rounded-xl border border-border p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <Bell className="h-4 w-4 text-foreground" />
+              <h2 className="font-medium text-foreground">Notification preferences</h2>
+            </div>
+            <p className="text-sm text-muted-foreground mb-4">
+              Control email and push notification settings for price drops, gift activity, followers, and more.
+            </p>
+            <Link href="/dashboard/settings/notifications">
+              <Button variant="outline" size="sm">
+                Manage notifications
+              </Button>
+            </Link>
+          </div>
         </div>
       )}
     </div>

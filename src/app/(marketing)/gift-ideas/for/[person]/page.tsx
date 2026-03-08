@@ -1694,6 +1694,467 @@ const GUIDES: Record<string, GiftGuide> = {
       },
     ],
   },
+  wedding: {
+    title: 'Best Wedding Gifts in 2026',
+    description: 'Find the perfect wedding gift — from registry must-haves to thoughtful cash alternatives. Curated wedding gift ideas for every budget.',
+    intro: "Wedding gifts are a minefield. Too practical feels cold; too personal feels presumptuous. The best approach: check the registry first, then fill gaps with something from these categories. The couple will remember the thoughtful ones long after the wrapping paper is gone.",
+    categories: [
+      {
+        heading: 'Kitchen & Home Essentials',
+        items: [
+          { name: 'Dutch Oven (Le Creuset or Staub)', price: '$100–$350', why: 'The kitchen heirloom every couple wants but won\'t buy themselves. Gets used for decades.', searchUrl: 'https://www.amazon.com/s?k=le+creuset+dutch+oven+wedding+gift' },
+          { name: 'KitchenAid Stand Mixer', price: '$300–$500', why: 'The ultimate kitchen upgrade. Pairs well with a group contribution from multiple guests.', searchUrl: 'https://www.amazon.com/s?k=kitchenaid+stand+mixer+wedding' },
+          { name: 'Luxury Bedding Set', price: '$100–$250', why: 'High thread-count sheets or a quality duvet set. Something they\'ll use every single night.', searchUrl: 'https://www.amazon.com/s?k=luxury+bedding+set+wedding+gift' },
+          { name: 'Espresso / Coffee Machine', price: '$80–$300', why: 'Nespresso or Breville. Daily use, daily appreciation. A great registry pick to contribute toward.', searchUrl: 'https://www.amazon.com/s?k=espresso+machine+wedding+gift' },
+        ],
+      },
+      {
+        heading: 'Experience Gifts',
+        items: [
+          { name: 'Honeymoon Fund Contribution', price: '$50–$200', why: 'Many couples set up a honeymoon fund instead of a traditional registry. Contributing directly feels incredibly generous.', searchUrl: 'https://www.amazon.com/s?k=experience+gift+card+travel' },
+          { name: 'Cooking Class for Two', price: '$80–$200', why: 'A date night built in. Cooking classes are a memorable shared experience that strengthens the new marriage.', searchUrl: 'https://www.amazon.com/s?k=cooking+class+gift+card+couple' },
+          { name: 'Wine or Whiskey Tasting Experience', price: '$60–$150', why: 'A curated tasting experience at a local winery or distillery, or a delivered sampler box.', searchUrl: 'https://www.amazon.com/s?k=wine+tasting+gift+couple' },
+        ],
+      },
+      {
+        heading: 'Personalized & Sentimental',
+        items: [
+          { name: 'Custom Wedding Artwork', price: '$50–$200', why: 'A custom illustration of their venue, vows, or wedding date. Etsy has hundreds of talented artists for this.', searchUrl: 'https://www.etsy.com/search?q=custom+wedding+artwork+personalized' },
+          { name: 'Engraved Cutting Board', price: '$40–$100', why: 'Personalized with their names and wedding date. A kitchen staple that doubles as a keepsake.', searchUrl: 'https://www.amazon.com/s?k=engraved+cutting+board+wedding+personalized' },
+          { name: 'Custom Photo Album / Guest Book', price: '$40–$100', why: 'A beautifully designed guest book or photo album for their wedding memories. They\'ll pull it out every anniversary.', searchUrl: 'https://www.etsy.com/search?q=custom+wedding+photo+album+guest+book' },
+        ],
+      },
+      {
+        heading: 'Cash Alternatives',
+        items: [
+          { name: 'Newlywed Starter Fund (Gift Card Bundle)', price: '$50–$300', why: 'Gift cards to home stores (Pottery Barn, Williams Sonoma, IKEA) give flexibility without the awkwardness of cash.', searchUrl: 'https://www.amazon.com/s?k=pottery+barn+gift+card+wedding' },
+          { name: 'Home Depot / Lowe\'s Gift Card', price: '$50–$200', why: 'For couples moving into their first home — practical and immediately useful. Often more appreciated than kitchenware.', searchUrl: 'https://www.amazon.com/s?k=home+depot+gift+card' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What is a good wedding gift?', a: 'The best wedding gifts come from the registry — the couple chose those items intentionally. If you want to go off-registry, personalized keepsakes (custom artwork, engraved items), experience gifts, or contributions to a honeymoon fund are universally well-received.' },
+      { q: 'How much should I spend on a wedding gift?', a: 'The general etiquette: $50–$75 for a coworker or casual acquaintance, $75–$150 for a friend, $150–$300+ for a close friend or family member. For a destination wedding where you\'re traveling, it\'s acceptable to spend less on the gift itself.' },
+      { q: 'What are unique wedding gift ideas?', a: 'Beyond the registry: a custom illustrated map of where they met or got married, a star map of their wedding night sky, a contribution to a honeymoon experience, a "first year of marriage" date night box, or a donation to their favorite charity in their name.' },
+      { q: 'Is it okay to give cash as a wedding gift?', a: 'Absolutely — especially for younger couples or those who have already established their home. A beautifully presented cash gift or contribution to a honeymoon fund is often the most practical and appreciated option. Just present it thoughtfully with a card.' },
+    ],
+  },
+  'baby-shower': {
+    title: 'Best Baby Shower Gifts in 2026',
+    description: 'The best baby shower gifts for new parents — from nursery essentials to mom care. Practical, thoughtful, and actually used from day one.',
+    intro: "Baby shower gifts should pass two tests: will the parents use it in the first month, or will they treasure it forever? Everything else is just clutter. These picks nail both — practical essentials that make new-parent life easier, plus keepsakes they\'ll hold onto.",
+    categories: [
+      {
+        heading: 'Nursery Essentials',
+        items: [
+          { name: 'White Noise Machine (Hatch Baby Rest)', price: '$60–$100', why: 'The single most recommended baby sleep tool by parents. Doubles as a nightlight and app-controlled.', searchUrl: 'https://www.amazon.com/s?k=hatch+baby+rest+white+noise+machine' },
+          { name: 'Baby Monitor (Video)', price: '$80–$200', why: 'A quality video monitor is used every nap and every night for 3+ years. One of the highest-value baby gifts.', searchUrl: 'https://www.amazon.com/s?k=video+baby+monitor' },
+          { name: 'Organic Crib Sheet Set', price: '$30–$60', why: 'Burt\'s Bees or Aden + Anais. Soft, breathable, chemical-free. Parents go through these constantly.', searchUrl: 'https://www.amazon.com/s?k=organic+crib+sheet+set+baby' },
+          { name: 'Diaper Pail (Dekor or Ubbi)', price: '$40–$70', why: 'The good diaper pails seal in odors completely. Parents who have one can\'t imagine living without it.', searchUrl: 'https://www.amazon.com/s?k=diaper+pail+ubbi+dekor' },
+        ],
+      },
+      {
+        heading: 'Feeding & Care',
+        items: [
+          { name: 'Dr. Brown\'s Bottle Starter Set', price: '$25–$50', why: 'Reduces colic and gas. The bottle brand pediatricians most commonly recommend.', searchUrl: 'https://www.amazon.com/s?k=dr+browns+bottle+starter+set' },
+          { name: 'Baby Nail File & Grooming Kit', price: '$15–$30', why: 'New parents are terrified of trimming tiny nails. A quality grooming kit removes the anxiety.', searchUrl: 'https://www.amazon.com/s?k=baby+nail+file+grooming+kit' },
+          { name: 'Nursing Pillow (Boppy)', price: '$40–$60', why: 'Essential for breastfeeding and bottle feeding. Also doubles as a tummy time support as they grow.', searchUrl: 'https://www.amazon.com/s?k=boppy+nursing+pillow+baby' },
+        ],
+      },
+      {
+        heading: 'Mom Care',
+        items: [
+          { name: 'Meal Delivery Gift Card (DoorDash or Instacart)', price: '$50–$100', why: 'New parents can\'t cook. A meal delivery gift card may be the single most appreciated baby shower gift of all.', searchUrl: 'https://www.amazon.com/s?k=doordash+gift+card' },
+          { name: 'Postpartum Recovery Kit', price: '$40–$80', why: 'Earth Mama or Frida Mom postpartum sets. Something everyone needs but nobody buys themselves. Deeply appreciated.', searchUrl: 'https://www.amazon.com/s?k=postpartum+recovery+kit+new+mom' },
+          { name: 'Comfortable Nursing Pajamas Set', price: '$40–$80', why: 'Soft, functional PJs designed for new moms. Used every single night in those early weeks.', searchUrl: 'https://www.amazon.com/s?k=nursing+pajamas+set+new+mom' },
+        ],
+      },
+      {
+        heading: 'Keepsakes & Memories',
+        items: [
+          { name: 'Baby Handprint & Footprint Kit', price: '$20–$40', why: 'A ceramic or ink kit that captures tiny prints forever. One of the most treasured baby gifts of all time.', searchUrl: 'https://www.amazon.com/s?k=baby+handprint+footprint+kit' },
+          { name: 'Personalized Baby Blanket', price: '$30–$70', why: 'Custom embroidered with baby\'s name and birth date. A keepsake they\'ll pull out for years.', searchUrl: 'https://www.etsy.com/search?q=personalized+baby+blanket+embroidered+name' },
+          { name: 'Baby Memory Book', price: '$20–$45', why: 'A beautifully designed book for first-year milestones. Parents love filling these in and keeping them forever.', searchUrl: 'https://www.amazon.com/s?k=baby+memory+book+first+year' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What is the most useful baby shower gift?', a: 'The most practically useful baby shower gifts: a white noise machine, a video baby monitor, a diaper pail, and a meal delivery gift card. These get used every day from week one. If in doubt, check the baby registry — the parents chose those items intentionally.' },
+      { q: 'How much should I spend on a baby shower gift?', a: 'Typical ranges: $20–$40 for a coworker or acquaintance, $40–$80 for a friend, $80–$150+ for a close friend or family member. Group gifts for big-ticket items (stroller, crib) are always appreciated and appropriate.' },
+      { q: 'What are unique baby shower gift ideas?', a: 'Beyond the registry: a meal train gift card, a postpartum recovery kit, a custom family portrait commission, a baby\'s first library (curated board books), or a "year of experiences" (activities for each month of baby\'s first year).' },
+      { q: 'What should you NOT give at a baby shower?', a: 'Avoid: clothing only in newborn size (they outgrow it in weeks — buy 3–6 month or 6–12 month), cheap stuffed animals that shed, bath toys (not used for months), and anything with small parts or strong fragrances. Check the registry first and ask if you\'re unsure.' },
+    ],
+  },
+  birthday: {
+    title: 'Best Birthday Gifts for Anyone in 2026',
+    description: 'The best birthday gift ideas in 2026 — from tech and experiences to pampering and personalized. Something great for everyone on your list.',
+    intro: "Birthday gifts have one job: make someone feel genuinely celebrated. The best ones are either something they want but wouldn\'t buy themselves, or an experience that creates a memory. These picks cover every personality type and every budget.",
+    categories: [
+      {
+        heading: 'Tech & Gadgets',
+        items: [
+          { name: 'Wireless Earbuds (AirPods or Pixel Buds)', price: '$80–$200', why: 'The gift almost nobody already has a perfect pair of. An upgrade they\'ll use every day.', searchUrl: 'https://www.amazon.com/s?k=wireless+earbuds+birthday+gift+2026' },
+          { name: 'Kindle Paperwhite', price: '$130–$160', why: 'For the reader who stares at screens all day — a warm-light e-reader is a genuine upgrade. Waterproof too.', searchUrl: 'https://www.amazon.com/s?k=kindle+paperwhite+birthday+gift' },
+          { name: 'Portable Power Bank (Anker)', price: '$30–$60', why: 'The gift everyone needs and always forgets to buy. Anker 20,000mAh charges phones 4+ times.', searchUrl: 'https://www.amazon.com/s?k=anker+portable+power+bank' },
+          { name: 'Smart Watch (Fitness Tracker)', price: '$100–$400', why: 'Fitbit, Garmin, or Apple Watch. For anyone who wants to be more active or just tell the time without their phone.', searchUrl: 'https://www.amazon.com/s?k=smart+watch+fitness+tracker+birthday+gift' },
+        ],
+      },
+      {
+        heading: 'Experiences',
+        items: [
+          { name: 'Concert or Event Tickets', price: '$50–$300', why: 'An experience beats a thing every time. Find out who they love and grab tickets — it shows real thought.', searchUrl: 'https://www.ticketmaster.com' },
+          { name: 'Cooking Class or Tasting Experience', price: '$60–$150', why: 'A shared experience you can do together or give as a solo adventure. Memorable and unique.', searchUrl: 'https://www.amazon.com/s?k=cooking+class+experience+gift+card+birthday' },
+          { name: 'Spa Day or Massage Gift Card', price: '$80–$200', why: 'Universal appeal. A spa voucher says "you deserve to be pampered" in the clearest possible way.', searchUrl: 'https://www.spafinder.com' },
+        ],
+      },
+      {
+        heading: 'Pampering & Self-Care',
+        items: [
+          { name: 'Luxury Skincare Set', price: '$40–$150', why: 'A curated set from Tatcha, Drunk Elephant, or Kiehl\'s. The gift that makes them feel genuinely indulgent.', searchUrl: 'https://www.amazon.com/s?k=luxury+skincare+set+birthday+gift' },
+          { name: 'Weighted Blanket', price: '$40–$80', why: 'The gift that says "rest more" — and they\'ll actually use it every single evening.', searchUrl: 'https://www.amazon.com/s?k=weighted+blanket+birthday+gift' },
+          { name: 'Diffuser + Essential Oil Set', price: '$30–$60', why: 'Aromatherapy that turns any room into a sanctuary. Endlessly giftable and universally loved.', searchUrl: 'https://www.amazon.com/s?k=diffuser+essential+oil+set+gift' },
+        ],
+      },
+      {
+        heading: 'Personalized',
+        items: [
+          { name: 'Custom Star Map Print', price: '$30–$80', why: 'A print of the night sky on their birthday. Deeply personal, beautifully framed. Etsy shops do stunning work.', searchUrl: 'https://www.etsy.com/search?q=custom+star+map+birthday+gift+print' },
+          { name: 'Personalized Jewelry', price: '$40–$150', why: 'A necklace or bracelet with their initial, birthstone, or a meaningful date. Never goes out of style.', searchUrl: 'https://www.amazon.com/s?k=personalized+jewelry+birthday+gift' },
+          { name: 'Custom Illustrated Portrait', price: '$30–$100', why: 'Commission a digital portrait of them, their pet, or their family. Etsy has talented artists at every price point.', searchUrl: 'https://www.etsy.com/search?q=custom+illustrated+portrait+birthday' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What is a good birthday gift for someone who has everything?', a: 'Focus on experiences (concert tickets, cooking class, spa day) or meaningful consumables (a bottle of their favorite wine, a luxury candle, specialty food). Personalized items also cut through — something with their name or a meaningful date shows genuine thought.' },
+      { q: 'What is a good birthday gift for a friend?', a: 'Great friend birthday gifts: something related to a shared memory or inside joke, a book by their favorite author, tickets to something they\'d love, a luxe version of something they use daily (skincare, coffee, candles), or a gift card to their favorite restaurant.' },
+      { q: 'How much should I spend on a birthday gift?', a: 'Context matters: $20–$40 for a coworker, $40–$75 for a friend, $75–$150+ for a close friend or partner. The thought and presentation matter as much as the price. A $30 gift wrapped beautifully with a heartfelt note beats a $100 gift in a bag with no card.' },
+      { q: 'What are unique birthday gift ideas?', a: 'Unique birthday gifts: a DNA ancestry kit, a custom illustrated family portrait, a subscription box in their hobby (coffee, books, plants), a "day trip" envelope with a planned experience, or a donation to a cause they care about paired with a heartfelt letter.' },
+    ],
+  },
+  christmas: {
+    title: 'Best Christmas Gifts in 2026',
+    description: 'The best Christmas gift ideas in 2026 — cozy home gifts, tech, kids toys, foodie picks, and stocking stuffers under $20.',
+    intro: "Christmas shopping is a sport, and the best players start with a list. Whether you\'re shopping for the tech lover, the homebody, the foodie, or the kid who already has everything — these categories have you covered with gifts people actually want to unwrap.",
+    categories: [
+      {
+        heading: 'Cozy & Home',
+        items: [
+          { name: 'Sherpa or Fleece Throw Blanket', price: '$30–$70', why: 'The ultimate Christmas gift. Warm, soft, and used every single evening. You can\'t go wrong.', searchUrl: 'https://www.amazon.com/s?k=sherpa+throw+blanket+christmas+gift' },
+          { name: 'Luxury Candle Set', price: '$30–$80', why: 'Voluspa, Diptyque, or Yankee Candle. A seasonal scent set feels festive and smells amazing.', searchUrl: 'https://www.amazon.com/s?k=luxury+candle+set+christmas+gift' },
+          { name: 'Coffee or Tea Gift Set', price: '$25–$60', why: 'A curated box of specialty coffees or holiday teas. Consumable, delightful, zero shelf-clutter.', searchUrl: 'https://www.amazon.com/s?k=coffee+tea+gift+set+christmas' },
+          { name: 'Slippers (Memory Foam)', price: '$25–$60', why: 'Cozy slippers are the dark horse Christmas gift. UGG, Dearfoams, or Minnetonka — all excellent.', searchUrl: 'https://www.amazon.com/s?k=memory+foam+slippers+christmas+gift' },
+        ],
+      },
+      {
+        heading: 'Tech Gifts',
+        items: [
+          { name: 'Amazon Echo (Smart Speaker)', price: '$50–$100', why: 'Alexa-powered everything. Amazon always discounts Echo devices at Christmas — great value.', searchUrl: 'https://www.amazon.com/s?k=amazon+echo+christmas+gift+2026' },
+          { name: 'Wireless Charging Pad', price: '$20–$50', why: 'Clean desk, charged phone. Everyone needs one and not everyone has one. Universal utility.', searchUrl: 'https://www.amazon.com/s?k=wireless+charging+pad+christmas+gift' },
+          { name: 'Streaming Stick (Fire TV or Roku)', price: '$30–$50', why: 'Instant upgrade for any TV. Perfect for the family member still watching cable.', searchUrl: 'https://www.amazon.com/s?k=fire+tv+stick+roku+christmas+gift' },
+        ],
+      },
+      {
+        heading: 'Kids & Toys',
+        items: [
+          { name: 'LEGO Set (Age-Appropriate)', price: '$30–$120', why: 'The classic Christmas gift that never fails. LEGO has sets for every age, interest, and budget.', searchUrl: 'https://www.amazon.com/s?k=lego+set+christmas+gift+kids' },
+          { name: 'Nintendo Switch Game', price: '$30–$60', why: 'If they have a Switch, a new game is the perfect Christmas addition. Check their wishlist or ask a parent.', searchUrl: 'https://www.amazon.com/s?k=nintendo+switch+game+christmas' },
+          { name: 'Arts & Crafts Activity Kit', price: '$20–$50', why: 'A Christmas break must-have. Kids\' kits for painting, slime, science experiments, or jewelry making.', searchUrl: 'https://www.amazon.com/s?k=kids+arts+crafts+kit+christmas+gift' },
+        ],
+      },
+      {
+        heading: 'Stocking Stuffers (Under $20)',
+        items: [
+          { name: 'Chapstick or Lip Balm Set', price: '$5–$15', why: 'Winter lips need moisture. A quality set from EOS or Burt\'s Bees is small, useful, and loved.', searchUrl: 'https://www.amazon.com/s?k=lip+balm+set+stocking+stuffer' },
+          { name: 'Mini Hand Cream Set', price: '$10–$20', why: 'L\'Occitane or The Body Shop minis. Travel-size luxury that\'s perfect stocking filler.', searchUrl: 'https://www.amazon.com/s?k=mini+hand+cream+set+stocking+stuffer' },
+          { name: 'Playing Cards (Premium)', price: '$10–$20', why: 'A deck of quality playing cards with interesting design. Bicycle, Theory11, or Cartamundi.', searchUrl: 'https://www.amazon.com/s?k=premium+playing+cards+stocking+stuffer' },
+          { name: 'Scratch-Off Lottery Tickets Bundle', price: '$10–$20', why: 'The stocking stuffer that always gets a reaction. Wrap a small bundle for instant Christmas excitement.', searchUrl: 'https://www.amazon.com/s?k=scratch+off+lottery+ticket+holder+stocking' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What are the most popular Christmas gifts in 2026?', a: 'Top Christmas gifts in 2026: LEGO sets, wireless earbuds, smart home devices (Echo, smart plugs), cozy throw blankets, skincare gift sets, Kindles, and Nintendo Switch games. The safest bets are consumables (candles, food) and practical tech upgrades.' },
+      { q: 'What is a good Christmas gift for someone who has everything?', a: 'For the person who has everything: experiences (spa day, cooking class, event tickets), high-quality consumables (luxury candle, specialty coffee, artisan chocolate), or personalized items they wouldn\'t buy themselves. Avoid generic decorative items — they have enough.' },
+      { q: 'How early should you start Christmas shopping?', a: 'The earlier the better, but realistically: start by October to avoid December shipping delays and sold-out stock. Black Friday and Cyber Monday (late November) offer genuine discounts on tech, appliances, and popular gifts. Many items ship free in December but cut-off dates vary.' },
+      { q: 'What are good last-minute Christmas gifts?', a: 'Last-minute Christmas gifts: a gift card to their favorite restaurant or store (digital delivery in minutes), an Audible or Amazon subscription, a streaming service gift, a PayPal or Venmo payment with a note about what it\'s for, or downloadable experiences like online classes.' },
+    ],
+  },
+  'valentines-day': {
+    title: "Best Valentine's Day Gifts in 2026",
+    description: "The best Valentine's Day gift ideas in 2026 — romantic, personalized, and thoughtful. For partners, new relationships, and everyone in between.",
+    intro: "Valentine\'s Day gifts don\'t have to be extravagant — they have to feel intentional. The best ones show you were paying attention: to what they love, what they\'ve mentioned, what would make them smile. These picks range from deeply romantic to lighthearted, covering every type of relationship.",
+    categories: [
+      {
+        heading: 'Romantic',
+        items: [
+          { name: 'Weekend Getaway or Hotel Stay', price: '$150–$500', why: 'An overnight trip together beats any physical gift. Pick a place they\'ve mentioned wanting to visit.', searchUrl: 'https://www.airbnb.com' },
+          { name: 'Spa Day for Two', price: '$100–$300', why: 'A couples\' massage or spa package. Relaxing, indulgent, and something you do together.', searchUrl: 'https://www.spafinder.com' },
+          { name: 'Personalized Love Letter Book', price: '$30–$80', why: 'A custom book where every page has a reason you love them. Etsy sellers make stunning keepsake versions.', searchUrl: 'https://www.etsy.com/search?q=personalized+love+letter+book+valentines' },
+          { name: 'Fine Dining Experience', price: '$80–$200', why: 'A reservation at a restaurant they\'ve been wanting to try. Wrap the confirmation in a card — the anticipation is half the gift.', searchUrl: 'https://www.opentable.com' },
+        ],
+      },
+      {
+        heading: 'Jewelry & Accessories',
+        items: [
+          { name: 'Personalized Initial Necklace', price: '$40–$150', why: 'Their initial or a meaningful date on a delicate chain. Classic, wearable, and genuinely appreciated.', searchUrl: 'https://www.etsy.com/search?q=personalized+initial+necklace+valentines+gift' },
+          { name: 'Birthstone Ring or Bracelet', price: '$50–$200', why: 'A piece of jewelry with their birthstone. Personal, wearable, and something they\'d treasure.', searchUrl: 'https://www.amazon.com/s?k=birthstone+ring+bracelet+valentines+gift' },
+          { name: 'Custom Coordinates Bracelet', price: '$30–$80', why: 'A bracelet engraved with the coordinates of where you met, got engaged, or a place that means something to you both.', searchUrl: 'https://www.etsy.com/search?q=custom+coordinates+bracelet+valentines' },
+        ],
+      },
+      {
+        heading: 'Pampering',
+        items: [
+          { name: 'Luxury Bath & Body Set', price: '$40–$100', why: 'Jo Malone, Aesop, or L\'Occitane. An indulgent set they\'d never justify buying themselves.', searchUrl: 'https://www.amazon.com/s?k=luxury+bath+body+gift+set+valentines' },
+          { name: 'Silk Robe or Pajamas', price: '$50–$150', why: 'Soft, sensual, and practical. A gift they\'ll wear and think of you every time.', searchUrl: 'https://www.amazon.com/s?k=silk+robe+pajamas+valentines+gift' },
+          { name: 'Perfume or Cologne (Their Signature Scent)', price: '$60–$150', why: 'If you know their signature scent, a full-size bottle is a deeply personal and romantic gift.', searchUrl: 'https://www.amazon.com/s?k=perfume+cologne+valentines+day+gift' },
+        ],
+      },
+      {
+        heading: 'Funny & Lighthearted',
+        items: [
+          { name: 'Custom Caricature Portrait', price: '$30–$80', why: 'A fun illustrated portrait of you both. Etsy artists do amazing work — great for couples with a sense of humor.', searchUrl: 'https://www.etsy.com/search?q=custom+caricature+portrait+couple+funny' },
+          { name: 'Couples Game Night Box', price: '$25–$50', why: 'A curated set of games for two: Fog of Love, Codenames Duet, or a card game designed for couples.', searchUrl: 'https://www.amazon.com/s?k=couples+game+night+set+valentines' },
+          { name: '"Why I Love You" Scratch Card', price: '$15–$30', why: 'Scratch off panels to reveal reasons. Sweet, interactive, and weirdly fun to give and receive.', searchUrl: 'https://www.amazon.com/s?k=why+i+love+you+scratch+card+valentines' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: "What is a good Valentine's Day gift for a girlfriend?", a: "For a girlfriend: personalized jewelry (initial necklace, birthstone ring), a luxury bath and body set, concert tickets to a show she wants to see, a spa day voucher, a romantic dinner reservation, or a custom illustrated portrait of you both. The most romantic gifts show you were paying attention to her interests." },
+      { q: "What is a good Valentine's Day gift for a boyfriend?", a: "For a boyfriend: a new experience together (cooking class, escape room, sport or activity he loves), a quality leather wallet or accessory, tickets to a game or concert, a personalized item (engraved watch, coordinates bracelet), or a night-in package (his favorite snacks, a game, a comfort movie)." },
+      { q: "How much should I spend on a Valentine's Day gift?", a: "There\'s no fixed rule. For new relationships: $20–$50 is appropriate. For established relationships: $50–$150 is common. For long-term partners or spouses: $100–$300+. Experiences (dinner, overnight trip) often feel more generous than a physical gift at the same price." },
+      { q: "What are good Valentine's Day gifts for him?", a: "Great Valentine\'s Day gifts for men: a quality leather wallet, a personalized whiskey glass set, tickets to a sporting event or concert, a grooming kit upgrade, a cooking class for two, a custom map print of a place meaningful to your relationship, or a weekend trip to a destination he\'s mentioned." },
+    ],
+  },
+  'mothers-day': {
+    title: "Best Mother's Day Gifts in 2026",
+    description: "Find the perfect Mother's Day gift — from relaxation and jewelry to experiences and kitchen upgrades. Thoughtful gift ideas for every mom.",
+    intro: "Mother\'s Day has one rule: make her feel seen, not just appreciated in a generic way. The gifts that land are the ones that reflect her actual interests — not a mug that says \'World\'s Best Mom.\' These picks are organized by what she actually loves.",
+    categories: [
+      {
+        heading: 'Relaxation & Wellness',
+        items: [
+          { name: 'Spa Day Gift Card (SpaFinder)', price: '$80–$200', why: 'A day entirely for her. SpaFinder works at thousands of spas nationwide — she picks when and where.', searchUrl: 'https://www.spafinder.com' },
+          { name: 'Weighted Blanket', price: '$40–$80', why: 'The gift that says "rest more." Used every evening on the couch or in bed. Genuinely life-improving.', searchUrl: 'https://www.amazon.com/s?k=weighted+blanket+mothers+day+gift' },
+          { name: 'Luxury Skincare Set (Tatcha or Kiehl\'s)', price: '$50–$150', why: 'A curated set she\'d never splurge on herself. Elegant packaging, real results.', searchUrl: 'https://www.amazon.com/s?k=luxury+skincare+gift+set+mothers+day' },
+          { name: 'Aromatherapy Diffuser + Essential Oils', price: '$30–$70', why: 'Creates a spa-like atmosphere at home. The gift that keeps giving every time she uses it.', searchUrl: 'https://www.amazon.com/s?k=aromatherapy+diffuser+essential+oils+mothers+day' },
+        ],
+      },
+      {
+        heading: 'Jewelry',
+        items: [
+          { name: "Children's Birthstone Necklace", price: '$50–$200', why: "A necklace featuring her children's birthstones. One of the most consistently loved Mother's Day gifts of all time.", searchUrl: 'https://www.etsy.com/search?q=childrens+birthstone+necklace+mothers+day' },
+          { name: 'Personalized Name Bracelet', price: '$40–$120', why: "A delicate bracelet with her children's names or initials. She'll wear it every day.", searchUrl: 'https://www.etsy.com/search?q=personalized+name+bracelet+mothers+day' },
+          { name: 'Locket Necklace (Photo Inside)', price: '$40–$150', why: 'A locket with photos of her kids or family inside. Sentimental, classic, and genuinely treasured.', searchUrl: 'https://www.amazon.com/s?k=locket+necklace+photo+mothers+day+gift' },
+        ],
+      },
+      {
+        heading: 'Experiences',
+        items: [
+          { name: 'Cooking or Baking Class', price: '$60–$150', why: 'Something to do, not just to have. Great for the mom who loves food and wants a fun outing.', searchUrl: 'https://www.amazon.com/s?k=cooking+class+gift+card+mothers+day' },
+          { name: 'Afternoon Tea Experience', price: '$40–$100', why: 'A classic, elegant Mother\'s Day treat. Book a local hotel or tea room for a refined outing.', searchUrl: 'https://www.amazon.com/s?k=afternoon+tea+experience+gift+card' },
+          { name: 'Concert or Theatre Tickets', price: '$50–$200', why: 'Find out who she loves and get tickets. A shared experience is the most memorable Mother\'s Day gift.', searchUrl: 'https://www.ticketmaster.com' },
+        ],
+      },
+      {
+        heading: 'Kitchen & Home',
+        items: [
+          { name: 'Nespresso or Keurig Machine', price: '$80–$180', why: 'Morning coffee elevated. If she doesn\'t have one, this is the gift that improves her every single morning.', searchUrl: 'https://www.amazon.com/s?k=nespresso+keurig+machine+mothers+day' },
+          { name: 'Silk Pillowcase Set', price: '$30–$60', why: 'Better sleep and better hair — a rare double win. She\'ll notice the difference immediately.', searchUrl: 'https://www.amazon.com/s?k=silk+pillowcase+set+mothers+day' },
+          { name: 'Custom Family Portrait', price: '$50–$200', why: 'Commission a digital or painted portrait of the family. Etsy artists do stunning work at every price point.', searchUrl: 'https://www.etsy.com/search?q=custom+family+portrait+mothers+day' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: "What is the best Mother's Day gift?", a: "The best Mother's Day gifts are personal and reflect her actual interests. A spa day, jewelry with her children's birthstones, a cooking class, or a beautiful personalized keepsake all outperform generic options. Ask her siblings or your own siblings for ideas if you're stuck — insider knowledge beats guessing." },
+      { q: "What to get mom for Mother's Day when she says she doesn't want anything?", a: "When she says she doesn't want anything, she means she doesn't want you to stress about it — but she'd still love to feel celebrated. A homemade voucher for a day of her choosing (you plan it), a favorite meal cooked for her, or a heartfelt letter alongside a small meaningful gift usually hits perfectly." },
+      { q: "What are good Mother's Day gifts from kids?", a: "From younger kids: a handmade card with a drawing, a coupon book for chores, a photo mug or photo book with their pictures, or a painted flower pot with a planted flower. From older kids/adults: experiences (dinner out, spa), jewelry, a framed family photo, or a subscription to something she loves." },
+      { q: "How much should I spend on a Mother's Day gift?", a: "There's no set rule. Many people spend $30–$75 on a thoughtful gift. Experiences (spa day, dinner out) in the $50–$150 range often feel more generous than a physical item at the same price. What matters most is that it feels personal — a $20 gift chosen with genuine thought beats a $100 generic set." },
+    ],
+  },
+  'fathers-day': {
+    title: "Best Father's Day Gifts in 2026",
+    description: "The best Father's Day gift ideas in 2026 — from tech and grilling gear to sports, grooming, and personalized gifts for every dad.",
+    intro: "Dad says he doesn\'t need anything. The trick is finding the thing he\'d buy himself if he ever actually did that. These picks are organized by what kind of dad he is — because a grilling enthusiast and a tech dad need very different gifts.",
+    categories: [
+      {
+        heading: 'Tech & Gadgets',
+        items: [
+          { name: 'Smart Watch (Garmin or Apple Watch)', price: '$150–$400', why: 'A fitness and health tracker that also tells the time. Dads who exercise love Garmin; iPhone users love Apple Watch.', searchUrl: 'https://www.amazon.com/s?k=garmin+apple+watch+fathers+day+gift' },
+          { name: 'Portable Bluetooth Speaker', price: '$50–$150', why: 'For the garage, backyard, or camping. JBL Flip or Bose SoundLink — both excellent options.', searchUrl: 'https://www.amazon.com/s?k=portable+bluetooth+speaker+fathers+day' },
+          { name: 'Action Camera (GoPro)', price: '$150–$400', why: 'For the active dad who bikes, skis, kayaks, or just wants to capture family adventures in a new way.', searchUrl: 'https://www.amazon.com/s?k=gopro+action+camera+fathers+day' },
+          { name: 'E-Reader (Kindle)', price: '$130–$160', why: 'For the dad who reads. A Paperwhite is portable, backlit, and holds a thousand books.', searchUrl: 'https://www.amazon.com/s?k=kindle+paperwhite+fathers+day+gift' },
+        ],
+      },
+      {
+        heading: 'Grilling & Outdoors',
+        items: [
+          { name: 'Premium Grilling Tool Set', price: '$40–$100', why: 'A quality stainless steel set with everything he needs. Great for the dad who grills year-round.', searchUrl: 'https://www.amazon.com/s?k=premium+grilling+tool+set+fathers+day' },
+          { name: 'Instant-Read Meat Thermometer (Thermapen)', price: '$40–$100', why: 'Perfect steaks, perfect chicken, every time. Every serious griller needs one and will immediately use it.', searchUrl: 'https://www.amazon.com/s?k=thermapen+meat+thermometer+fathers+day' },
+          { name: 'Traeger or Weber Grill Accessories', price: '$30–$80', why: 'If he already has a grill, premium accessories (smoking chips, cedar planks, grill mats) are always appreciated.', searchUrl: 'https://www.amazon.com/s?k=traeger+weber+grill+accessories+fathers+day' },
+        ],
+      },
+      {
+        heading: 'Grooming & Self-Care',
+        items: [
+          { name: 'Premium Grooming Kit (Braun or Philips)', price: '$50–$150', why: 'An electric trimmer or grooming set upgrade. The kind he wouldn\'t buy himself but uses every day.', searchUrl: 'https://www.amazon.com/s?k=premium+grooming+kit+men+fathers+day' },
+          { name: 'Luxury Shave Set (Art of Shaving)', price: '$40–$100', why: 'A quality shave cream, brush, and aftershave set. Transforms a chore into a ritual.', searchUrl: 'https://www.amazon.com/s?k=luxury+shave+set+art+of+shaving+fathers+day' },
+          { name: 'Skincare Starter Kit for Men', price: '$30–$80', why: 'Kiehl\'s or Lumin for Men. Most dads use the same bar of soap for everything. This is the nudge they need.', searchUrl: 'https://www.amazon.com/s?k=mens+skincare+starter+kit+fathers+day' },
+        ],
+      },
+      {
+        heading: 'Personalized',
+        items: [
+          { name: 'Custom Engraved Whiskey Glass Set', price: '$30–$80', why: 'His name or a meaningful date engraved on quality rocks glasses. One of the most consistently loved dad gifts.', searchUrl: 'https://www.amazon.com/s?k=custom+engraved+whiskey+glass+set+fathers+day' },
+          { name: 'Personalized Leather Wallet', price: '$30–$80', why: 'A slim wallet with his initials embossed. Something he uses every day with a personal touch.', searchUrl: 'https://www.amazon.com/s?k=personalized+leather+wallet+fathers+day' },
+          { name: 'Custom Family Portrait or Photo Book', price: '$30–$80', why: 'A photo book of the family\'s year or a custom illustrated family portrait. Dads love these more than they let on.', searchUrl: 'https://www.shutterfly.com' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: "What is the best Father's Day gift?", a: "The best Father's Day gifts match his actual hobbies: a Thermapen for the griller, tech accessories for the gadget dad, grooming upgrades for the man who uses the same shampoo for 10 years, or experiences (golf round, baseball game, fishing trip) for the dad who prefers doing over having." },
+      { q: "What to get your dad for Father's Day when he has everything?", a: "When he has everything: focus on experiences (a round of golf at a course he's been eyeing, tickets to a game, a day trip), personalized items (engraved whiskey glasses, custom photo book), or a premium version of something he uses daily (upgraded grooming kit, quality leather wallet)." },
+      { q: "What are good Father's Day gifts from kids?", a: "From young kids: a handmade coupon book, a custom painted portrait (help them draw dad), a photo mug with their pictures, or a planted herb they grew together. From older kids/adults: experiences (game tickets, dinner out), personalized gifts, or contributing toward a bigger purchase he's been wanting." },
+      { q: "How much should I spend on a Father's Day gift?", a: "Typical spending: $30–$75 for a practical or personalized gift, $75–$150 for a quality tech or grooming upgrade, $150+ for an experience or premium item. The most appreciated Father's Day gifts combine thoughtfulness with practicality — something he'll use, not just display." },
+    ],
+  },
+  graduation: {
+    title: 'Best Graduation Gifts in 2026',
+    description: 'The best graduation gift ideas in 2026 — practical career launches, experiences, and meaningful gifts for high school and college grads.',
+    intro: "Graduation gifts should meet the graduate where they\'re going — not where they\'ve been. A high school grad heading to college needs different things than a college grad entering the workforce. These picks are organized around what actually helps them launch the next chapter.",
+    categories: [
+      {
+        heading: 'Career Launch Essentials',
+        items: [
+          { name: 'Quality Laptop Bag or Backpack', price: '$50–$150', why: 'For the office, commute, or campus. A durable, professional bag that handles a laptop and essentials.', searchUrl: 'https://www.amazon.com/s?k=quality+laptop+bag+graduation+gift' },
+          { name: 'Business Card Holder + Portfolio', price: '$30–$80', why: 'For the grad entering the professional world. A sleek portfolio for interviews and first days.', searchUrl: 'https://www.amazon.com/s?k=business+card+holder+portfolio+graduation+gift' },
+          { name: 'Noise-Cancelling Headphones', price: '$100–$350', why: 'Sony WH-1000XM5 or AirPods Pro. For deep work, commutes, and open offices. One of the most impactful gifts for any grad.', searchUrl: 'https://www.amazon.com/s?k=noise+cancelling+headphones+graduation+gift' },
+          { name: 'Digital Planner + Productivity Bundle', price: '$30–$80', why: 'A quality paper planner plus productivity apps subscription. For the grad who needs to get organized.', searchUrl: 'https://www.amazon.com/s?k=digital+planner+productivity+gift+graduation' },
+        ],
+      },
+      {
+        heading: 'Experiences',
+        items: [
+          { name: 'Travel Gift Card (Airbnb or Booking.com)', price: '$100–$300', why: 'For the grad who wants to explore before the real world kicks in. A travel fund gift card is the ultimate adventure starter.', searchUrl: 'https://www.amazon.com/s?k=airbnb+gift+card+graduation+travel' },
+          { name: 'Cooking Class or Skills Workshop', price: '$60–$150', why: 'A practical life skill packaged as a fun experience. Perfect for grads moving out for the first time.', searchUrl: 'https://www.amazon.com/s?k=cooking+class+gift+card+graduation' },
+          { name: 'Concert, Festival, or Event Tickets', price: '$50–$200', why: 'A celebration experience for right now. Pick something they\'ve been wanting to see.', searchUrl: 'https://www.ticketmaster.com' },
+        ],
+      },
+      {
+        heading: 'Financial Head Start',
+        items: [
+          { name: 'Personal Finance Book (The Psychology of Money)', price: '$15–$25', why: 'Morgan Housel\'s book is the most accessible and impactful money book for young adults. Pair it with a Roth IRA contribution.', searchUrl: 'https://www.amazon.com/s?k=psychology+of+money+graduation+gift' },
+          { name: 'Quality Leather Wallet (Slim)', price: '$30–$80', why: 'A slim, professional wallet that handles cards and cash cleanly. The right wallet signals you\'re entering the adult world.', searchUrl: 'https://www.amazon.com/s?k=slim+leather+wallet+graduation+gift' },
+          { name: 'Cash or Gift Card to Build an Emergency Fund', price: '$50–$500', why: 'The most practical graduation gift of all. Cash toward an emergency fund or a head start on their first paycheck goes further than any object.', searchUrl: 'https://www.amazon.com/s?k=amazon+gift+card+graduation' },
+        ],
+      },
+      {
+        heading: 'Celebration & Personalized',
+        items: [
+          { name: 'Custom Graduation Jewelry (Name or Year)', price: '$40–$120', why: 'A necklace or bracelet engraved with their graduation year or name. A wearable memento they\'ll keep.', searchUrl: 'https://www.etsy.com/search?q=custom+graduation+jewelry+personalized' },
+          { name: 'Personalized Graduation Photo Book', price: '$30–$70', why: 'A photo book of their school years — from the first day to the last. Parents and grads both love this gift.', searchUrl: 'https://www.shutterfly.com' },
+          { name: 'Engraved Pen Set', price: '$20–$60', why: 'An engraved quality pen with their name or a message. Sounds cliché — actually used constantly and appreciated.', searchUrl: 'https://www.amazon.com/s?k=engraved+pen+set+graduation+gift' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What is a good high school graduation gift?', a: 'For high school grads: cash (always wins), noise-cancelling headphones, a quality backpack or laptop bag, a dorm essentials package, a travel gift card, or a personalized keepsake from their school years. Most high school grads are heading to college — practical life-launch gifts are the most appreciated.' },
+      { q: 'What is a good college graduation gift?', a: 'For college grads entering the workforce: noise-cancelling headphones, a quality laptop bag or portfolio, a slim leather wallet, a personal finance book, a skills course subscription (LinkedIn Learning, MasterClass), or cash toward their first apartment or emergency fund.' },
+      { q: 'How much should I spend on a graduation gift?', a: 'From a family friend or relative: $25–$75 is appropriate. From immediate family: $75–$200 is common. From parents: often $200–$500+, or contributing toward a meaningful life-launch purchase. Cash is always deeply appreciated and never wrong for a grad.' },
+      { q: 'What are unique graduation gift ideas?', a: 'Unique graduation gifts: a custom illustrated map of their college campus, a subscription to a skill-building platform (MasterClass, Coursera), a letter from a mentor or parent they can open "when you need it," a contribution toward their Roth IRA, or tickets to an experience they\'ve always wanted to try.' },
+    ],
+  },
+  housewarming: {
+    title: 'Best Housewarming Gifts in 2026',
+    description: 'The best housewarming gift ideas in 2026 — from kitchen essentials and home decor to smart home upgrades and outdoor entertaining.',
+    intro: "Housewarming gifts should feel like a contribution to a home, not more stuff to find room for. The best ones are either beautiful (they\'ll display it), useful (they\'ll use it daily), or both. These picks help a new homeowner or renter feel settled from day one.",
+    categories: [
+      {
+        heading: 'Kitchen Essentials',
+        items: [
+          { name: 'Cast Iron Skillet (Lodge)', price: '$30–$60', why: 'Indestructible, improves with age, works on every heat source. The forever kitchen gift that new homeowners love.', searchUrl: 'https://www.amazon.com/s?k=lodge+cast+iron+skillet+housewarming+gift' },
+          { name: 'Quality Cutting Board (End-Grain)', price: '$40–$100', why: 'A beautiful end-grain wood cutting board is both a kitchen workhorse and a countertop centerpiece.', searchUrl: 'https://www.amazon.com/s?k=end+grain+cutting+board+housewarming+gift' },
+          { name: 'French Press or Pour-Over Coffee Set', price: '$25–$60', why: 'A simple coffee ritual for the new home. Chemex or a quality French press makes the first morning special.', searchUrl: 'https://www.amazon.com/s?k=french+press+pour+over+coffee+housewarming' },
+          { name: 'Herb Garden Starter Kit', price: '$25–$50', why: 'Fresh basil, thyme, and rosemary in their new kitchen window. A living, growing gift that keeps giving.', searchUrl: 'https://www.amazon.com/s?k=herb+garden+starter+kit+housewarming+gift' },
+        ],
+      },
+      {
+        heading: 'Home Decor',
+        items: [
+          { name: 'Luxury Candle (Diptyque or Voluspa)', price: '$30–$80', why: 'A beautifully scented candle that makes a new space feel instantly like home. Classic and always right.', searchUrl: 'https://www.amazon.com/s?k=luxury+candle+housewarming+gift+diptyque' },
+          { name: 'Quality Throw Blanket', price: '$40–$80', why: 'A soft, beautiful throw for the couch. Adds warmth and texture to any living space immediately.', searchUrl: 'https://www.amazon.com/s?k=quality+throw+blanket+housewarming+gift' },
+          { name: 'Framed Art Print', price: '$30–$100', why: 'A beautiful print for their wall. Society6 and Minted have excellent options at every price point and style.', searchUrl: 'https://www.amazon.com/s?k=framed+art+print+housewarming+gift' },
+        ],
+      },
+      {
+        heading: 'Organization & Smart Home',
+        items: [
+          { name: 'Smart Plug Set (Kasa or TP-Link)', price: '$25–$50', why: 'Instantly makes any lamp or appliance app-controlled. The gateway drug to smart home living.', searchUrl: 'https://www.amazon.com/s?k=smart+plug+set+housewarming+gift' },
+          { name: 'Over-the-Door Organizer Kit', price: '$20–$50', why: 'Pantry, closet, or bathroom organization that uses vertical space. Practical and immediately useful.', searchUrl: 'https://www.amazon.com/s?k=over+door+organizer+housewarming+gift' },
+          { name: 'Label Maker (DYMO)', price: '$25–$50', why: 'Every organized home starts with a label maker. DYMO LabelManager is the go-to for pantry and office organization.', searchUrl: 'https://www.amazon.com/s?k=dymo+label+maker+housewarming+gift' },
+        ],
+      },
+      {
+        heading: 'Outdoor & Entertaining',
+        items: [
+          { name: 'Charcuterie Board Set', price: '$40–$100', why: 'A beautiful marble or wood board with serving accessories. Perfect for new homeowners who love to entertain.', searchUrl: 'https://www.amazon.com/s?k=charcuterie+board+set+housewarming+gift' },
+          { name: 'String Lights (Outdoor Patio)', price: '$20–$50', why: 'Instant ambiance for any patio, balcony, or backyard. One of the most universally loved outdoor home additions.', searchUrl: 'https://www.amazon.com/s?k=outdoor+string+lights+patio+housewarming+gift' },
+          { name: 'Cocktail or Mocktail Kit', price: '$30–$70', why: 'A curated set of cocktail tools, mixers, and a recipe card. Makes the first housewarming party feel like a real occasion.', searchUrl: 'https://www.amazon.com/s?k=cocktail+mocktail+kit+housewarming+gift' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What is a good housewarming gift?', a: 'The best housewarming gifts are things people need but don\'t prioritize buying for themselves: a quality cast iron skillet, a luxury candle, a throw blanket, a beautiful cutting board, or a set of smart plugs. Avoid overly personal decor items — stick to universally useful or neutral-aesthetic pieces.' },
+      { q: 'How much should I spend on a housewarming gift?', a: 'Typical spending: $20–$50 for a coworker or acquaintance, $50–$100 for a friend, $100–$200+ for a close friend or family member. Group gifts are common for big-ticket items (a KitchenAid, a Roomba, a nice outdoor set). There\'s no strict etiquette — give what feels right for the relationship.' },
+      { q: 'What should you NOT give as a housewarming gift?', a: 'Avoid: live plants that need specific care (unless you know their green-thumb level), overly personal decor that may not match their style, breakable items that are hard to display, and anything requiring major assembly. Also skip wine if you\'re unsure whether they drink.' },
+      { q: 'What is a good housewarming gift for a first apartment?', a: 'For a first apartment: a quality cast iron skillet, an herb garden starter kit, a French press, a cozy throw blanket, a label maker, or a practical tool kit. First-apartment dwellers need basics more than luxuries — practical gifts that fill gaps in their kitchen and home are the most appreciated.' },
+    ],
+  },
+  anniversary: {
+    title: 'Best Anniversary Gifts in 2026',
+    description: 'The best anniversary gift ideas in 2026 — from personalized keepsakes and experiences to traditional year-specific gifts and romantic getaways.',
+    intro: "Anniversary gifts should feel as significant as the milestone they\'re marking. The most memorable ones are either deeply personal (something that reflects your shared history) or an experience that creates a new memory together. These picks cover every anniversary stage — from the first year to the fiftieth.",
+    categories: [
+      {
+        heading: 'Personalized & Sentimental',
+        items: [
+          { name: 'Custom Wedding Vows Art Print', price: '$40–$120', why: 'Your actual vows beautifully typeset and framed. Etsy sellers do stunning calligraphy versions. A gift they\'ll hang forever.', searchUrl: 'https://www.etsy.com/search?q=custom+wedding+vows+art+print+anniversary' },
+          { name: 'Custom Map of Where You Met', price: '$30–$80', why: 'A framed map of the city, neighborhood, or exact location where your relationship began. Deeply personal.', searchUrl: 'https://www.etsy.com/search?q=custom+map+print+where+we+met+anniversary' },
+          { name: 'Photo Book of Your Years Together', price: '$30–$80', why: 'A beautifully curated photo book of your relationship. Shutterfly or Artifact Uprising do excellent work.', searchUrl: 'https://www.shutterfly.com' },
+          { name: 'Star Map of Your Wedding Night', price: '$30–$80', why: 'The exact night sky from your wedding location and date. A romantic, unique keepsake.', searchUrl: 'https://www.etsy.com/search?q=star+map+wedding+night+anniversary+print' },
+        ],
+      },
+      {
+        heading: 'Experiences',
+        items: [
+          { name: 'Weekend Getaway (Return to First Date Location)', price: '$200–$600', why: 'Return to where you had your first date, got engaged, or spent your honeymoon. The experience + the memory is unbeatable.', searchUrl: 'https://www.airbnb.com' },
+          { name: 'Couples\' Cooking Class', price: '$80–$200', why: 'A fun shared experience that results in a delicious meal. Book through a local culinary school or Sur La Table.', searchUrl: 'https://www.amazon.com/s?k=couples+cooking+class+experience+gift' },
+          { name: 'Spa Day for Two', price: '$100–$300', why: 'A couples\' massage or spa package. Relaxing, indulgent, and a genuine treat for both of you.', searchUrl: 'https://www.spafinder.com' },
+        ],
+      },
+      {
+        heading: 'Jewelry & Accessories',
+        items: [
+          { name: 'Eternity Band or Anniversary Ring', price: '$100–$500', why: 'A diamond or gemstone eternity band. The traditional jewelry milestone gift for 5th, 10th, or 25th anniversaries.', searchUrl: 'https://www.amazon.com/s?k=eternity+band+anniversary+ring+gift' },
+          { name: 'Personalized Couple\'s Watch Set', price: '$100–$400', why: 'Matching or complementary watches engraved with your anniversary date. Wearable daily reminders of each other.', searchUrl: 'https://www.amazon.com/s?k=personalized+couples+watch+anniversary+gift' },
+          { name: 'Coordinates Bracelet (Where You Got Married)', price: '$30–$80', why: 'The exact GPS coordinates of your ceremony location engraved on a bracelet. Small, meaningful, and wearable.', searchUrl: 'https://www.etsy.com/search?q=coordinates+bracelet+wedding+anniversary' },
+        ],
+      },
+      {
+        heading: 'Year-Specific Gifts (Traditional)',
+        items: [
+          { name: '1st Anniversary — Paper Gift (Custom Book or Art Print)', price: '$30–$100', why: 'The traditional 1st anniversary gift is paper. A custom art print, a personalized book, or handwritten letters in a beautiful journal.', searchUrl: 'https://www.etsy.com/search?q=paper+gift+1st+anniversary' },
+          { name: '5th Anniversary — Wood Gift (Engraved Keepsake Box)', price: '$40–$120', why: 'The 5th is wood. An engraved wooden keepsake box, a personalized cutting board, or a custom wooden wall art piece.', searchUrl: 'https://www.etsy.com/search?q=wood+gift+5th+anniversary+engraved' },
+          { name: '10th Anniversary — Tin or Aluminum Gift (Personalized)', price: '$30–$80', why: 'The 10th is tin/aluminum. A personalized aluminum print of your wedding photo or a custom stamped piece of jewelry.', searchUrl: 'https://www.etsy.com/search?q=tin+aluminum+10th+anniversary+personalized' },
+          { name: '25th Anniversary — Silver Gift', price: '$80–$300', why: 'The silver anniversary. Sterling silver jewelry, engraved silver frames, or a beautiful silver keepsake box.', searchUrl: 'https://www.amazon.com/s?k=silver+25th+anniversary+gift+personalized' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What is a good anniversary gift for her?', a: 'For her: personalized jewelry (eternity band, coordinates bracelet, initial necklace), a custom map or star map print of a significant moment, a weekend getaway, a spa day, or a photo book of your years together. The most treasured anniversary gifts are personal and reflect your shared history.' },
+      { q: 'What is a good anniversary gift for him?', a: 'For him: a personalized leather wallet or watch engraved with your anniversary date, a weekend trip to somewhere he\'s mentioned, tickets to a sporting event or concert, a custom photo book, engraved whiskey glasses, or a couples\' experience you do together.' },
+      { q: 'What are traditional anniversary gifts by year?', a: '1st = Paper, 2nd = Cotton, 3rd = Leather, 4th = Fruit/Flowers, 5th = Wood, 6th = Candy/Iron, 7th = Wool/Copper, 8th = Bronze/Pottery, 9th = Pottery/Willow, 10th = Tin/Aluminum, 15th = Crystal, 20th = China, 25th = Silver, 30th = Pearl, 40th = Ruby, 50th = Gold.' },
+      { q: 'What is a good 1st anniversary gift?', a: 'The traditional 1st anniversary gift is paper. Great options: a custom art print of your wedding vows, a photo book of your first year together, a personalized watercolor of your home or wedding venue, a handwritten letter collection in a beautiful book, or a journal documenting your first year of marriage.' },
+    ],
+  },
 }
 
 export async function generateStaticParams() {

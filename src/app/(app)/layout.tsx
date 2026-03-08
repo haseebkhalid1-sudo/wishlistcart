@@ -18,11 +18,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     redirect('/login')
   }
 
+  const isAdmin = !!process.env.ADMIN_EMAIL && user.email === process.env.ADMIN_EMAIL
+
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar />
+      <Sidebar isAdmin={isAdmin} />
       <div className="flex flex-1 flex-col overflow-hidden">
-        <Topbar />
+        <Topbar isAdmin={isAdmin} />
         <main className="flex-1 overflow-y-auto bg-background">
           <div className="mx-auto max-w-6xl px-4 py-6 md:px-6">{children}</div>
         </main>
