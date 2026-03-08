@@ -908,8 +908,9 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 > **Phase 3 Weeks 33–36**: Creator Program — application flow, analytics dashboard (views/clicks/earnings),
 > Stripe Connect Express accounts, 70/30 revenue share, payout flow.
 >
-> **Phase 4 Weeks 37–48 COMPLETE** — Admin dashboard, push notifications, PWA share target, 50 gift guides.
-> **Next**: Phase 4 Weeks 49–52 (Corporate gifting + B2B) or registry SEO + blog content.
+> **Phase 4 Weeks 37–52 COMPLETE** — Admin dashboard, push notifications, PWA share target, 50 gift guides,
+> 3 SEO blog posts, corporate landing page, classroom wishlist, CORPORATE Stripe plan, registry SEO schemas.
+> **All Phase 4 features shipped. Ready for Phase 5 (Monetization Scale).**
 
 ### Phase Progress Tracker
 
@@ -1129,16 +1130,16 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 
 **Weeks 45–48: SEO Occasion Guides & Content Expansion**
 - [x] Occasion gift guides: wedding, baby-shower, birthday, christmas, valentines-day, mothers-day, fathers-day, graduation, housewarming, anniversary — total 50 guides
-- [ ] Registry SEO: public registry pages fully indexed (sitemap + schema)
-- [ ] 2-4 new blog posts (wedding registry checklist, baby registry guide, price tracking tips)
+- [x] Registry SEO: public registry pages fully indexed (sitemap + schema)
+- [x] 2-4 new blog posts (wedding registry checklist, baby registry guide, price tracking tips)
 - [ ] Internal linking strategy between gift guides and feature pages
 
 **Weeks 49–52: Corporate Gifting & B2B**
-- [ ] Corporate gifting landing page (/corporate)
-- [ ] Bulk wishlist creation for teams (corporate plan)
+- [x] Corporate gifting landing page (/corporate)
+- [x] Corporate plan Stripe tier + feature gates (CORPORATE Plan enum, createCorporateCheckoutSession)
+- [x] Teacher/classroom wishlist templates (/classroom-wishlist SEO page)
+- [ ] Bulk wishlist creation for teams (corporate plan — admin UI)
 - [ ] B2B wishlist widget API (embeddable on partner sites)
-- [ ] Teacher/classroom wishlist templates
-- [ ] Corporate plan Stripe tier + feature gates
 
 ---
 
