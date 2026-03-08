@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { RetryButton } from './retry-button'
 
 export const metadata: Metadata = {
   title: 'Offline — WishlistCart',
@@ -15,12 +16,7 @@ export default function OfflinePage() {
           Check your internet connection and try again. Your wishlists will be waiting when
           you&apos;re back online.
         </p>
-        <button
-          onClick={() => window.location.reload()}
-          className="inline-flex items-center justify-center px-6 py-3 bg-[#0F0F0F] text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
-        >
-          Try again
-        </button>
+        <RetryButton />
         <div className="mt-4">
           <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 transition-colors">
             Go home
