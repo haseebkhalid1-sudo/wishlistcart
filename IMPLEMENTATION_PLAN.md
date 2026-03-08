@@ -1112,6 +1112,36 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 
 ---
 
+#### PHASE 4 — Scale & Expand (Weeks 37–52)
+
+**Weeks 37–40: Admin Dashboard & Operations**
+- [ ] Admin dashboard (/dashboard/admin) — user growth, revenue overview, affiliate stats
+- [ ] Creator application review queue — approve/reject with note
+- [ ] Affiliate performance breakdown (clicks, conversions, revenue by retailer)
+- [ ] System health panel (scraper status, error rates, DB stats)
+
+**Weeks 41–44: Push Notifications & PWA Enhancements**
+- [ ] Web push notifications (service worker PushManager API)
+- [ ] Push notification types: item claimed, price drop, new follower, reminder
+- [ ] PWA share target (manifest share_target — share URLs from any app into WishlistCart)
+- [ ] Notification preferences page — granular per-type controls
+- [ ] Quick Actions (PWA shortcuts already in manifest — enhance with deep links)
+
+**Weeks 45–48: SEO Occasion Guides & Content Expansion**
+- [ ] Occasion gift guides: /gift-ideas/for/wedding, baby-shower, birthday, christmas, valentines-day, mothers-day, fathers-day, graduation, housewarming, anniversary (10 new guides)
+- [ ] Registry SEO: public registry pages fully indexed (sitemap + schema)
+- [ ] 2-4 new blog posts (wedding registry checklist, baby registry guide, price tracking tips)
+- [ ] Internal linking strategy between gift guides and feature pages
+
+**Weeks 49–52: Corporate Gifting & B2B**
+- [ ] Corporate gifting landing page (/corporate)
+- [ ] Bulk wishlist creation for teams (corporate plan)
+- [ ] B2B wishlist widget API (embeddable on partner sites)
+- [ ] Teacher/classroom wishlist templates
+- [ ] Corporate plan Stripe tier + feature gates
+
+---
+
 ### PHASE 1A: Foundation & MVP Core (Weeks 1-6)
 
 **Goal**: Ship a working product - users can save items, organize wishlists, share them, and we earn affiliate revenue.
