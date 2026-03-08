@@ -24,20 +24,28 @@ model User {
   stripeCustomerId String?  @unique @map("stripe_customer_id")
   emailVerified    Boolean  @default(false) @map("email_verified")
   settings         Json     @default("{}") // notifications, privacy, theme
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Creator program fields
+  isCreator         Boolean   @default(false) @map("is_creator")
+  creatorVerifiedAt DateTime? @map("creator_verified_at")
+  stripeConnectId   String?   @unique @map("stripe_connect_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relations
-  wishlists       Wishlist[]
-  items           WishlistItem[]          @relation("ItemOwner")
-  purchasedItems  WishlistItem[]          @relation("ItemPurchaser")
-  priceAlerts     PriceAlert[]
-  reminders       OccasionReminder[]
-  affiliateClicks AffiliateClick[]
-  contributions   GroupGiftContribution[]
-  notifications   Notification[]
-  followers       Follow[]                @relation("Following")
-  following       Follow[]                @relation("Follower")
+  wishlists           Wishlist[]
+  items               WishlistItem[]          @relation("ItemOwner")
+  purchasedItems      WishlistItem[]          @relation("ItemPurchaser")
+  priceAlerts         PriceAlert[]
+  reminders           OccasionReminder[]
+  affiliateClicks     AffiliateClick[]
+  contributions       GroupGiftContribution[]
+  notifications       Notification[]
+  followers           Follow[]                @relation("Following")
+  following           Follow[]                @relation("Follower")
+  creatorApplication  CreatorApplication?
+  creatorEarnings     CreatorEarning[]
 
   @@map("users")
 }
@@ -77,6 +85,7 @@ model Wishlist {
   user     User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   items    WishlistItem[]
   cashFund CashFund?
+  views    WishlistView[]
 
   @@unique([userId, slug])
   @@index([userId])
@@ -309,8 +318,9 @@ model AffiliateClick {
   commissionAmount Decimal? @map("commission_amount") @db.Decimal(10, 2)
   orderId          String?  @map("order_id")
 
-  item WishlistItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  user User?        @relation(fields: [userId], references: [id])
+  item           WishlistItem    @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  user           User?           @relation(fields: [userId], references: [id])
+  creatorEarning CreatorEarning?
 
   @@index([itemId])
   @@index([clickedAt])
@@ -337,4 +347,72 @@ model Notification {
   @@index([userId, readAt])
   @@index([userId, createdAt])
   @@map("notifications")
+}
+
+// ============================================================
+// CREATOR PROGRAM
+// ============================================================
+
+model CreatorApplication {
+  id           String            @id @default(uuid()) @db.Uuid
+  userId       String            @unique @map("user_id") @db.Uuid
+  status       ApplicationStatus @default(PENDING)
+  bio          String
+  niche        String? // "tech", "fashion", "home", "gaming", "lifestyle", etc.
+  audienceSize String?           @map("audience_size") // "under_1k", "1k_10k", "10k_100k", "100k_plus"
+  socialLinks  Json              @default("{}") // { youtube, instagram, twitter, tiktok, website }
+  reviewNote   String?           @map("review_note")
+  reviewedAt   DateTime?         @map("reviewed_at")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@map("creator_applications")
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model CreatorEarning {
+  id               String        @id @default(uuid()) @db.Uuid
+  userId           String        @map("user_id") @db.Uuid
+  affiliateClickId String?       @unique @map("affiliate_click_id") @db.Uuid
+  amount           Decimal       @db.Decimal(10, 2)
+  status           EarningStatus @default(PENDING)
+  paidAt           DateTime?     @map("paid_at")
+  stripePayoutId   String?       @map("stripe_payout_id")
+  createdAt        DateTime      @default(now()) @map("created_at")
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  affiliateClick AffiliateClick? @relation(fields: [affiliateClickId], references: [id])
+
+  @@index([userId, createdAt])
+  @@index([status])
+  @@map("creator_earnings")
+}
+
+enum EarningStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+}
+
+model WishlistView {
+  id         String   @id @default(uuid()) @db.Uuid
+  wishlistId String   @map("wishlist_id") @db.Uuid
+  visitorId  String?  @map("visitor_id") // hashed anonymous ID
+  referrer   String?
+  country    String?
+  viewedAt   DateTime @default(now()) @map("viewed_at")
+
+  wishlist Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+
+  @@index([wishlistId, viewedAt])
+  @@map("wishlist_views")
 }
