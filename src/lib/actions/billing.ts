@@ -63,6 +63,38 @@ export async function createCheckoutSession(): Promise<ActionResult<{ url: strin
   }
 }
 
+// Start a Stripe Checkout session for Corporate subscription
+export async function createCorporateCheckoutSession(): Promise<ActionResult<{ url: string }>> {
+  const supabase = await createServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { success: false, error: 'Unauthorized' }
+
+  await ensureUser(user)
+
+  const priceId = process.env.STRIPE_CORPORATE_PRICE_ID
+  if (!priceId) return { success: false, error: 'Corporate billing not configured' }
+
+  try {
+    const customerId = await getOrCreateCustomer(user.id, user.email ?? '')
+
+    const session = await stripe.checkout.sessions.create({
+      customer: customerId,
+      mode: 'subscription',
+      line_items: [{ price: priceId, quantity: 1 }],
+      success_url: `${APP_URL}/dashboard/settings?billing=success`,
+      cancel_url: `${APP_URL}/corporate`,
+      allow_promotion_codes: true,
+      metadata: { userId: user.id },
+    })
+
+    if (!session.url) return { success: false, error: 'Failed to create checkout session' }
+    return { success: true, data: { url: session.url } }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Stripe error'
+    return { success: false, error: message }
+  }
+}
+
 // Open Stripe Customer Portal for managing subscription
 export async function createPortalSession(): Promise<ActionResult<{ url: string }>> {
   const supabase = await createServerClient()

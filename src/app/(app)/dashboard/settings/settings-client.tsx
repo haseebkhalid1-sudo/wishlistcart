@@ -9,7 +9,7 @@ import { createCheckoutSession, createPortalSession } from '@/lib/actions/billin
 import { toast } from 'sonner'
 
 interface BillingStatus {
-  plan: 'FREE' | 'PRO'
+  plan: 'FREE' | 'PRO' | 'CORPORATE'
   stripeCustomerId: string | null
   email: string
   name: string | null

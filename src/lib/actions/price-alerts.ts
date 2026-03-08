@@ -45,7 +45,7 @@ export async function createPriceAlert(
     where: { id: user.id },
     select: { plan: true },
   })
-  if (!canSetPriceAlert((dbUser?.plan ?? 'FREE') as 'FREE' | 'PRO')) {
+  if (!canSetPriceAlert((dbUser?.plan ?? 'FREE') as 'FREE' | 'PRO' | 'CORPORATE')) {
     return { success: false, error: 'Price alerts are a Pro feature. Upgrade to set alerts.' }
   }
 

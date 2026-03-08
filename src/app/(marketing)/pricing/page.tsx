@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Check } from 'lucide-react'
+import { Check, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Pricing — WishlistCart',
@@ -153,6 +153,19 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
+        </div>
+        {/* Business upsell banner */}
+        <div className="mt-16 rounded-xl border border-border bg-subtle p-8 text-center max-w-2xl mx-auto">
+          <h3 className="text-xl font-semibold text-foreground mb-2">Need it for your team?</h3>
+          <p className="text-muted-foreground mb-6">
+            WishlistCart for Business includes team management, budget controls, custom gift templates, and dedicated support.
+          </p>
+          <Button asChild className="bg-[#0F0F0F] text-white hover:bg-gray-800 inline-flex items-center gap-2">
+            <Link href="/corporate">
+              See Business Plans
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
         </div>
       </div>
     </>

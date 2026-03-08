@@ -1,8 +1,9 @@
 import type { MetadataRoute } from 'next'
+import { prisma } from '@/lib/prisma/client'
 
 const BASE_URL = 'https://wishlistcart.com'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()
 
   const staticPages: MetadataRoute.Sitemap = [
@@ -37,6 +38,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     {
+      url: `${BASE_URL}/corporate`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/classroom-wishlist`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: `${BASE_URL}/blog`,
       lastModified: now,
       changeFrequency: 'weekly',
@@ -47,6 +60,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date('2026-03-07'),
       changeFrequency: 'yearly',
       priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/blog/wedding-registry-checklist-2026`,
+      lastModified: new Date('2026-03-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/baby-registry-must-haves-2026`,
+      lastModified: new Date('2026-03-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/price-tracking-wishlists-2026`,
+      lastModified: new Date('2026-03-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
   ]
 
@@ -76,9 +107,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  // TODO: add public wishlist pages from DB once we have enough users
-  // const publicWishlists = await prisma.wishlist.findMany({ where: { privacy: 'PUBLIC' }, ... })
-  // return [...staticPages, ...publicWishlists.map(w => ({ url: `${BASE_URL}/@${w.username}/${w.slug}`, ... }))]
+  const publicRegistries = await prisma.wishlist.findMany({
+    where: {
+      type: 'REGISTRY',
+      privacy: 'PUBLIC',
+      isArchived: false,
+      shareToken: { not: null },
+    },
+    select: { shareToken: true, updatedAt: true },
+    take: 5000,
+    orderBy: { updatedAt: 'desc' },
+  })
 
-  return [...staticPages, ...personaGuides, ...occasionGuides, ...budgetGuides]
+  const registryPages: MetadataRoute.Sitemap = publicRegistries.map((r) => ({
+    url: `${BASE_URL}/registry/${r.shareToken as string}`,
+    lastModified: r.updatedAt,
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...personaGuides, ...occasionGuides, ...budgetGuides, ...registryPages]
 }

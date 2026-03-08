@@ -47,7 +47,7 @@ export async function createWishlist(
     const wishlistCount = await prisma.wishlist.count({
       where: { userId: user.id, isArchived: false },
     })
-    if (!canCreateWishlist((dbUser?.plan ?? 'FREE') as 'FREE' | 'PRO', wishlistCount)) {
+    if (!canCreateWishlist((dbUser?.plan ?? 'FREE') as 'FREE' | 'PRO' | 'CORPORATE', wishlistCount)) {
       return {
         success: false,
         error: `Free plan is limited to ${FREE_WISHLIST_LIMIT} wishlists. Upgrade to Pro for unlimited.`,

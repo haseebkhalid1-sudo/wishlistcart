@@ -2316,6 +2316,28 @@ export default async function GiftGuidePage({ params }: { params: Promise<{ pers
               ))}
           </div>
         </section>
+
+        {/* Related WishlistCart features */}
+        <div className="mt-12 rounded-xl border border-[--color-border] bg-[--color-bg-subtle] p-6">
+          <h3 className="text-sm font-semibold text-[--color-text] mb-3">Save these gift ideas</h3>
+          <p className="text-sm text-[--color-text-secondary] mb-4">
+            Add any of these to a wishlist or registry — share with friends and family so they know exactly what to get.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/signup"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[#0F0F0F] px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
+            >
+              Create a free wishlist
+            </Link>
+            <Link
+              href="/explore"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[--color-border] px-4 py-2 text-sm font-medium text-[--color-text] hover:bg-[--color-bg-muted] transition-colors"
+            >
+              Explore gift ideas
+            </Link>
+          </div>
+        </div>
       </div>
     </>
   )

@@ -9,6 +9,33 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: 'wedding-registry-checklist-2026',
+    title: 'The Complete Wedding Registry Checklist for 2026 — 150+ Items by Category',
+    description:
+      'Everything you need on your wedding registry, organized by category. From kitchen essentials to bedroom luxuries — the complete list for modern couples.',
+    date: '2026-03-09',
+    readTime: '8 min read',
+    category: 'Guides',
+  },
+  {
+    slug: 'baby-registry-must-haves-2026',
+    title: 'Baby Registry Must-Haves in 2026 — What You Actually Need (And What to Skip)',
+    description:
+      'Cut through the noise. Here are the baby registry essentials new parents actually use, organized by stage — plus what to skip entirely.',
+    date: '2026-03-09',
+    readTime: '7 min read',
+    category: 'Guides',
+  },
+  {
+    slug: 'price-tracking-wishlists-2026',
+    title: 'How to Never Overpay Again — Using Price Tracking on Your Wishlist',
+    description:
+      "Price tracking turns your wishlist into a money-saving machine. Here's how to set up price alerts, read price history charts, and buy at the perfect time.",
+    date: '2026-03-09',
+    readTime: '6 min read',
+    category: 'Guides',
+  },
+  {
     slug: 'introducing-wishlistcart',
     title: 'Introducing WishlistCart',
     description:
