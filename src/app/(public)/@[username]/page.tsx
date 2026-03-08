@@ -12,6 +12,7 @@ import {
   type PublicWishlistCard,
 } from '@/lib/actions/social'
 import { FollowButton } from '@/components/social/follow-button'
+import { CreatorBadge } from '@/components/creator/creator-badge'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishlistcart.com'
 
@@ -75,9 +76,12 @@ export default async function PublicProfilePage({ params }: Props) {
               )}
             </div>
 
-            <h1 className="font-serif text-display-md text-foreground">
-              {profile.name ?? `@${username}`}
-            </h1>
+            <div className="flex flex-col items-center gap-2">
+              <h1 className="font-serif text-display-md text-foreground">
+                {profile.name ?? `@${username}`}
+              </h1>
+              {profile.isCreator && <CreatorBadge variant="inline" />}
+            </div>
             <p className="mt-1 text-sm text-muted-foreground">@{username}</p>
 
             {profile.bio && (

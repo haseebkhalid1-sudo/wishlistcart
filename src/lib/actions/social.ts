@@ -17,6 +17,7 @@ export type PublicProfile = Prisma.UserGetPayload<{
     username: true
     avatarUrl: true
     bio: true
+    isCreator: true
     createdAt: true
     _count: { select: { followers: true; following: true; wishlists: true } }
   }
@@ -132,6 +133,7 @@ export async function getPublicProfile(username: string): Promise<PublicProfile 
       username: true,
       avatarUrl: true,
       bio: true,
+      isCreator: true,
       createdAt: true,
       _count: { select: { followers: true, following: true, wishlists: true } },
     },

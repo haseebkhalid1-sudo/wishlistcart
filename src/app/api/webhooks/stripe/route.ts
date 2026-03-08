@@ -1,8 +1,48 @@
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
-import type Stripe from 'stripe'
+import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe/client'
 import { prisma } from '@/lib/prisma/client'
+
+// ---- Helper: create CreatorEarning when an affiliate click converts ----
+// Called from the affiliate redirect handler after marking a click as converted.
+
+export async function createCreatorEarningForClick(affiliateClickId: string) {
+  const click = await prisma.affiliateClick.findUnique({
+    where: { id: affiliateClickId },
+    include: {
+      item: {
+        include: {
+          wishlist: { select: { userId: true } },
+        },
+      },
+    },
+  })
+
+  if (!click?.commissionAmount) return
+
+  const creatorId = click.item.wishlist.userId
+  const creator = await prisma.user.findUnique({
+    where: { id: creatorId },
+    select: { isCreator: true, stripeConnectId: true },
+  })
+
+  if (!creator?.isCreator) return
+
+  // 70% revenue share to creator
+  const creatorShare = Number(click.commissionAmount) * 0.7
+
+  await prisma.creatorEarning.upsert({
+    where: { affiliateClickId },
+    create: {
+      userId: creatorId,
+      affiliateClickId,
+      amount: creatorShare,
+      status: 'PENDING',
+    },
+    update: {},
+  })
+}
 
 export const dynamic = 'force-dynamic'
 
@@ -125,6 +165,40 @@ export async function POST(req: Request) {
           await prisma.user.update({
             where: { id: user.id },
             data: { plan: 'FREE' },
+          })
+        }
+        break
+      }
+
+      case 'account.updated': {
+        // Stripe Connect — Express account onboarding completed or updated
+        const account = event.data.object as Stripe.Account
+        if (account.charges_enabled) {
+          // Account is fully onboarded — no additional DB changes needed here;
+          // stripeConnectId was already stored when the Express account was created.
+          // Log for observability.
+          console.log(`Stripe Connect account ${account.id} charges enabled`)
+        }
+        break
+      }
+
+      case 'transfer.created': {
+        // A payout transfer was created to a creator's Connect account
+        const transfer = event.data.object as Stripe.Transfer
+        const destination =
+          typeof transfer.destination === 'string'
+            ? transfer.destination
+            : (transfer.destination as Stripe.Account | null)?.id
+
+        if (destination) {
+          // Mark PROCESSING earnings as PAID when the transfer is confirmed
+          await prisma.creatorEarning.updateMany({
+            where: {
+              user: { stripeConnectId: destination },
+              status: 'PROCESSING',
+              stripePayoutId: transfer.id,
+            },
+            data: { status: 'PAID', paidAt: new Date() },
           })
         }
         break

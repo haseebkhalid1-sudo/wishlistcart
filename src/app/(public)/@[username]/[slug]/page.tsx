@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { getPublicWishlist } from '@/lib/queries/wishlist'
 import { PublicItemGrid } from '@/components/wishlist/public-item-grid'
 import { ShareButtons } from '@/components/shared/share-buttons'
+import { ViewTracker } from '@/components/wishlist/view-tracker'
 
 interface Props {
   params: Promise<{ username: string; slug: string }>
@@ -50,6 +51,9 @@ export default async function PublicWishlistPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* View tracking — fire-and-forget client component */}
+      <ViewTracker wishlistId={wishlist.id} />
+
       {/* Header */}
       <div className="border-b border-border bg-subtle">
         <div className="mx-auto max-w-4xl px-4 py-8 md:px-6">
