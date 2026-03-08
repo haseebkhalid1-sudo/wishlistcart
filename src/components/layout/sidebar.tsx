@@ -11,15 +11,19 @@ import {
   Gift,
   Calendar,
   History,
+  Rss,
+  Compass,
 } from 'lucide-react'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutGrid, exact: true },
+  { href: '/dashboard/feed', label: 'Feed', icon: Rss },
   { href: '/dashboard/wishlists', label: 'My Wishlists', icon: Heart },
   { href: '/dashboard/registries', label: 'Registries', icon: Gift },
   { href: '/dashboard/reminders', label: 'Reminders', icon: Calendar },
   { href: '/dashboard/price-alerts', label: 'Price Alerts', icon: Bell },
   { href: '/dashboard/gift-history', label: 'Gift History', icon: History },
+  { href: '/explore', label: 'Explore', icon: Compass },
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ]
 
