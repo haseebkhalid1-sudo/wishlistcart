@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createServerClient } from '@/lib/supabase/server'
 import { UserMenu } from './user-menu'
 import { MobileNav } from './mobile-nav'
+import { NotificationBell } from './notification-bell'
 
 interface TopbarProps {
   isAdmin?: boolean
@@ -30,8 +31,11 @@ export async function Topbar({ isAdmin = false }: TopbarProps) {
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Right side: user menu */}
-      <UserMenu name={name} email={email} avatarUrl={avatarUrl} />
+      {/* Right side: notifications + user menu */}
+      <div className="flex items-center gap-1">
+        {user?.id && <NotificationBell userId={user.id} />}
+        <UserMenu name={name} email={email} avatarUrl={avatarUrl} />
+      </div>
     </header>
   )
 }

@@ -4,6 +4,9 @@ import { redirect } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase/server'
 import { z } from 'zod'
 import { applyReferralCode } from '@/lib/actions/referrals'
+import { resend } from '@/lib/email/client'
+import { render } from '@react-email/components'
+import { WelcomeEmail } from '@/emails/welcome-email'
 
 const signUpSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -49,6 +52,18 @@ export async function signUp(formData: FormData) {
   // Fire-and-forget referral tracking after successful signup
   if (refCodeStr && signUpData.user?.id) {
     applyReferralCode(refCodeStr, signUpData.user.id).catch(() => undefined)
+  }
+
+  // Fire-and-forget welcome email
+  if (signUpData.user) {
+    render(WelcomeEmail({ userName: parsed.data.name })).then((html) =>
+      resend.emails.send({
+        from: 'WishlistCart <welcome@wishlistcart.com>',
+        to: parsed.data.email,
+        subject: 'Welcome to WishlistCart 🎁',
+        html,
+      })
+    ).catch(() => undefined)
   }
 
   redirect('/dashboard')
