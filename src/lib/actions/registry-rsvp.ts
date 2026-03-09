@@ -1,7 +1,10 @@
 'use server'
 
+import React from 'react'
+import { render } from '@react-email/components'
 import { prisma } from '@/lib/prisma/client'
 import { resend, FROM_EMAIL } from '@/lib/email/client'
+import { RsvpNotificationEmail } from '@/emails/rsvp-notification-email'
 import type { ActionResult } from '@/types'
 
 // ---- Types ----
@@ -17,17 +20,6 @@ interface RsvpData {
 // ---- Helpers ----
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-function attendingLabel(attending: 'YES' | 'NO' | 'MAYBE'): string {
-  switch (attending) {
-    case 'YES':
-      return 'Yes, will attend'
-    case 'NO':
-      return "Sorry, can't make it"
-    case 'MAYBE':
-      return 'Maybe'
-  }
-}
 
 // ---- Action ----
 
@@ -59,7 +51,7 @@ export async function submitRsvp(
     // 2. Look up registry by shareToken
     const registry = await prisma.wishlist.findUnique({
       where: { shareToken },
-      select: { id: true, name: true, userId: true, eventDate: true },
+      select: { id: true, name: true, userId: true, eventDate: true, shareToken: true },
     })
 
     if (!registry) {
@@ -77,70 +69,41 @@ export async function submitRsvp(
     }
 
     // 4. Send email to registry owner
-    const guestLine =
+    const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishlistcart.com'
+    const registryUrl = `${APP_URL}/registry/${registry.shareToken ?? ''}`
+
+    const formattedEventDate = registry.eventDate
+      ? new Date(registry.eventDate).toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        })
+      : undefined
+
+    const showGuestCount =
       (data.attending === 'YES' || data.attending === 'MAYBE') && data.guestCount != null
-        ? `<tr>
-            <td style="padding: 6px 0; color: #888; font-size: 14px; width: 130px;">Guests</td>
-            <td style="padding: 6px 0; font-size: 14px;">${data.guestCount}</td>
-           </tr>`
-        : ''
+        ? data.guestCount
+        : undefined
 
-    const messageLine = data.message
-      ? `<tr>
-          <td style="padding: 6px 0; color: #888; font-size: 14px; vertical-align: top; width: 130px;">Message</td>
-          <td style="padding: 6px 0; font-size: 14px; font-style: italic;">&ldquo;${data.message}&rdquo;</td>
-         </tr>`
-      : ''
-
-    const eventDateLine = registry.eventDate
-      ? `<tr>
-          <td style="padding: 6px 0; color: #888; font-size: 14px; width: 130px;">Event date</td>
-          <td style="padding: 6px 0; font-size: 14px;">
-            ${new Date(registry.eventDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-          </td>
-         </tr>`
-      : ''
+    const html = await render(
+      React.createElement(RsvpNotificationEmail, {
+        ownerName: owner.name ?? 'there',
+        registryName: registry.name,
+        guestName: name,
+        guestEmail: email,
+        attending: data.attending,
+        guestCount: showGuestCount,
+        eventDate: formattedEventDate,
+        message: data.message ?? undefined,
+        registryUrl,
+      })
+    )
 
     await resend.emails.send({
       from: FROM_EMAIL,
       to: owner.email,
       subject: `RSVP from ${name} — ${registry.name}`,
-      html: `
-        <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; color: #0F0F0F;">
-          <h2 style="font-size: 20px; font-weight: 600; margin: 0 0 4px;">New RSVP received</h2>
-          <p style="color: #666; font-size: 14px; margin: 0 0 24px;">
-            Someone has responded to your registry <strong>${registry.name}</strong>.
-          </p>
-
-          <div style="border: 1px solid #e4e4e0; border-radius: 12px; padding: 20px; margin-bottom: 24px;">
-            <table style="width: 100%; border-collapse: collapse;">
-              <tbody>
-                <tr>
-                  <td style="padding: 6px 0; color: #888; font-size: 14px; width: 130px;">From</td>
-                  <td style="padding: 6px 0; font-size: 14px; font-weight: 600;">${name}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0; color: #888; font-size: 14px; width: 130px;">Email</td>
-                  <td style="padding: 6px 0; font-size: 14px;">
-                    <a href="mailto:${email}" style="color: #0F0F0F;">${email}</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 6px 0; color: #888; font-size: 14px; width: 130px;">Attending</td>
-                  <td style="padding: 6px 0; font-size: 14px; font-weight: 600;">${attendingLabel(data.attending)}</td>
-                </tr>
-                ${guestLine}
-                ${eventDateLine}
-                ${messageLine}
-              </tbody>
-            </table>
-          </div>
-
-          <p style="font-size: 12px; color: #aaa; margin: 0;">
-            You received this because someone RSVPd on your WishlistCart registry.
-          </p>
-        </div>
-      `,
+      html,
     })
 
     return { success: true, data: undefined }

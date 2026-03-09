@@ -1,6 +1,9 @@
+import React from 'react'
+import { render } from '@react-email/components'
 import { inngest } from '@/lib/inngest/client'
 import { prisma } from '@/lib/prisma/client'
 import { resend, FROM_EMAIL } from '@/lib/email/client'
+import { PriceDropEmail } from '@/emails/price-drop-email'
 
 export const processAlert = inngest.createFunction(
   { id: 'process-price-alert', name: 'Process Price Alert' },
@@ -37,31 +40,26 @@ export const processAlert = inngest.createFunction(
 
     // Send email notification
     await step.run('send-email', async () => {
+      const storeName = item.url ? new URL(item.url).hostname.replace(/^www\./, '') : 'Online store'
+
+      const html = await render(
+        React.createElement(PriceDropEmail, {
+          userName: user.name ?? 'there',
+          itemTitle: item.title,
+          storeName,
+          oldPrice,
+          newPrice,
+          currency: 'USD',
+          itemUrl: buyUrl,
+          imageUrl: item.imageUrl ?? undefined,
+        })
+      )
+
       await resend.emails.send({
         from: FROM_EMAIL,
         to: user.email,
         subject: `Price dropped ${dropPct}% on "${item.title}"`,
-        html: `
-          <div style="font-family: system-ui, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px;">
-            <h2 style="font-size: 20px; margin-bottom: 8px;">Price Alert Triggered</h2>
-            <p style="color: #666;">The price on an item you're tracking just dropped.</p>
-            <div style="border: 1px solid #e4e4e0; border-radius: 12px; padding: 20px; margin: 20px 0;">
-              <p style="font-weight: 600; margin: 0 0 8px;">${item.title}</p>
-              <p style="margin: 0; color: #888;">
-                <span style="text-decoration: line-through;">$${oldPrice.toFixed(2)}</span>
-                &nbsp;→&nbsp;
-                <span style="color: #1a7a4a; font-weight: 700; font-size: 18px;">$${newPrice.toFixed(2)}</span>
-                &nbsp;<span style="color: #1a7a4a;">(${dropPct}% off)</span>
-              </p>
-            </div>
-            <a href="${buyUrl}" style="display: inline-block; background: #0F0F0F; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
-              Buy now
-            </a>
-            <p style="margin-top: 24px; font-size: 12px; color: #aaa;">
-              You received this because you set a price alert on WishlistCart.
-            </p>
-          </div>
-        `,
+        html,
       })
     })
 

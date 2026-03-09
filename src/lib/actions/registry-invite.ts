@@ -1,8 +1,11 @@
 'use server'
 
+import React from 'react'
+import { render } from '@react-email/components'
 import { createServerClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma/client'
 import { resend, FROM_EMAIL } from '@/lib/email/client'
+import { RegistryInviteEmail } from '@/emails/registry-invite-email'
 import type { ActionResult } from '@/types'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -63,50 +66,25 @@ export async function sendRegistryInvite(
 
     const ownerName = owner?.name ?? 'Someone'
 
-    // 5. Build event details block (only if eventType or eventDate is set)
-    let eventDetailsHtml = ''
-    if (registry.eventType || registry.eventDate) {
-      const parts: string[] = []
-      if (registry.eventType) {
-        const label = formatEventType(registry.eventType)
-        parts.push(`<span style="color: #555;">${label}</span>`)
-      }
-      if (registry.eventDate) {
-        const formatted = new Date(registry.eventDate).toLocaleDateString('en-US', {
+    // 5. Build event details for template
+    const formattedEventType = registry.eventType ? formatEventType(registry.eventType) : undefined
+    const formattedEventDate = registry.eventDate
+      ? new Date(registry.eventDate).toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
         })
-        parts.push(`<span style="color: #555;">${formatted}</span>`)
-      }
-      eventDetailsHtml = `
-        <p style="margin: 4px 0 0; font-size: 14px; color: #888;">
-          ${parts.join(' &middot; ')}
-        </p>`
-    }
+      : undefined
 
-    const html = `
-<div style="font-family: system-ui, -apple-system, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; color: #111;">
-  <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 12px;">You're invited to ${escapeHtml(registry.name)}</h2>
-  <p style="color: #555; margin: 0 0 20px;">${escapeHtml(ownerName)} has invited you to view their gift registry.</p>
-
-  <div style="border: 1px solid #e4e4e0; border-radius: 12px; padding: 20px; margin: 0 0 24px;">
-    <p style="font-weight: 600; margin: 0 0 4px; font-size: 16px;">${escapeHtml(registry.name)}</p>
-    ${eventDetailsHtml}
-  </div>
-
-  <a
-    href="${shareUrl}"
-    style="display: inline-block; background: #0f0f0f; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 15px;"
-  >
-    View Registry
-  </a>
-
-  <p style="color: #aaa; font-size: 12px; margin-top: 24px; margin-bottom: 0;">
-    You received this because ${escapeHtml(ownerName)} invited you via WishlistCart.
-  </p>
-</div>
-    `.trim()
+    const html = await render(
+      React.createElement(RegistryInviteEmail, {
+        ownerName,
+        registryName: registry.name,
+        eventType: formattedEventType,
+        eventDate: formattedEventDate,
+        shareUrl,
+      })
+    )
 
     // 6. Send email (Resend accepts string[] for `to`)
     await resend.emails.send({
@@ -124,15 +102,6 @@ export async function sendRegistryInvite(
 }
 
 // ---- Helpers ----
-
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
-}
 
 function formatEventType(eventType: string): string {
   const labels: Record<string, string> = {

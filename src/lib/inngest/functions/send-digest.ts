@@ -1,6 +1,9 @@
+import React from 'react'
+import { render } from '@react-email/components'
 import { inngest } from '@/lib/inngest/client'
 import { prisma } from '@/lib/prisma/client'
 import { resend, FROM_EMAIL } from '@/lib/email/client'
+import { WeeklyDigestEmail } from '@/emails/weekly-digest-email'
 
 // Weekly digest — sent every Monday at 9am
 export const sendWeeklyDigest = inngest.createFunction(
@@ -82,43 +85,24 @@ export const sendWeeklyDigest = inngest.createFunction(
 
         if (priceChanges.length === 0) return
 
-        const rows = priceChanges
-          .map(
-            (c) =>
-              `<tr>
-                <td style="padding: 8px 0; border-bottom: 1px solid #f0f0ee;">${c.title}</td>
-                <td style="padding: 8px 0; border-bottom: 1px solid #f0f0ee; text-align: right; text-decoration: line-through; color: #aaa;">$${c.oldPrice.toFixed(2)}</td>
-                <td style="padding: 8px 0; border-bottom: 1px solid #f0f0ee; text-align: right; color: #1a7a4a; font-weight: 600;">$${c.newPrice.toFixed(2)}</td>
-              </tr>`
-          )
-          .join('')
+        const html = await render(
+          React.createElement(WeeklyDigestEmail, {
+            userName: user.name ?? 'there',
+            alerts: priceChanges.map((c) => ({
+              itemTitle: c.title,
+              oldPrice: c.oldPrice,
+              newPrice: c.newPrice,
+              currency: c.currency,
+              itemUrl: c.url,
+            })),
+          })
+        )
 
         await resend.emails.send({
           from: FROM_EMAIL,
           to: user.email,
           subject: `${priceChanges.length} price drop${priceChanges.length > 1 ? 's' : ''} on your wishlists this week`,
-          html: `
-            <div style="font-family: system-ui, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px;">
-              <h2 style="font-size: 20px; margin-bottom: 8px;">Your weekly price digest</h2>
-              <p style="color: #666; margin-bottom: 24px;">Here are the price changes on your wishlists this week.</p>
-              <table style="width: 100%; border-collapse: collapse;">
-                <thead>
-                  <tr>
-                    <th style="text-align: left; padding-bottom: 8px; font-size: 12px; color: #aaa; text-transform: uppercase; border-bottom: 2px solid #e4e4e0;">Item</th>
-                    <th style="text-align: right; padding-bottom: 8px; font-size: 12px; color: #aaa; text-transform: uppercase; border-bottom: 2px solid #e4e4e0;">Was</th>
-                    <th style="text-align: right; padding-bottom: 8px; font-size: 12px; color: #aaa; text-transform: uppercase; border-bottom: 2px solid #e4e4e0;">Now</th>
-                  </tr>
-                </thead>
-                <tbody>${rows}</tbody>
-              </table>
-              <a href="${process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishlistcart.com'}/dashboard" style="display: inline-block; margin-top: 24px; background: #0F0F0F; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
-                View your wishlists
-              </a>
-              <p style="margin-top: 24px; font-size: 12px; color: #aaa;">
-                WishlistCart · <a href="${process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishlistcart.com'}/dashboard/settings" style="color: #aaa;">Manage notifications</a>
-              </p>
-            </div>
-          `,
+          html,
         })
       })
     }

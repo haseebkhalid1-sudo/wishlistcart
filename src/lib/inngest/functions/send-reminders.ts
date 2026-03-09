@@ -1,6 +1,9 @@
+import React from 'react'
+import { render } from '@react-email/components'
 import { inngest } from '@/lib/inngest/client'
 import { prisma } from '@/lib/prisma/client'
 import { resend, FROM_EMAIL } from '@/lib/email/client'
+import { ReminderEmail } from '@/emails/reminder-email'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishlistcart.com'
 
@@ -91,60 +94,26 @@ export const sendOccasionReminders = inngest.createFunction(
           ...(reminder.isRecurring ? {} : { year: 'numeric' }),
         })
 
-        const wishlistSection = reminder.linkedWishlistId
-          ? `<p style="margin: 16px 0 0;">
-              <a href="${APP_URL}/dashboard/wishlists/${reminder.linkedWishlistId}"
-                 style="color: #0F0F0F; font-weight: 500; text-decoration: underline;">
-                View their wishlist →
-              </a>
-            </p>`
-          : ''
+        const linkedWishlistUrl = reminder.linkedWishlistId
+          ? `${APP_URL}/dashboard/wishlists/${reminder.linkedWishlistId}`
+          : undefined
+
+        const html = await render(
+          React.createElement(ReminderEmail, {
+            userName: reminder.user.name ?? 'there',
+            personName: reminder.personName,
+            occasionType: label,
+            daysUntil: reminder.daysUntil,
+            formattedDate,
+            linkedWishlistUrl,
+          })
+        )
 
         await resend.emails.send({
           from: FROM_EMAIL,
           to: reminder.user.email,
           subject: `Reminder: ${reminder.personName}'s ${label} is in ${reminder.daysUntil} days`,
-          html: `
-            <div style="font-family: system-ui, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; color: #0F0F0F;">
-              <h2 style="font-size: 20px; margin-bottom: 8px;">Upcoming occasion reminder</h2>
-              <p style="color: #666; margin-bottom: 24px;">
-                Here's a heads-up about an occasion coming up soon.
-              </p>
-
-              <table style="width: 100%; border-collapse: collapse;">
-                <tbody>
-                  <tr>
-                    <td style="padding: 10px 0; border-bottom: 1px solid #f0f0ee; font-size: 13px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; width: 120px;">Who</td>
-                    <td style="padding: 10px 0; border-bottom: 1px solid #f0f0ee; font-weight: 500;">${reminder.personName}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 0; border-bottom: 1px solid #f0f0ee; font-size: 13px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em;">Occasion</td>
-                    <td style="padding: 10px 0; border-bottom: 1px solid #f0f0ee; font-weight: 500;">${label}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 0; border-bottom: 1px solid #f0f0ee; font-size: 13px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em;">Date</td>
-                    <td style="padding: 10px 0; border-bottom: 1px solid #f0f0ee; font-weight: 500;">${formattedDate}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 10px 0; font-size: 13px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em;">Coming up</td>
-                    <td style="padding: 10px 0; font-weight: 500;">${reminder.daysUntil} day${reminder.daysUntil === 1 ? '' : 's'} away</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              ${wishlistSection}
-
-              <a href="${APP_URL}/dashboard/reminders"
-                 style="display: inline-block; margin-top: 24px; background: #0F0F0F; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
-                Manage reminders
-              </a>
-
-              <p style="margin-top: 24px; font-size: 12px; color: #aaa;">
-                WishlistCart &middot;
-                <a href="${APP_URL}/dashboard/reminders" style="color: #aaa;">Manage reminders</a>
-              </p>
-            </div>
-          `,
+          html,
         })
 
         sent += 1

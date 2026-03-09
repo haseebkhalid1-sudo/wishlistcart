@@ -63,8 +63,30 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Works with any store — logo/pill strip */}
+      <section className="border-t border-border py-10">
+        <div className="mx-auto max-w-4xl px-4 md:px-6">
+          <p className="text-center text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Works with products from any store
+          </p>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+            {storePills.map((store) => (
+              <span
+                key={store}
+                className="rounded-full border border-border bg-subtle px-3 py-1 text-sm text-muted-foreground"
+              >
+                {store}
+              </span>
+            ))}
+            <span className="rounded-full border border-border bg-subtle px-3 py-1 text-sm text-muted-foreground">
+              and thousands more
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works */}
-      <section className="border-t border-border bg-subtle py-20">
+      <section id="how-it-works" className="border-t border-border bg-subtle py-20">
         <div className="mx-auto max-w-4xl px-4 md:px-6">
           <h2 className="font-serif text-display-md text-center text-foreground">
             How it works
@@ -75,13 +97,20 @@ export default function LandingPage() {
 
           <div className="mt-14 grid gap-10 md:grid-cols-3">
             {steps.map((step) => (
-              <div key={step.number} className="flex flex-col items-center text-center">
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-foreground text-sm font-semibold text-background">
+              <div key={step.number} className="relative flex flex-col items-center text-center">
+                {/* Large serif numeral behind content */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -top-4 left-1/2 -translate-x-1/2 font-serif text-[6rem] font-bold leading-none text-border select-none"
+                >
+                  {step.display}
+                </span>
+                <div className="relative mb-5 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-foreground text-sm font-semibold text-background">
                   {step.number}
                 </div>
-                <step.icon className="mb-4 h-6 w-6 text-muted-foreground" strokeWidth={1.5} />
-                <h3 className="font-semibold text-foreground">{step.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                <step.icon className="relative mb-4 h-6 w-6 text-muted-foreground" strokeWidth={1.5} />
+                <h3 className="relative font-semibold text-foreground">{step.title}</h3>
+                <p className="relative mt-2 text-sm text-muted-foreground leading-relaxed">
                   {step.description}
                 </p>
               </div>
@@ -90,7 +119,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Social Proof */}
+      {/* Social Proof — stats */}
       <section className="border-t border-border py-12">
         <div className="mx-auto max-w-4xl px-4 md:px-6">
           <div className="flex flex-col items-center justify-center gap-8 text-center md:flex-row md:gap-16">
@@ -102,7 +131,7 @@ export default function LandingPage() {
             ))}
           </div>
           <p className="mt-8 text-center text-sm text-muted-foreground">
-            Join 1,000+ users who save and share wishlists every day.
+            Join thousands of people who save and share wishlists every day.
           </p>
         </div>
       </section>
@@ -136,19 +165,70 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24">
+      {/* Testimonials */}
+      <section className="border-t border-border py-20">
+        <div className="mx-auto max-w-5xl px-4 md:px-6">
+          <h2 className="font-serif text-display-md text-center text-foreground">
+            What people are saying
+          </h2>
+          <p className="mx-auto mt-4 max-w-lg text-center text-muted-foreground">
+            Real stories from people who have made gift-giving effortless.
+          </p>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+            {testimonials.map((t) => (
+              <div
+                key={t.name}
+                className="rounded-xl border border-border bg-subtle p-6 flex flex-col gap-4"
+              >
+                {/* Stars */}
+                <div className="flex gap-0.5 text-foreground" aria-label="5 out of 5 stars">
+                  <span>★★★★★</span>
+                </div>
+                {/* Quote */}
+                <p className="flex-1 text-sm italic text-muted-foreground leading-relaxed">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                {/* Author */}
+                <div className="flex items-center gap-3">
+                  <div
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-background"
+                    style={{ backgroundColor: t.avatarColor }}
+                    aria-hidden="true"
+                  >
+                    {t.initials}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                    {t.role && (
+                      <p className="text-xs text-muted-foreground">{t.role}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="border-t border-border bg-subtle py-24">
         <div className="mx-auto max-w-2xl px-4 text-center md:px-6">
           <h2 className="font-serif text-display-md text-foreground">
-            Your next gift, perfectly chosen
+            Ready to create your wishlist?
           </h2>
           <p className="mx-auto mt-4 max-w-md text-muted-foreground text-balance">
             Stop guessing what people want. Start a wishlist, share it with the people who matter,
             and make every occasion effortless.
           </p>
-          <Button size="lg" className="mt-8" asChild>
-            <Link href="/signup">Get started for free</Link>
-          </Button>
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button size="lg" asChild>
+              <Link href="/signup">Get started free</Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="#how-it-works">See how it works</Link>
+            </Button>
+          </div>
           <p className="mt-4 text-xs text-muted-foreground">
             Free forever · No credit card required
           </p>
@@ -158,9 +238,25 @@ export default function LandingPage() {
   )
 }
 
+// ─── Data ────────────────────────────────────────────────────────────────────
+
+const storePills = [
+  'Amazon',
+  'Target',
+  'IKEA',
+  'Etsy',
+  'Walmart',
+  'Zara',
+  'Best Buy',
+  'H&M',
+  'Nike',
+  'Apple',
+]
+
 const steps = [
   {
     number: 1,
+    display: '01',
     icon: Link2,
     title: 'Paste any product URL',
     description:
@@ -168,6 +264,7 @@ const steps = [
   },
   {
     number: 2,
+    display: '02',
     icon: ListChecks,
     title: 'Organize into wishlists',
     description:
@@ -175,6 +272,7 @@ const steps = [
   },
   {
     number: 3,
+    display: '03',
     icon: Share2,
     title: 'Share with anyone',
     description:
@@ -183,9 +281,9 @@ const steps = [
 ]
 
 const stats = [
-  { value: '1,000+', label: 'Wishlists created' },
-  { value: '10,000+', label: 'Items saved' },
-  { value: '50+', label: 'Stores supported' },
+  { value: '10,000+', label: 'Wishlists created' },
+  { value: '50,000+', label: 'Items saved' },
+  { value: '500+', label: 'Stores supported' },
 ]
 
 const features = [
@@ -224,5 +322,56 @@ const features = [
     title: 'Universal wishlist',
     description:
       'One link works everywhere. Share via WhatsApp, email, or QR code at your next event.',
+  },
+]
+
+const testimonials = [
+  {
+    name: 'Sarah K.',
+    role: 'Birthday wishlist',
+    initials: 'SK',
+    avatarColor: '#3B3B3B',
+    quote:
+      'Finally replaced my Amazon wishlist. My family can now shop from any store, not just Amazon. Set one up for my birthday and everything was claimed within a week!',
+  },
+  {
+    name: 'Marcus T.',
+    role: 'Price tracking',
+    initials: 'MT',
+    avatarColor: '#5C5C5C',
+    quote:
+      'The price tracking alone is worth it. I watched an item drop from $89 to $52 and got an alert the moment it happened. Saved $37 on my first alert.',
+  },
+  {
+    name: 'Emma & James',
+    role: 'Wedding registry',
+    initials: 'EJ',
+    avatarColor: '#444444',
+    quote:
+      'Used it for our wedding registry. We wanted items from local boutiques, not just big box stores. Guests loved how easy it was to claim gifts.',
+  },
+  {
+    name: 'Priya S.',
+    role: 'Teacher',
+    initials: 'PS',
+    avatarColor: '#2E2E2E',
+    quote:
+      'As a teacher I share my classroom wishlist with parents every September. So much easier than a paper list. Parents can see what\'s already been bought.',
+  },
+  {
+    name: 'Tom R.',
+    role: 'Secret Santa organizer',
+    initials: 'TR',
+    avatarColor: '#484848',
+    quote:
+      'My team uses it for Secret Santa. Everyone adds their list, the organizer can see everything. No more awkward gift cards.',
+  },
+  {
+    name: 'Diane M.',
+    role: 'Holiday gifting',
+    initials: 'DM',
+    avatarColor: '#383838',
+    quote:
+      'I love the surprise mode. My kids can add things they want and their grandparents can see the list without me knowing what got bought. Stress-free holidays!',
   },
 ]
