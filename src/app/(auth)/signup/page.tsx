@@ -7,7 +7,14 @@ export const metadata: Metadata = {
   description: 'Create your free WishlistCart account',
 }
 
-export default function SignupPage() {
+interface SignupPageProps {
+  searchParams: Promise<{ ref?: string }>
+}
+
+export default async function SignupPage({ searchParams }: SignupPageProps) {
+  const { ref } = await searchParams
+  const refCode = typeof ref === 'string' && ref.length >= 4 ? ref.toUpperCase() : undefined
+
   return (
     <div className="w-full max-w-sm">
       <div className="mb-8">
@@ -17,7 +24,7 @@ export default function SignupPage() {
         </p>
       </div>
 
-      <SignupForm />
+      <SignupForm refCode={refCode} />
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         Already have an account?{' '}

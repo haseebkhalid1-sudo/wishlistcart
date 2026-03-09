@@ -8,7 +8,11 @@ import { Separator } from '@/components/ui/separator'
 import { signUp, signInWithGoogle } from '@/lib/actions/auth'
 import { toast } from 'sonner'
 
-export function SignupForm() {
+interface SignupFormProps {
+  refCode?: string
+}
+
+export function SignupForm({ refCode }: SignupFormProps) {
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
   const [isGooglePending, startGoogleTransition] = useTransition()
@@ -58,6 +62,9 @@ export function SignupForm() {
       </div>
 
       <form action={handleSubmit} className="space-y-4">
+        {refCode && (
+          <input type="hidden" name="refCode" value={refCode} />
+        )}
         <div className="space-y-1.5">
           <Label htmlFor="name">Full name</Label>
           <Input

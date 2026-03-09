@@ -302,6 +302,57 @@ const BUDGET_GUIDES: Record<string, BudgetGuide> = {
       },
     ],
   },
+  '150': {
+    amount: 150,
+    title: 'Best Gifts Under $150 — Quality Picks for Any Occasion',
+    description: "Skip the generic — gifts under $150 hit the sweet spot between thoughtful and impressive.",
+    intro: "Under $150, you can give something that genuinely surprises — quality tech, memorable experiences, and home upgrades they'd want but wouldn't splurge on themselves.",
+    categories: [
+      {
+        heading: 'Tech & Gadgets',
+        items: [
+          { name: 'Anker Soundcore Motion+ Bluetooth Speaker', price: '$100–$130', why: 'Hi-res audio, 12-hour battery, and waterproof. Audiophile sound without the audiophile price tag.', searchUrl: 'https://www.amazon.com/s?k=anker+soundcore+motion+plus+speaker' },
+          { name: 'Tile Pro Tracker (4-Pack)', price: '$100–$140', why: 'The gift for the person who loses everything. Attaches to keys, bags, and wallets. Actually life-changing.', searchUrl: 'https://www.amazon.com/s?k=tile+pro+4+pack+tracker' },
+          { name: 'Smart Ring (Oura or RingConn)', price: '$100–$149', why: 'Sleep, HRV, and activity tracking in a ring. For the health-conscious person on your list.', searchUrl: 'https://www.amazon.com/s?k=smart+ring+health+tracker' },
+          { name: 'Kindle Oasis', price: '$120–$149', why: 'The premium Kindle with a warm light and ergonomic grip. The e-reader for serious readers.', searchUrl: 'https://www.amazon.com/s?k=kindle+oasis+e-reader' },
+          { name: 'MagSafe Charger + Stand Combo', price: '$80–$140', why: 'An elegant bedside or desk charging station for iPhone users. Practical and genuinely beautiful.', searchUrl: 'https://www.amazon.com/s?k=magsafe+charger+stand+combo' },
+        ],
+      },
+      {
+        heading: 'Experience Gifts',
+        items: [
+          { name: 'Local Cooking Class (for One)', price: '$80–$150', why: 'A hands-on cooking class is an experience they\'d never book for themselves but will love. Check Sur La Table or local culinary schools.', searchUrl: 'https://www.amazon.com/s?k=cooking+class+gift+card+experience' },
+          { name: 'Wine or Cocktail Tasting Experience', price: '$75–$140', why: 'A guided tasting at a local bar, winery, or spirits distillery. Memorable and fun.', searchUrl: 'https://www.amazon.com/s?k=wine+tasting+experience+gift+card' },
+          { name: 'Pottery or Art Class (Intro Session)', price: '$70–$140', why: 'A creative experience for the person who\'s always said they want to try something artsy.', searchUrl: 'https://www.amazon.com/s?k=pottery+class+gift+voucher+experience' },
+          { name: 'Museum Membership (Annual Pass)', price: '$75–$150', why: 'A year of unlimited visits. Great for art, science, or history lovers — a gift that gives all year.', searchUrl: 'https://www.amazon.com/s?k=museum+membership+annual+gift' },
+        ],
+      },
+      {
+        heading: 'Home & Kitchen',
+        items: [
+          { name: 'Breville Milk Frother (Cafe Roma)', price: '$100–$130', why: 'Barista-quality milk foam at home. Perfect for latte and cappuccino lovers who haven\'t bought one yet.', searchUrl: 'https://www.amazon.com/s?k=breville+milk+frother+cafe+roma' },
+          { name: 'KitchenAid Hand Mixer (5-Speed)', price: '$60–$100', why: 'The kitchen upgrade that opens up baking. Reliable, colorful, and something home bakers treasure.', searchUrl: 'https://www.amazon.com/s?k=kitchenaid+hand+mixer+5+speed' },
+          { name: 'Luxury Scented Candle Set (Diptyque or Jo Malone)', price: '$80–$150', why: 'Two or three candles from a luxury brand. The gift for someone who appreciates fine fragrance at home.', searchUrl: 'https://www.amazon.com/s?k=diptyque+candle+gift+set' },
+          { name: 'Linen Throw Blanket (Stonewashed)', price: '$80–$130', why: 'A beautiful, breathable linen throw that goes with any sofa. The aesthetic home gift.', searchUrl: 'https://www.amazon.com/s?k=stonewashed+linen+throw+blanket' },
+          { name: 'French Press (Bodum Chambord, Large)', price: '$40–$80', why: 'The coffee purist\'s brewer. Elegant, simple, and makes a noticeably better cup. Great paired with specialty coffee.', searchUrl: 'https://www.amazon.com/s?k=bodum+chambord+french+press+large' },
+        ],
+      },
+      {
+        heading: 'Fashion & Accessories',
+        items: [
+          { name: 'Leather Belt (Genuine Full-Grain)', price: '$60–$130', why: 'A quality leather belt from Fossil, Lejon, or Trafalgar. One of the most underrated practical gifts for men.', searchUrl: 'https://www.amazon.com/s?k=genuine+full+grain+leather+belt+men' },
+          { name: 'Silk Sleep Mask (Luxury)', price: '$40–$100', why: 'A weighted silk sleep mask from Slip or Alaska Bear. Genuinely improves sleep quality.', searchUrl: 'https://www.amazon.com/s?k=silk+sleep+mask+luxury+weighted' },
+          { name: 'Cashmere Beanie or Scarf', price: '$60–$140', why: 'Real cashmere, not cashmere blend. Once they feel the difference, nothing else compares.', searchUrl: 'https://www.amazon.com/s?k=100+percent+cashmere+beanie+scarf+gift' },
+          { name: 'Personalized Leather Wallet (Engraved)', price: '$60–$130', why: 'A slim full-grain leather wallet engraved with initials or a short message. A keepsake gift.', searchUrl: 'https://www.etsy.com/search?q=personalized+leather+wallet+engraved+men' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What are good gifts in the $100–$150 range?', a: 'The $100–$150 range is perfect for milestone birthdays, close friends, and partners. Great picks: a Kindle Oasis, a smart ring, a cooking class experience, a luxury candle set, a KitchenAid hand mixer, or a cashmere accessory. Focus on quality and longevity — gifts at this price should last.' },
+      { q: 'What is a thoughtful gift under $150 for a woman?', a: 'For her under $150: a Kindle Oasis, a Diptyque candle set, a luxury silk sleep mask, a stonewashed linen throw, a pottery class voucher, or a museum membership. The most appreciated gifts at this range are ones she would enjoy but wouldn\'t buy for herself.' },
+      { q: 'What is a good gift under $150 for a man?', a: 'For him under $150: a smart ring or fitness tracker, a Tile Pro 4-pack, an Anker Bluetooth speaker, a personalized leather wallet, a full-grain leather belt, or a cooking class. At this range, tech and quality accessories resonate best with most men.' },
+    ],
+  },
   '200': {
     amount: 200,
     title: 'Best Gifts Under $200 in 2026',
@@ -337,6 +388,59 @@ const BUDGET_GUIDES: Record<string, BudgetGuide> = {
       { q: 'What are good gifts in the $100–$200 range?', a: 'The $100–$200 range covers truly special gifts: wireless earbuds, a Kindle Paperwhite, a spa day, a fine dining gift card, a Le Creuset skillet, or a cashmere throw. This is the range for milestone birthdays, anniversaries, and people you want to impress.' },
       { q: 'What is a luxurious gift under $200?', a: 'Luxury gifts under $200: Dyson hair tools, AirPods, a wine club subscription, a spa gift certificate, a cashmere blanket, or a piece of quality jewelry. The key at this price point is brand and quality — one premium item beats a bundle of average ones.' },
       { q: 'What are romantic gifts under $200?', a: 'Romantic gifts in this range: a spa day for two ($150–$200), a fine dining reservation with a small meaningful gift, a weekend getaway deposit, a custom piece of jewelry ($80–$150), or a wine and cheese tasting experience.' },
+    ],
+  },
+  '300': {
+    amount: 300,
+    title: 'Best Gifts Under $300 — Wow-Factor Picks for Special Occasions',
+    description: "For milestones that deserve more than a gift card. These under-$300 picks deliver real wow-factor.",
+    intro: "Under $300, you can give something that genuinely wows — premium tech, serious kitchen gear, or a travel experience they'll talk about. These picks are for the special occasions that deserve more than a token gift.",
+    categories: [
+      {
+        heading: 'Tech & Entertainment',
+        items: [
+          { name: 'Sony WF-1000XM5 Wireless Earbuds', price: '$200–$280', why: 'The best noise-cancelling earbuds available. Audiophile sound + ANC in a tiny package. Daily use guaranteed.', searchUrl: 'https://www.amazon.com/s?k=sony+wf-1000xm5+wireless+earbuds' },
+          { name: 'GoPro Hero 13 Black', price: '$250–$280', why: 'For the adventurer, traveler, or anyone who wants to capture life in action. Waterproof, durable, incredible footage.', searchUrl: 'https://www.amazon.com/s?k=gopro+hero+13+black' },
+          { name: 'iPad Mini (Latest Gen)', price: '$250–$300', why: 'The most portable and versatile iPad. Perfect for reading, drawing, travel, and video calls.', searchUrl: 'https://www.amazon.com/s?k=ipad+mini+latest+generation' },
+          { name: 'Garmin Forerunner 265 (Running Watch)', price: '$250–$280', why: 'Advanced GPS running watch with AMOLED display and training readiness metrics. A serious runner\'s dream.', searchUrl: 'https://www.amazon.com/s?k=garmin+forerunner+265+running+watch' },
+          { name: 'Bose QuietComfort 45 Headphones', price: '$200–$280', why: 'Best-in-class comfort and noise cancellation. The headphones for long flights, commutes, and deep work sessions.', searchUrl: 'https://www.amazon.com/s?k=bose+quietcomfort+45+headphones' },
+        ],
+      },
+      {
+        heading: 'Kitchen & Home',
+        items: [
+          { name: 'Breville Barista Express Espresso Machine', price: '$250–$300', why: 'Built-in grinder + espresso maker in one. For the coffee lover who\'s ready to graduate from pods.', searchUrl: 'https://www.amazon.com/s?k=breville+barista+express+espresso+machine' },
+          { name: 'KitchenAid Stand Mixer (Artisan, 5 Qt)', price: '$250–$300', why: 'The kitchen gift that changes everything. Heavy, beautiful, and built to last a lifetime.', searchUrl: 'https://www.amazon.com/s?k=kitchenaid+artisan+stand+mixer+5+quart' },
+          { name: 'Vitamix E310 Blender', price: '$250–$300', why: 'The blender that blends anything — ice, nuts, frozen fruit — silky smooth in seconds. A lifetime appliance.', searchUrl: 'https://www.amazon.com/s?k=vitamix+e310+blender' },
+          { name: 'Philips Hue Starter Kit (Smart Lighting)', price: '$100–$200', why: 'Smart color-changing lights that transform the feel of any room. Controlled by voice or phone.', searchUrl: 'https://www.amazon.com/s?k=philips+hue+starter+kit+smart+lighting' },
+          { name: 'Saatva Throw Pillow Set (Premium)', price: '$150–$280', why: 'Hotel-quality throw pillows that elevate a living room or bedroom instantly.', searchUrl: 'https://www.amazon.com/s?k=premium+decorative+throw+pillow+set+luxury' },
+        ],
+      },
+      {
+        heading: 'Travel & Outdoors',
+        items: [
+          { name: 'Osprey Farpoint 40 Travel Backpack', price: '$180–$250', why: 'The gold-standard carry-on travel backpack. Fits overhead bins, comes with a lifetime guarantee.', searchUrl: 'https://www.amazon.com/s?k=osprey+farpoint+40+travel+backpack' },
+          { name: 'Away Carry-On Suitcase', price: '$225–$275', why: 'The travel brand with a cult following. Elegant, durable, and the gold standard of modern luggage.', searchUrl: 'https://www.amazon.com/s?k=away+carry+on+suitcase' },
+          { name: 'Stanley Quencher Tumbler (40 oz)', price: '$35–$55', why: 'The tumbler that keeps drinks cold for 2 days. A perennial best-seller for active people and outdoor lovers.', searchUrl: 'https://www.amazon.com/s?k=stanley+quencher+40oz+tumbler' },
+          { name: 'YETI Tundra 35 Hard Cooler', price: '$250–$300', why: 'The serious cooler for camping, road trips, and tailgating. Keeps ice for days. Built like a tank.', searchUrl: 'https://www.amazon.com/s?k=yeti+tundra+35+hard+cooler' },
+          { name: 'National Parks Annual Pass (America the Beautiful)', price: '$80', why: 'Unlimited entry to 2,000+ federal recreation sites for a year. The outdoor lover\'s gift card.', searchUrl: 'https://store.usgs.gov/america-the-beautiful' },
+        ],
+      },
+      {
+        heading: 'Wellness',
+        items: [
+          { name: 'Theragun Prime (Percussion Massager)', price: '$200–$250', why: 'The recovery tool athletes and desk workers both love. Deep muscle relief in minutes.', searchUrl: 'https://www.amazon.com/s?k=theragun+prime+massage+gun' },
+          { name: 'Loftie Smart Alarm Clock', price: '$120–$160', why: 'A premium bedside alarm with white noise, wake-up light, and a phone-free bedroom philosophy.', searchUrl: 'https://www.amazon.com/s?k=loftie+smart+alarm+clock' },
+          { name: 'Casper Sleep Foam Pillow (2-Pack)', price: '$150–$230', why: 'The most-gifted sleep upgrade. Supportive, breathable, and endorsed by serious sleepers everywhere.', searchUrl: 'https://www.amazon.com/s?k=casper+foam+pillow+2+pack' },
+          { name: 'Hydrow Wave Rower (Monthly Plan)', price: '$200–$300', why: 'An at-home rowing machine with live and on-demand classes. For the fitness person who wants something different.', searchUrl: 'https://www.amazon.com/s?k=hydrow+wave+connected+rower' },
+          { name: 'Weighted Blanket (Gravity, 20 lb)', price: '$120–$200', why: 'The gold-standard weighted blanket. Reduces anxiety, deepens sleep, and feels like a permanent hug.', searchUrl: 'https://www.amazon.com/s?k=gravity+weighted+blanket+20+pound' },
+        ],
+      },
+    ],
+    faqs: [
+      { q: 'What are impressive gifts under $300?', a: 'Under $300 you can give genuinely memorable gifts: Sony XM5 earbuds, a KitchenAid stand mixer, a Vitamix blender, Away luggage, a Theragun, or an iPad Mini. These are aspirational items people want but rarely buy for themselves — which makes them perfect gifts.' },
+      { q: 'What are good birthday gifts under $300?', a: 'For a milestone birthday under $300: noise-cancelling headphones, a KitchenAid, a Breville espresso machine, Away carry-on luggage, or a Theragun. The best approach: think about their biggest daily friction and gift them the tool that eliminates it.' },
+      { q: 'What is a good Christmas gift under $300?', a: 'Top Christmas gifts under $300: Sony WF-1000XM5 earbuds, iPad Mini, Vitamix blender, Bose QC45 headphones, Away suitcase, or a YETI cooler. At this price point, choose one exceptional item rather than a bundle. One wow gift beats three okay gifts every time.' },
     ],
   },
   '500': {

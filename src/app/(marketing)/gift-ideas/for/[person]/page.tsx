@@ -8,11 +8,49 @@ interface GiftGuide {
   title: string
   description: string
   intro: string
+  heading?: string
   categories: {
     heading: string
     items: { name: string; price: string; why: string; searchUrl: string }[]
   }[]
   faqs: { q: string; a: string }[]
+}
+
+const RELATED_GUIDES: Record<string, string[]> = {
+  mom: ['grandma', 'sister', 'wife', 'teacher'],
+  dad: ['grandpa', 'brother', 'husband', 'boss'],
+  wife: ['mom', 'girlfriend', 'sister', 'anniversary'],
+  husband: ['dad', 'boyfriend', 'brother', 'anniversary'],
+  boyfriend: ['husband', 'brother', 'gamer', 'foodie'],
+  girlfriend: ['wife', 'sister', 'bookworm', 'traveler'],
+  grandma: ['mom', 'teacher', 'gardener', 'bookworm'],
+  grandpa: ['dad', 'boss', 'gardener', 'outdoorsy'],
+  kids: ['toddler', 'newborn', 'teens', 'birthday'],
+  teens: ['kids', 'gamer', 'artist', 'bookworm'],
+  coworker: ['boss', 'teacher', 'foodie', 'traveler'],
+  sister: ['mom', 'girlfriend', 'wife', 'traveler'],
+  brother: ['dad', 'boyfriend', 'husband', 'gamer'],
+  teacher: ['coworker', 'boss', 'bookworm', 'gardener'],
+  boss: ['coworker', 'teacher', 'foodie', 'traveler'],
+  newborn: ['kids', 'toddler', 'sister', 'brother'],
+  toddler: ['kids', 'newborn', 'sister', 'brother'],
+  gamer: ['teens', 'brother', 'boyfriend', 'husband'],
+  foodie: ['mom', 'coworker', 'wife', 'girlfriend'],
+  traveler: ['outdoorsy', 'boyfriend', 'husband', 'coworker'],
+  bookworm: ['teacher', 'grandma', 'sister', 'girlfriend'],
+  gardener: ['grandma', 'grandpa', 'mom', 'sister'],
+  artist: ['teens', 'sister', 'girlfriend', 'bookworm'],
+  outdoorsy: ['dad', 'traveler', 'brother', 'boyfriend'],
+  wedding: ['anniversary', 'housewarming', 'graduation', 'wife'],
+  birthday: ['kids', 'teens', 'mom', 'dad'],
+  christmas: ['birthday', 'kids', 'coworker', 'boss'],
+  graduation: ['teens', 'coworker', 'boss', 'traveler'],
+  housewarming: ['wedding', 'anniversary', 'gardener', 'foodie'],
+  anniversary: ['wedding', 'wife', 'husband', 'housewarming'],
+  'baby-shower': ['newborn', 'toddler', 'sister', 'mom'],
+  'valentines-day': ['boyfriend', 'girlfriend', 'wife', 'husband'],
+  'mothers-day': ['mom', 'grandma', 'wife', 'sister'],
+  'fathers-day': ['dad', 'grandpa', 'husband', 'brother'],
 }
 
 const GUIDES: Record<string, GiftGuide> = {
@@ -2300,22 +2338,39 @@ export default async function GiftGuidePage({ params }: { params: Promise<{ pers
         </section>
 
         {/* Related guides */}
-        <section className="mt-16 border-t border-border pt-10">
-          <h2 className="font-semibold text-foreground mb-4">More gift guides</h2>
-          <div className="flex flex-wrap gap-2">
-            {Object.keys(GUIDES)
-              .filter((p) => p !== person)
-              .map((p) => (
+        <div className="mt-16 border-t border-border pt-12">
+          <h2 className="font-serif text-2xl text-foreground mb-2">More Gift Ideas</h2>
+          <p className="text-sm text-muted-foreground mb-6">Browse our curated gift guides by person and budget.</p>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {RELATED_GUIDES[person]?.map((slug) => {
+              const related = GUIDES[slug]
+              if (!related) return null
+              const rawTitle = related.title.replace(/^.*?—\s*/, '')
+              const displayName = related.heading ?? rawTitle.split(' (')[0]?.split(' in 2')[0] ?? rawTitle
+              return (
                 <Link
-                  key={p}
-                  href={`/gift-ideas/for/${p}`}
-                  className="rounded-full border border-border px-3 py-1 text-sm text-muted-foreground hover:text-foreground hover:border-foreground transition-colors capitalize"
+                  key={slug}
+                  href={`/gift-ideas/for/${slug}`}
+                  className="rounded-lg border border-border bg-subtle px-4 py-3 text-sm font-medium text-foreground hover:border-foreground/40 hover:bg-background transition-colors"
                 >
-                  Gifts for {p}
+                  {displayName}
                 </Link>
-              ))}
+              )
+            })}
+            <Link
+              href="/gift-ideas/under/50"
+              className="rounded-lg border border-border bg-subtle px-4 py-3 text-sm font-medium text-foreground hover:border-foreground/40 hover:bg-background transition-colors"
+            >
+              Gifts Under $50
+            </Link>
+            <Link
+              href="/gift-ideas/under/100"
+              className="rounded-lg border border-border bg-subtle px-4 py-3 text-sm font-medium text-foreground hover:border-foreground/40 hover:bg-background transition-colors"
+            >
+              Gifts Under $100
+            </Link>
           </div>
-        </section>
+        </div>
 
         {/* Related WishlistCart features */}
         <div className="mt-12 rounded-xl border border-[--color-border] bg-[--color-bg-subtle] p-6">

@@ -100,7 +100,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }))
 
-  const budgetGuides: MetadataRoute.Sitemap = ['25', '50', '100'].map((price) => ({
+  const budgetGuides: MetadataRoute.Sitemap = ['25', '50', '100', '150', '200', '300'].map((price) => ({
     url: `${BASE_URL}/gift-ideas/under/${price}`,
     lastModified: now,
     changeFrequency: 'monthly' as const,

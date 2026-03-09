@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase/server'
+import { prisma } from '@/lib/prisma/client'
 import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
@@ -12,6 +14,16 @@ export default async function DashboardPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser()
+
+  if (user) {
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { onboardingDone: true },
+    })
+    if (!dbUser?.onboardingDone) {
+      redirect('/onboarding')
+    }
+  }
 
   const name = (user?.user_metadata?.['name'] as string | undefined) ?? 'there'
 

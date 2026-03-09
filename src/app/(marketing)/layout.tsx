@@ -15,6 +15,9 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             <Link href="/gift-finder" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Gift Finder
             </Link>
+            <Link href="/gift-ideas/for/mom" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Gift Ideas
+            </Link>
             <Link href="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Pricing
             </Link>

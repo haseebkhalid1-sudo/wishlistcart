@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { Menu, LayoutGrid, Heart, Bell, Settings, Gift, Calendar, History, Rss, Compass, Star, Shield } from 'lucide-react'
+import { Menu, LayoutGrid, Heart, Bell, Settings, Gift, Calendar, History, Rss, Compass, Star, Shield, Users2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -15,6 +15,7 @@ const navItems = [
   { href: '/dashboard/reminders', label: 'Reminders', icon: Calendar },
   { href: '/dashboard/price-alerts', label: 'Price Alerts', icon: Bell },
   { href: '/dashboard/gift-history', label: 'Gift History', icon: History },
+  { href: '/dashboard/referrals', label: 'Referrals', icon: Users2 },
   { href: '/explore', label: 'Explore', icon: Compass },
   { href: '/dashboard/creator', label: 'Creator', icon: Star },
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },

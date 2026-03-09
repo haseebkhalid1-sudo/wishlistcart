@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createServerClient } from '@/lib/supabase/server'
 import { z } from 'zod'
+import { applyReferralCode } from '@/lib/actions/referrals'
 
 const signUpSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -27,8 +28,12 @@ export async function signUp(formData: FormData) {
     return { error: parsed.error.issues[0]?.message ?? 'Invalid input' }
   }
 
+  const refCode = formData.get('refCode')
+  const refCodeStr =
+    typeof refCode === 'string' && refCode.length >= 4 ? refCode : null
+
   const supabase = await createServerClient()
-  const { error } = await supabase.auth.signUp({
+  const { data: signUpData, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
@@ -39,6 +44,11 @@ export async function signUp(formData: FormData) {
 
   if (error) {
     return { error: error.message }
+  }
+
+  // Fire-and-forget referral tracking after successful signup
+  if (refCodeStr && signUpData.user?.id) {
+    applyReferralCode(refCodeStr, signUpData.user.id).catch(() => undefined)
   }
 
   redirect('/dashboard')
