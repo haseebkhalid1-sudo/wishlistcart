@@ -910,9 +910,54 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 >
 > **Phase 4 Weeks 37–52 COMPLETE** — Admin dashboard, push notifications, PWA share target, 50 gift guides,
 > 3 SEO blog posts, corporate landing page, classroom wishlist, CORPORATE Stripe plan, registry SEO schemas.
-> **All Phase 4 features shipped. Ready for Phase 5 (Monetization Scale).**
+>
+> **Phase 5 COMPLETE** — Referral program, onboarding wizard, dashboard improvements, React Email templates,
+> profile settings, explore improvements, landing page polish, pricing FAQ, 6 new blog posts, welcome email,
+> notification bell + /dashboard/notifications page, gift finder markdown rendering, item quantity field,
+> multi-currency price display (10 currencies), ANTHROPIC_API_KEY + STRIPE_CORPORATE_PRICE_ID wired.
+> **All Phase 5 features shipped. Ready for Phase 6.**
 
 ### Phase Progress Tracker
+
+#### PHASE 5 — Monetization Scale & Polish (COMPLETE ✅)
+
+**Referral & Onboarding**
+- [x] Referral program (`/dashboard/referrals`, `ReferralCode` schema, `applyReferralCode` action)
+- [x] Inngest `handleReferral`: FREE→PRO upgrade, referral-reward email, in-app notification
+- [x] Onboarding wizard (`/onboarding` — 4-step: profile, wishlist, interests, done)
+- [x] Dashboard home: quick stats (wishlists/items/alerts), recent activity feed, quick actions grid, 7-day welcome banner
+
+**Email & Notifications**
+- [x] 9 React Email templates (`src/emails/`) — welcome, price-drop, gift-claimed, weekly-digest, reminder, referral-reward, registry-invite, rsvp-notification, base-layout
+- [x] Welcome email fired on signup (fire-and-forget via Resend in `auth.ts`)
+- [x] Notification bell in topbar (`src/components/layout/notification-bell.tsx`) — unread count badge
+- [x] `/dashboard/notifications` page — unread/read sections, mark-as-read on click, mark-all-read button
+- [x] `src/lib/actions/notifications-list.ts` — getNotifications, markNotificationRead, markAllNotificationsRead
+
+**Profile & Social Polish**
+- [x] Profile settings form: avatar upload, display name, username, bio (`src/lib/actions/profile.ts`)
+- [x] Explore page improvements: CTA banner, category pills, registry section, wishlist count
+
+**Landing & Marketing**
+- [x] Landing page: store pills, testimonials, stats (10K+/50K+), decorative numerals, two-button CTA
+- [x] Pricing page: monthly/yearly toggle (20% off), FAQ section, FAQPage JSON-LD
+- [x] 6 new blog posts: how-to, gift-ideas, registry-apps, wedding, baby, price-tracking
+
+**SEO Cross-linking**
+- [x] 33 RELATED_GUIDES across gift guide pages for cross-linking
+
+**Item & UI Improvements**
+- [x] Item quantity field: `WishlistItem.quantity` (Int, default 1, max 99) — dialogs + `×N` card badge
+- [x] Gift finder markdown renderer: bold text, numbered list badges, paragraph breaks (no new packages)
+- [x] Multi-currency: 10 currencies in Add/Edit dialogs (USD/EUR/GBP/CAD/AUD/JPY/INR/MXN/BRL/CHF), shared `formatPrice(amount, currency)` everywhere
+
+**Infrastructure**
+- [x] `STRIPE_CORPORATE_PRICE_ID` added to Vercel env
+- [x] `ANTHROPIC_API_KEY` added to Vercel env
+- [x] Gift finder route: lazy Anthropic client init (fixes 405 when key missing)
+- [x] `date-fns` installed for `formatDistanceToNow` in notification items
+
+---
 
 #### PHASE 1A — Foundation & MVP Core (Weeks 1–6)
 
