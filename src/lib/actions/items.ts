@@ -42,6 +42,7 @@ export async function createItem(
     storeName: formData.get('storeName') || undefined,
     notes: formData.get('notes') || undefined,
     priority: formData.get('priority') ? Number(formData.get('priority')) : 3,
+    quantity: formData.get('quantity') ? Number(formData.get('quantity')) : 1,
     category: formData.get('category') || undefined,
     tags: [],
   }
@@ -73,6 +74,7 @@ export async function createItem(
       storeName: parsed.data.storeName ?? null,
       notes: parsed.data.notes ?? null,
       priority: parsed.data.priority,
+      quantity: parsed.data.quantity,
       category: parsed.data.category ?? null,
       tags: parsed.data.tags,
       position: (maxPos._max.position ?? 0) + 1,
@@ -112,6 +114,7 @@ export async function updateItem(
     storeName: formData.get('storeName') || undefined,
     notes: formData.get('notes') || undefined,
     priority: formData.get('priority') ? Number(formData.get('priority')) : undefined,
+    quantity: formData.get('quantity') ? Number(formData.get('quantity')) : undefined,
     category: formData.get('category') || undefined,
   }
 

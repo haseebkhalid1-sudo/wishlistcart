@@ -5,6 +5,73 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Sparkles, ArrowRight, ArrowLeft, Loader2 } from 'lucide-react'
 
+// ---- Markdown renderer ----
+
+function renderMarkdown(text: string): React.ReactNode {
+  const lines = text.split('\n')
+  const nodes: React.ReactNode[] = []
+  let key = 0
+
+  function renderInline(line: string): React.ReactNode {
+    const parts: React.ReactNode[] = []
+    const regex = /\*\*(.+?)\*\*/g
+    let last = 0
+    let match: RegExpExecArray | null
+
+    while ((match = regex.exec(line)) !== null) {
+      if (match.index > last) {
+        parts.push(line.slice(last, match.index))
+      }
+      parts.push(<strong key={key++}>{match[1]}</strong>)
+      last = match.index + match[0].length
+    }
+
+    if (last < line.length) {
+      parts.push(line.slice(last))
+    }
+
+    return parts.length === 1 ? parts[0] : parts
+  }
+
+  let i = 0
+  while (i < lines.length) {
+    const line: string = lines[i] ?? ''
+
+    // Empty line → paragraph break (skip)
+    if (line.trim() === '') {
+      i++
+      continue
+    }
+
+    // Numbered list item: starts with digit(s) followed by "." and space
+    const listMatch = /^(\d+)\.\s+(.*)$/.exec(line)
+    if (listMatch) {
+      const num: string = listMatch[1] ?? ''
+      const body: string = listMatch[2] ?? ''
+      nodes.push(
+        <div key={key++} className="flex items-start gap-3 py-1">
+          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-foreground text-background text-xs font-semibold">
+            {num}
+          </span>
+          <p className="text-sm leading-relaxed text-foreground">{renderInline(body)}</p>
+        </div>
+      )
+      i++
+      continue
+    }
+
+    // Plain text line → <p>
+    nodes.push(
+      <p key={key++} className="text-sm leading-relaxed text-foreground py-0.5">
+        {renderInline(line)}
+      </p>
+    )
+    i++
+  }
+
+  return <>{nodes}</>
+}
+
 // ---- Types ----
 
 type Step = 'recipient' | 'age' | 'interests' | 'budget' | 'occasion' | 'result'
@@ -125,8 +192,8 @@ export default function GiftFinderPage() {
               </div>
             )}
             {result && (
-              <div className="prose prose-sm max-w-none text-foreground">
-                <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">{result}</pre>
+              <div className="space-y-1">
+                {renderMarkdown(result)}
               </div>
             )}
             {loading && result && (

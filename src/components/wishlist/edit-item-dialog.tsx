@@ -83,11 +83,16 @@ export function EditItemDialog({ item, open, onOpenChange }: EditItemDialogProps
               <Select name="currency" defaultValue={item.currency}>
                 <SelectTrigger id="edit-currency"><SelectValue /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="USD">USD</SelectItem>
-                  <SelectItem value="EUR">EUR</SelectItem>
-                  <SelectItem value="GBP">GBP</SelectItem>
-                  <SelectItem value="CAD">CAD</SelectItem>
-                  <SelectItem value="AUD">AUD</SelectItem>
+                  <SelectItem value="USD">USD ($)</SelectItem>
+                  <SelectItem value="EUR">EUR (€)</SelectItem>
+                  <SelectItem value="GBP">GBP (£)</SelectItem>
+                  <SelectItem value="CAD">CAD (CA$)</SelectItem>
+                  <SelectItem value="AUD">AUD (A$)</SelectItem>
+                  <SelectItem value="JPY">JPY (¥)</SelectItem>
+                  <SelectItem value="INR">INR (₹)</SelectItem>
+                  <SelectItem value="MXN">MXN (MX$)</SelectItem>
+                  <SelectItem value="BRL">BRL (R$)</SelectItem>
+                  <SelectItem value="CHF">CHF</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -125,18 +130,31 @@ export function EditItemDialog({ item, open, onOpenChange }: EditItemDialogProps
             />
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="edit-priority">Priority</Label>
-            <Select name="priority" defaultValue={String(item.priority)}>
-              <SelectTrigger id="edit-priority"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Low</SelectItem>
-                <SelectItem value="2">Low-Medium</SelectItem>
-                <SelectItem value="3">Medium</SelectItem>
-                <SelectItem value="4">High</SelectItem>
-                <SelectItem value="5">Must have</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="edit-priority">Priority</Label>
+              <Select name="priority" defaultValue={String(item.priority)}>
+                <SelectTrigger id="edit-priority"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">Low</SelectItem>
+                  <SelectItem value="2">Low-Medium</SelectItem>
+                  <SelectItem value="3">Medium</SelectItem>
+                  <SelectItem value="4">High</SelectItem>
+                  <SelectItem value="5">Must have</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="edit-quantity">Quantity</Label>
+              <Input
+                id="edit-quantity"
+                name="quantity"
+                type="number"
+                min="1"
+                max="99"
+                defaultValue={item.quantity}
+              />
+            </div>
           </div>
 
           <div className="space-y-1.5">

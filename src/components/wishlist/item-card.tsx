@@ -96,6 +96,9 @@ export function ItemCard({ item, view = 'grid', dragHandleProps }: ItemCardProps
                 {formatPrice(Number(item.price), item.currency)}
               </span>
             )}
+            {item.quantity > 1 && (
+              <span className="text-xs text-muted-foreground">×{item.quantity}</span>
+            )}
             {buyUrl && (
               <a
                 href={buyUrl}
@@ -173,13 +176,18 @@ export function ItemCard({ item, view = 'grid', dragHandleProps }: ItemCardProps
         <p className="text-sm font-medium text-foreground line-clamp-2 flex-1">{item.title}</p>
 
         <div className="mt-2 flex items-center justify-between">
-          {item.price != null ? (
-            <span className="font-semibold text-foreground">
-              {formatPrice(Number(item.price), item.currency)}
-            </span>
-          ) : (
-            <span />
-          )}
+          <div className="flex items-center gap-1.5">
+            {item.price != null ? (
+              <span className="font-semibold text-foreground">
+                {formatPrice(Number(item.price), item.currency)}
+              </span>
+            ) : (
+              <span />
+            )}
+            {item.quantity > 1 && (
+              <span className="text-xs text-muted-foreground">×{item.quantity}</span>
+            )}
+          </div>
           {item.priority >= 4 && (
             <Badge variant="outline" className="text-micro">
               {PRIORITY_LABELS[item.priority]}

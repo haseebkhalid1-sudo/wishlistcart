@@ -24,6 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Skeleton } from '@/components/ui/skeleton'
 import { createItem } from '@/lib/actions/items'
 import type { ScrapedProduct } from '@/types'
+import { formatPrice } from '@/lib/utils'
 import { toast } from 'sonner'
 import { Loader2, ExternalLink } from 'lucide-react'
 
@@ -214,7 +215,7 @@ function ScrapedPreview({
           )}
           {scraped.price != null && (
             <p className="mt-1 font-semibold text-foreground">
-              ${scraped.price.toFixed(2)} {scraped.currency}
+              {formatPrice(scraped.price, scraped.currency ?? 'USD')}
             </p>
           )}
           {scraped.url && (
@@ -273,11 +274,16 @@ function ManualForm({
           <Select name="currency" defaultValue="USD">
             <SelectTrigger id="currency"><SelectValue /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="USD">USD</SelectItem>
-              <SelectItem value="EUR">EUR</SelectItem>
-              <SelectItem value="GBP">GBP</SelectItem>
-              <SelectItem value="CAD">CAD</SelectItem>
-              <SelectItem value="AUD">AUD</SelectItem>
+              <SelectItem value="USD">USD ($)</SelectItem>
+              <SelectItem value="EUR">EUR (€)</SelectItem>
+              <SelectItem value="GBP">GBP (£)</SelectItem>
+              <SelectItem value="CAD">CAD (CA$)</SelectItem>
+              <SelectItem value="AUD">AUD (A$)</SelectItem>
+              <SelectItem value="JPY">JPY (¥)</SelectItem>
+              <SelectItem value="INR">INR (₹)</SelectItem>
+              <SelectItem value="MXN">MXN (MX$)</SelectItem>
+              <SelectItem value="BRL">BRL (R$)</SelectItem>
+              <SelectItem value="CHF">CHF</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -298,18 +304,24 @@ function ManualForm({
         <Input id="imageUrl" name="imageUrl" type="url" placeholder="https://…" />
       </div>
 
-      <div className="space-y-1.5">
-        <Label htmlFor="priority">Priority</Label>
-        <Select name="priority" defaultValue="3">
-          <SelectTrigger id="priority"><SelectValue /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="1">Low</SelectItem>
-            <SelectItem value="2">Low-Medium</SelectItem>
-            <SelectItem value="3">Medium</SelectItem>
-            <SelectItem value="4">High</SelectItem>
-            <SelectItem value="5">Must have</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-1.5">
+          <Label htmlFor="priority">Priority</Label>
+          <Select name="priority" defaultValue="3">
+            <SelectTrigger id="priority"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">Low</SelectItem>
+              <SelectItem value="2">Low-Medium</SelectItem>
+              <SelectItem value="3">Medium</SelectItem>
+              <SelectItem value="4">High</SelectItem>
+              <SelectItem value="5">Must have</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="quantity">Quantity</Label>
+          <Input id="quantity" name="quantity" type="number" min="1" max="99" defaultValue="1" />
+        </div>
       </div>
 
       <div className="space-y-1.5">

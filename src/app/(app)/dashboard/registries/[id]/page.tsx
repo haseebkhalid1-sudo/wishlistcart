@@ -23,6 +23,7 @@ import { StartPoolDialog } from '@/components/group-gift/start-pool-dialog'
 import { PoolStatusCard } from '@/components/group-gift/pool-status-card'
 import { CashFundCard } from '@/components/registry/cash-fund-card'
 import { CreateCashFundDialog } from '@/components/registry/create-cash-fund-dialog'
+import { formatPrice } from '@/lib/utils'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -96,18 +97,12 @@ function groupItemsByCategory(items: RegistryItem[]): Map<string, RegistryItem[]
   return map
 }
 
-function formatPrice(price: Prisma.Decimal | null | undefined): string | null {
-  if (price == null) return null
-  const n = Number(price)
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n)
-}
-
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://wishlistcart.com'
 
 // ─── Item row ─────────────────────────────────────────────────────────────────
 
 function RegistryItemRow({ item, pool }: { item: RegistryItem; pool: PoolSummary | null }) {
-  const price = formatPrice(item.price)
+  const price = item.price != null ? formatPrice(Number(item.price), item.currency) : null
 
   return (
   <div>

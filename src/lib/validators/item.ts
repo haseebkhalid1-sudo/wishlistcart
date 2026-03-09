@@ -9,6 +9,7 @@ export const createItemSchema = z.object({
   storeName: z.string().max(100).optional().nullable(),
   notes: z.string().max(1000).trim().optional().nullable(),
   priority: z.number().int().min(1).max(5).default(3),
+  quantity: z.number().int().min(1).max(99).default(1),
   category: z.string().max(50).optional().nullable(),
   tags: z.array(z.string().max(30)).max(10).default([]),
 })
