@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { createCheckoutSession, createPortalSession } from '@/lib/actions/billing'
 import { toast } from 'sonner'
+import { ProfileForm } from './profile-form'
+import type { ProfileData } from '@/lib/actions/profile'
 
 interface BillingStatus {
   plan: 'FREE' | 'PRO' | 'CORPORATE'
@@ -18,9 +20,10 @@ interface BillingStatus {
 
 interface Props {
   billingStatus: BillingStatus | null
+  profile: ProfileData | null
 }
 
-export function SettingsClient({ billingStatus }: Props) {
+export function SettingsClient({ billingStatus, profile }: Props) {
   const [activeTab, setActiveTab] = useState<'profile' | 'billing' | 'notifications'>('profile')
   const [isPending, startTransition] = useTransition()
 
@@ -93,10 +96,12 @@ export function SettingsClient({ billingStatus }: Props) {
           </div>
 
           <div className="rounded-xl border border-border p-6">
-            <h2 className="font-medium text-foreground mb-1">Profile editing</h2>
-            <p className="text-sm text-muted-foreground">
-              Profile name and avatar editing coming soon.
-            </p>
+            <h2 className="font-medium text-foreground mb-5">Edit profile</h2>
+            {profile ? (
+              <ProfileForm profile={profile} />
+            ) : (
+              <p className="text-sm text-muted-foreground">Unable to load profile data.</p>
+            )}
           </div>
         </div>
       )}

@@ -79,6 +79,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${BASE_URL}/blog/how-to-create-a-wishlist`,
+      lastModified: new Date('2026-03-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/gift-ideas-for-people-who-have-everything`,
+      lastModified: new Date('2026-03-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${BASE_URL}/blog/best-registry-apps-2026`,
+      lastModified: new Date('2026-03-09'),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ]
 
   const personaGuides: MetadataRoute.Sitemap = [

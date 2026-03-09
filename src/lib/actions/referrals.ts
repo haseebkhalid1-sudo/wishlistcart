@@ -2,6 +2,7 @@
 
 import { createServerClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma/client'
+import { inngest } from '@/lib/inngest/client'
 import { referralCodeSchema } from '@/lib/validators/referrals'
 import type { ActionResult } from '@/types'
 import type { ReferralCode } from '@prisma/client'
@@ -123,6 +124,12 @@ export async function applyReferralCode(
           connect: { id: newUserId },
         },
       },
+    })
+
+    // Fire Inngest event to handle referral reward asynchronously
+    await inngest.send({
+      name: 'app/referral.completed',
+      data: { referrerId: referral.userId, newUserId, code: parsed.data.code },
     })
 
     return { success: true, data: undefined }

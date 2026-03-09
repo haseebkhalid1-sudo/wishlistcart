@@ -83,6 +83,20 @@ export default async function ReferralsPage() {
         </div>
       </div>
 
+      {/* Rewards banner — shown when at least one reward has been earned */}
+      {stats.rewardsSent > 0 && (
+        <div className="mb-8 rounded-lg border border-border bg-subtle px-5 py-4 flex items-center gap-3">
+          <Award className="h-5 w-5 shrink-0 text-foreground" />
+          <p className="text-sm text-foreground">
+            You&apos;ve earned{' '}
+            <span className="font-semibold">
+              {stats.rewardsSent} Pro upgrade{stats.rewardsSent === 1 ? '' : 's'}
+            </span>
+            !
+          </p>
+        </div>
+      )}
+
       {/* Empty state for no signups yet */}
       {stats.signups === 0 && (
         <div className="mb-8 rounded-lg border border-dashed border-border px-6 py-8 text-center">

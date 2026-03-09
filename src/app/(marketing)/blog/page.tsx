@@ -9,6 +9,34 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: 'best-registry-apps-2026',
+    title:
+      'Best Registry Apps in 2026 — Honest Comparison (Amazon, Zola, WishlistCart, and More)',
+    description:
+      'A plain-language comparison of the top registry platforms in 2026 — universal store support, group gifting, price tracking, and privacy, all weighed honestly.',
+    date: '2026-03-09',
+    readTime: '7 min read',
+    category: 'Guides',
+  },
+  {
+    slug: 'gift-ideas-for-people-who-have-everything',
+    title: 'Gift Ideas for People Who Have Everything — 40 Thoughtful Picks for 2026',
+    description:
+      "Stuck buying for someone who already has everything? Here are 40 thoughtful ideas — from experiences and subscriptions to personalized gifts they can't buy themselves.",
+    date: '2026-03-09',
+    readTime: '8 min read',
+    category: 'Guides',
+  },
+  {
+    slug: 'how-to-create-a-wishlist',
+    title: 'How to Create a Wishlist Online in 2026 — The Complete Guide',
+    description:
+      'Everything you need to know about creating, sharing, and managing a digital wishlist — from your first item to coordinating gifts without the awkwardness.',
+    date: '2026-03-09',
+    readTime: '6 min read',
+    category: 'Guides',
+  },
+  {
     slug: 'wedding-registry-checklist-2026',
     title: 'The Complete Wedding Registry Checklist for 2026 — 150+ Items by Category',
     description:
