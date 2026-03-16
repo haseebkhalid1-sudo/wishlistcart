@@ -29,10 +29,10 @@ export default async function GiftConciergePage() {
   ])
 
   const usage = usageResult.success
-    ? usageResult
+    ? usageResult.data
     : { used: 0, limit: 3, plan: 'FREE' }
 
-  const sessions = historyResult.success ? historyResult.sessions : []
+  const sessions = historyResult.success ? historyResult.data.sessions : []
 
   return (
     <div className="flex h-[calc(100vh-3.5rem)] overflow-hidden">
