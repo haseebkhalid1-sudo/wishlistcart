@@ -898,7 +898,7 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 > Update this tracker as you finish each deliverable.
 
 ### Last Session Summary
-> **Date**: March 2026 | **PHASE 1 ✅ | PHASE 2 ✅ | PHASE 3 ✅ — ALL COMPLETE**
+> **Date**: March 2026 | **PHASE 1 ✅ | PHASE 2 ✅ | PHASE 3 ✅ | PHASE 4 ✅ | PHASE 5 ✅ — ALL COMPLETE**
 >
 > **Phase 3 Weeks 25–28**: Public profiles, follow/unfollow, activity feed, explore page, gift finder quiz.
 >
@@ -915,7 +915,10 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 > profile settings, explore improvements, landing page polish, pricing FAQ, 6 new blog posts, welcome email,
 > notification bell + /dashboard/notifications page, gift finder markdown rendering, item quantity field,
 > multi-currency price display (10 currencies), ANTHROPIC_API_KEY + STRIPE_CORPORATE_PRICE_ID wired.
-> **All Phase 5 features shipped. Ready for Phase 6.**
+>
+> **Phase 6 DEFINED** (March 2026) — Ecosystem expansion: Browser Extension (Wks 53–56), AI Gift Concierge
+> (Wks 57–60), B2B Embeddable Widget (Wks 61–64), Marketplace MVP (Wks 65–68), Advanced Analytics (Wks 69–72),
+> Partner Integrations & Public API (Wks 73–76). **Starting Phase 6 — Weeks 53–56 (Browser Extension).**
 
 ### Phase Progress Tracker
 
@@ -956,6 +959,79 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 - [x] `ANTHROPIC_API_KEY` added to Vercel env
 - [x] Gift finder route: lazy Anthropic client init (fixes 405 when key missing)
 - [x] `date-fns` installed for `formatDistanceToNow` in notification items
+
+---
+
+#### PHASE 6 — Ecosystem Expansion (Weeks 53–76)
+
+> **Goal**: Open new revenue streams — B2B widget, enhanced AI, browser extension, marketplace MVP, and partner integrations.
+
+---
+
+**Weeks 53–56: Browser Extension (Deferred from Phase 1)**
+- [x] Chrome extension: "Add to WishlistCart" button on any product page
+- [x] Extension popup: select target wishlist, set quantity/priority/note
+- [x] Extension background script: calls `/api/scrape` with active tab URL
+- [x] Extension auth: uses existing Supabase session (shared cookie domain)
+- [x] `public/extension/` build output — `manifest.json` v3, background service worker
+- [ ] Submit to Chrome Web Store ($5 one-time dev fee)
+- [ ] Firefox extension (WebExtension API compatible)
+- [x] Extension landing page at `/browser-extension` (install CTA + demo GIF)
+
+**Weeks 57–60: AI Gift Concierge**
+- [x] `/gift-concierge` page — conversational AI gift advisor (Anthropic streaming)
+- [x] `src/app/api/gift-concierge/route.ts` — POST, streams Claude response
+- [x] Multi-turn chat UI: `src/components/gift-concierge/chat.tsx` (message history, typing indicator)
+- [x] Budget + recipient + occasion inputs → personalized product recommendations
+- [x] "Save to Wishlist" button on each AI-recommended item
+- [x] Concierge history: last 5 sessions stored in `User.settings.conciergeHistory` (Json)
+- [x] Pro gate: unlimited sessions; Free: 3/month (tracked via `ConciergeSession` model)
+- [x] Sidebar nav item: Concierge (Sparkles icon)
+
+**Weeks 61–64: B2B Embeddable Widget**
+- [x] `WishlistWidget` Prisma model: `id`, `userId`, `name`, `allowedDomains` (String[]), `apiKey`, `createdAt`
+- [x] `src/lib/actions/widget.ts`: `createWidget`, `updateWidget`, `deleteWidget`, `rotateApiKey`
+- [x] `/dashboard/widget` — widget management dashboard (create, configure, embed code)
+- [x] `/api/widget/[apiKey]/wishlists` — public API: returns user's public wishlists (CORS-enabled)
+- [x] `/api/widget/[apiKey]/add-item` — POST: add item to wishlist from external site
+- [ ] Embed snippet: `<script src="https://wishlistcart.com/widget.js" data-key="..."></script>`
+- [ ] `public/widget.js` — vanilla JS widget (no framework deps, < 10 KB gzipped)
+- [ ] Widget UI: floating "Add to WishlistCart" button + popover with wishlist select
+- [x] API key shown once on creation, stored as bcrypt hash
+- [x] `/widget-docs` marketing page — integration guide, code examples, pricing
+
+**Weeks 65–68: Marketplace MVP**
+- [ ] `MarketplaceProduct` model: `id`, `title`, `description`, `price`, `currency`, `imageUrl`, `storeUrl`, `tags` (String[]), `category`, `isFeatured`, `createdAt`
+- [ ] `/marketplace` page — curated product discovery grid (filter by category, price range)
+- [ ] `src/lib/actions/marketplace.ts`: `getMarketplaceProducts`, `searchMarketplace`
+- [ ] Admin: `addMarketplaceProduct`, `featureProduct` — admin-only actions
+- [ ] "Add to Wishlist" from marketplace → AddItemDialog pre-filled
+- [ ] Marketplace categories: Home, Tech, Fashion, Beauty, Kids, Books, Sports, Food
+- [ ] Marketplace items link through `/api/affiliate/redirect` for commission tracking
+- [ ] SEO: `/marketplace/[category]` pages with static generation + metadata
+- [ ] Sitemap updated with all marketplace category pages
+
+**Weeks 69–72: Advanced Analytics (Pro)**
+- [ ] `src/app/(app)/dashboard/analytics/page.tsx` — Pro-gated analytics hub
+- [ ] Wishlist view tracking: chart (7d/30d/90d), top wishlists by views
+- [ ] Affiliate click analytics: clicks per item, conversion estimate, top earners
+- [ ] Gift claim analytics: most-gifted items, claim rate per wishlist
+- [ ] Referral funnel: referral clicks → signups → conversions
+- [ ] CSV export: all analytics data as downloadable CSV
+- [ ] `src/lib/queries/analytics.ts` — aggregate queries with Prisma groupBy
+- [ ] Weekly analytics digest email (Pro only) — new Resend template
+
+**Weeks 73–76: Partner Integrations & API**
+- [ ] Public REST API: `/api/v1/` — authenticated with user API keys
+- [ ] API key management: `ApiKey` model, `/dashboard/api-keys` page (create/revoke)
+- [ ] `/api/v1/wishlists` — GET (list), POST (create)
+- [ ] `/api/v1/wishlists/[id]/items` — GET (list), POST (add item)
+- [ ] `/api/v1/me` — GET current user profile
+- [ ] Rate limiting: 100 req/min (Free), 1000 req/min (Pro) via Upstash Redis
+- [ ] API docs page: `/developers` — OpenAPI spec viewer (Scalar or Redoc)
+- [ ] `openapi.yaml` in `public/` — machine-readable API spec
+- [ ] Zapier integration guide (webhook triggers: item-added, gift-claimed)
+- [ ] Partnership outreach page: `/partners` — embed + API CTAs for e-commerce stores
 
 ---
 

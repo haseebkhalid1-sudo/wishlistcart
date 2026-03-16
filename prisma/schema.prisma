@@ -49,6 +49,8 @@ model User {
   referralCode        ReferralCode?
   referredUsers       ReferralCode[]          @relation("ReferredBy")
   onboardingDone      Boolean                 @default(false) @map("onboarding_done")
+  conciergeSession    ConciergeSession[]
+  wishlistWidgets     WishlistWidget[]
 
   @@map("users")
 }
@@ -440,4 +442,45 @@ model ReferralCode {
 
   @@index([code])
   @@map("referral_codes")
+}
+
+// ============================================================
+// AI GIFT CONCIERGE
+// ============================================================
+
+model ConciergeSession {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  title     String   @default("Gift Advice Session")
+  messages  Json     @default("[]") // array of { role: 'user'|'assistant', content: string, createdAt: string }
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("concierge_sessions")
+}
+
+// ============================================================
+// B2B EMBEDDABLE WIDGET
+// ============================================================
+
+model WishlistWidget {
+  id             String   @id @default(uuid()) @db.Uuid
+  userId         String   @map("user_id") @db.Uuid
+  name           String   @default("My Widget")
+  apiKeyHash     String   @unique @map("api_key_hash") // SHA-256 hash of the raw key
+  apiKeyPrefix   String   @map("api_key_prefix") // first 8 chars for display e.g. "wlc_a1b2"
+  allowedDomains String[] @default([]) @map("allowed_domains") // e.g. ["mystore.com"]
+  isActive       Boolean  @default(true) @map("is_active")
+  requestCount   Int      @default(0) @map("request_count") // total API calls
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([apiKeyHash])
+  @@map("wishlist_widgets")
 }

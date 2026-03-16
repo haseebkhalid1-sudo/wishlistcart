@@ -43,6 +43,7 @@ export const PLAN_CONFIG = {
       itemsPerWishlist: Infinity,
       teamMembers: 1,
       priceAlerts: 0,
+      conciergeSessionsPerMonth: 3,
     },
   },
   PRO: {
@@ -63,6 +64,7 @@ export const PLAN_CONFIG = {
       itemsPerWishlist: Infinity,
       teamMembers: 1,
       priceAlerts: Infinity,
+      conciergeSessionsPerMonth: Infinity,
     },
   },
   CORPORATE: {
@@ -81,6 +83,7 @@ export const PLAN_CONFIG = {
       itemsPerWishlist: 200,
       teamMembers: 25,
       priceAlerts: 100,
+      conciergeSessionsPerMonth: Infinity,
     },
   },
 } as const satisfies Record<Plan, {
@@ -88,5 +91,9 @@ export const PLAN_CONFIG = {
   price: number
   priceId: string
   features: readonly string[]
-  limits: { wishlists: number; itemsPerWishlist: number; teamMembers: number; priceAlerts: number }
+  limits: { wishlists: number; itemsPerWishlist: number; teamMembers: number; priceAlerts: number; conciergeSessionsPerMonth: number }
 }>
+
+export function getConciergeLimit(plan: Plan): number {
+  return PLAN_CONFIG[plan].limits.conciergeSessionsPerMonth
+}

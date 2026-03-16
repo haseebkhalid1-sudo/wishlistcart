@@ -46,6 +46,16 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://wishlistcart.com' },
   manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/extension/icons/icon.svg', type: 'image/svg+xml' },
+      { url: '/extension/icons/icon16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/extension/icons/icon48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/extension/icons/icon512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/extension/icons/icon512.png',
+    apple: '/extension/icons/icon512.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black',
@@ -60,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`}>
       <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+        <link rel="apple-touch-icon" href="/extension/icons/icon512.png" />
         <meta name="theme-color" content="#0F0F0F" />
       </head>
       <body className="font-sans antialiased">

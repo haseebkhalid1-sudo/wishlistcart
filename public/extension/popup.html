@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WishlistCart</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 360px;
+      min-height: 480px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      color: #0F0F0F;
+      background: #FFFFFF;
+      line-height: 1.5;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid #E4E4E0;
+      background: #FFFFFF;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #0F0F0F;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      background: #0F0F0F;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      font-family: Georgia, serif;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+
+    .header-link {
+      font-size: 12px;
+      color: #8A8A8A;
+      text-decoration: none;
+    }
+
+    .header-link:hover {
+      color: #0F0F0F;
+    }
+
+    /* ── App container ── */
+    #app {
+      padding: 16px;
+    }
+
+    /* ── Loading state ── */
+    .state-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 16px;
+      gap: 12px;
+      color: #8A8A8A;
+      font-size: 13px;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #E4E4E0;
+      border-top-color: #0F0F0F;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Not logged in state ── */
+    .state-auth {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .auth-icon {
+      width: 56px;
+      height: 56px;
+      background: #F8F8F7;
+      border: 1px solid #E4E4E0;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .auth-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #0F0F0F;
+    }
+
+    .auth-desc {
+      font-size: 13px;
+      color: #8A8A8A;
+      line-height: 1.6;
+      max-width: 260px;
+    }
+
+    /* ── Add item form state ── */
+    .state-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ── Product preview card ── */
+    .product-card {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: #F8F8F7;
+      border: 1px solid #E4E4E0;
+      border-radius: 8px;
+    }
+
+    .product-image-wrap {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #E4E4E0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-image-placeholder {
+      font-size: 24px;
+      color: #8A8A8A;
+    }
+
+    .product-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .product-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #0F0F0F;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.4;
+    }
+
+    .product-price {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0F0F0F;
+    }
+
+    .product-domain {
+      font-size: 11px;
+      color: #8A8A8A;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Section label ── */
+    .field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #0F0F0F;
+      margin-bottom: 4px;
+    }
+
+    .field-label .optional {
+      color: #8A8A8A;
+      font-weight: 400;
+    }
+
+    /* ── Form controls ── */
+    select,
+    input[type="number"],
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: #0F0F0F;
+      background: #FFFFFF;
+      border: 1px solid #E4E4E0;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238A8A8A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+
+    select:focus,
+    input[type="number"]:focus,
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: #0F0F0F;
+    }
+
+    select:disabled,
+    input:disabled,
+    textarea:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 64px;
+    }
+
+    /* ── Priority radio group ── */
+    .radio-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .radio-option {
+      flex: 1;
+    }
+
+    .radio-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .radio-label {
+      display: block;
+      text-align: center;
+      padding: 7px 4px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #8A8A8A;
+      background: #F8F8F7;
+      border: 1px solid #E4E4E0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .radio-option input[type="radio"]:checked + .radio-label {
+      background: #0F0F0F;
+      border-color: #0F0F0F;
+      color: #FFFFFF;
+    }
+
+    .radio-label:hover {
+      border-color: #0F0F0F;
+      color: #0F0F0F;
+    }
+
+    .radio-option input[type="radio"]:checked + .radio-label:hover {
+      color: #FFFFFF;
+    }
+
+    /* ── Row layout ── */
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row .field {
+      flex: 1;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      text-decoration: none;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: #0F0F0F;
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      opacity: 0.85;
+    }
+
+    .btn-secondary {
+      background: #F8F8F7;
+      color: #0F0F0F;
+      border: 1px solid #E4E4E0;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #F0F0EE;
+    }
+
+    /* ── Message / toast ── */
+    .message {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .message-success {
+      background: #F0FDF4;
+      color: #166534;
+      border: 1px solid #BBF7D0;
+    }
+
+    .message-error {
+      background: #FFF1F2;
+      color: #9F1239;
+      border: 1px solid #FECDD3;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: #E4E4E0;
+      margin: 2px 0;
+    }
+
+    /* ── Utility ── */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ── Scraping indicator ── */
+    .scraping-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #8A8A8A;
+      font-size: 12px;
+    }
+
+    .scraping-row .spinner {
+      width: 14px;
+      height: 14px;
+      border-width: 2px;
+    }
+
+    /* ── No wishlists hint ── */
+    .hint {
+      font-size: 12px;
+      color: #8A8A8A;
+    }
+
+    .hint a {
+      color: #0F0F0F;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <a class="logo" href="https://wishlistcart.com" target="_blank" rel="noopener">
+      <div class="logo-mark">W</div>
+      <span class="logo-text">WishlistCart</span>
+    </a>
+    <a class="header-link" id="openDashboard" href="https://wishlistcart.com/dashboard" target="_blank" rel="noopener">
+      Dashboard ↗
+    </a>
+  </header>
+
+  <!-- Main app container -->
+  <div id="app">
+
+    <!-- State: Loading -->
+    <div id="stateLoading" class="state-loading">
+      <div class="spinner"></div>
+      <span>Checking login&hellip;</span>
+    </div>
+
+    <!-- State: Not logged in -->
+    <div id="stateAuth" class="state-auth hidden">
+      <div class="auth-icon">🔒</div>
+      <div>
+        <p class="auth-title">Sign in to save products</p>
+        <p class="auth-desc">Sign in to WishlistCart to save products from any store to your wishlists.</p>
+      </div>
+      <a class="btn btn-primary" href="https://wishlistcart.com/login" target="_blank" rel="noopener" id="signInBtn">
+        Sign in to WishlistCart
+      </a>
+      <a class="btn btn-secondary" href="https://wishlistcart.com/signup" target="_blank" rel="noopener">
+        Create free account
+      </a>
+    </div>
+
+    <!-- State: Add item form -->
+    <div id="stateForm" class="state-form hidden">
+
+      <!-- Product preview -->
+      <div id="productCard" class="product-card hidden">
+        <div class="product-image-wrap">
+          <img id="productImage" src="" alt="" />
+          <span id="productImagePlaceholder" class="product-image-placeholder hidden">🛍️</span>
+        </div>
+        <div class="product-info">
+          <p class="product-title" id="productTitle">Loading product&hellip;</p>
+          <p class="product-price" id="productPrice"></p>
+          <p class="product-domain" id="productDomain"></p>
+        </div>
+      </div>
+
+      <!-- Scraping indicator -->
+      <div id="scrapingRow" class="scraping-row hidden">
+        <div class="spinner"></div>
+        <span>Fetching product details&hellip;</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Wishlist selector -->
+      <div class="field">
+        <label class="field-label" for="wishlistSelect">Save to wishlist</label>
+        <select id="wishlistSelect">
+          <option value="">Loading wishlists&hellip;</option>
+        </select>
+        <p class="hint" id="noWishlistsHint" style="margin-top:6px; display:none;">
+          No wishlists found. <a href="https://wishlistcart.com/dashboard/wishlists" target="_blank">Create one first.</a>
+        </p>
+      </div>
+
+      <!-- Title (editable) -->
+      <div class="field">
+        <label class="field-label" for="itemTitle">Product name</label>
+        <input type="text" id="itemTitle" placeholder="Enter product name" maxlength="500" />
+      </div>
+
+      <!-- Price (editable) -->
+      <div class="field">
+        <label class="field-label" for="itemPrice">Price <span class="optional">(optional)</span></label>
+        <input type="text" id="itemPrice" placeholder="e.g. 29.99" maxlength="20" />
+      </div>
+
+      <!-- Row: Quantity -->
+      <div class="field">
+        <label class="field-label" for="itemQuantity">Quantity</label>
+        <input type="number" id="itemQuantity" value="1" min="1" max="99" style="width:80px;" />
+      </div>
+
+      <!-- Priority -->
+      <div class="field">
+        <label class="field-label">Priority</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="priority" value="LOW" />
+            <span class="radio-label">Low</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="priority" value="MEDIUM" checked />
+            <span class="radio-label">Medium</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="priority" value="HIGH" />
+            <span class="radio-label">High</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="field">
+        <label class="field-label" for="itemNotes">Notes <span class="optional">(optional)</span></label>
+        <textarea id="itemNotes" placeholder="Size, color, or any other details&hellip;" rows="2"></textarea>
+      </div>
+
+      <!-- Message area -->
+      <div id="messageArea" class="message hidden"></div>
+
+      <!-- Submit button -->
+      <button class="btn btn-primary" id="addBtn" type="button">
+        Add to Wishlist
+      </button>
+
+    </div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
