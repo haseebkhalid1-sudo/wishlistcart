@@ -152,6 +152,7 @@ function SaveToWishlistButton({
         wishlistId,
         title: productName,
         price: productPrice,
+        currency: 'USD',
       })
       if (result.success) {
         setSaved(true)
