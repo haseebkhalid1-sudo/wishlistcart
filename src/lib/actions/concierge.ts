@@ -71,7 +71,7 @@ const saveSchema = z.object({
   wishlistId: z.string().uuid(),
   title: z.string().min(1).max(500).trim(),
   price: z.number().positive().optional().nullable(),
-  currency: z.string().length(3).default('USD'),
+  currency: z.string().length(3).optional().default('USD'),
 })
 
 export async function saveRecommendationToWishlist(
