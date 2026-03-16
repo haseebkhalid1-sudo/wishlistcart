@@ -44,6 +44,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
+      url: `${BASE_URL}/developers`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${BASE_URL}/partners`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: `${BASE_URL}/classroom-wishlist`,
       lastModified: now,
       changeFrequency: 'monthly',
@@ -131,6 +143,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
+  const marketplaceCategories: MetadataRoute.Sitemap = [
+    'home', 'tech', 'fashion', 'beauty', 'kids', 'books', 'sports', 'food',
+  ].map((slug) => ({
+    url: `${BASE_URL}/marketplace/${slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }))
+
   const publicRegistries = await prisma.wishlist.findMany({
     where: {
       type: 'REGISTRY',
@@ -150,5 +171,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticPages, ...personaGuides, ...occasionGuides, ...budgetGuides, ...registryPages]
+  const marketplaceMain: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/marketplace`,
+      lastModified: now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+  ]
+
+  return [
+    ...staticPages,
+    ...personaGuides,
+    ...occasionGuides,
+    ...budgetGuides,
+    ...marketplaceMain,
+    ...marketplaceCategories,
+    ...registryPages,
+  ]
 }

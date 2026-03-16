@@ -51,6 +51,7 @@ model User {
   onboardingDone      Boolean                 @default(false) @map("onboarding_done")
   conciergeSession    ConciergeSession[]
   wishlistWidgets     WishlistWidget[]
+  apiKeys             ApiKey[]
 
   @@map("users")
 }
@@ -483,4 +484,49 @@ model WishlistWidget {
   @@index([userId])
   @@index([apiKeyHash])
   @@map("wishlist_widgets")
+}
+
+// ============================================================
+// MARKETPLACE
+// ============================================================
+
+model MarketplaceProduct {
+  id          String   @id @default(uuid()) @db.Uuid
+  title       String
+  description String?
+  price       Float
+  currency    String   @default("USD")
+  imageUrl    String?  @map("image_url")
+  storeUrl    String   @map("store_url")
+  tags        String[] @default([])
+  category    String   // e.g. "Tech", "Home", "Fashion"
+  isFeatured  Boolean  @default(false) @map("is_featured")
+  clickCount  Int      @default(0) @map("click_count")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([category])
+  @@index([isFeatured])
+  @@map("marketplace_products")
+}
+
+// ============================================================
+// API KEYS
+// ============================================================
+
+model ApiKey {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  name       String    // user-given name e.g. "Zapier Integration"
+  keyHash    String    @unique @map("key_hash") // SHA-256 of raw key
+  keyPrefix  String    @map("key_prefix")       // first 12 chars for display
+  lastUsedAt DateTime? @map("last_used_at")
+  isActive   Boolean   @default(true) @map("is_active")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([keyHash])
+  @@map("api_keys")
 }

@@ -19,6 +19,9 @@ import {
   Chrome,
   Sparkles,
   Code2,
+  ShoppingBag,
+  BarChart2,
+  Key,
 } from 'lucide-react'
 import { SearchBar } from '@/components/search/search-bar'
 
@@ -32,9 +35,12 @@ const navItems = [
   { href: '/dashboard/gift-history', label: 'Gift History', icon: History },
   { href: '/dashboard/referrals', label: 'Referrals', icon: Users2 },
   { href: '/explore', label: 'Explore', icon: Compass },
+  { href: '/marketplace', label: 'Marketplace', icon: ShoppingBag },
   { href: '/dashboard/gift-concierge', label: 'Gift Concierge', icon: Sparkles },
   { href: '/dashboard/widget', label: 'Embed Widget', icon: Code2 },
   { href: '/browser-extension', label: 'Get Extension', icon: Chrome },
+  { href: '/dashboard/analytics', label: 'Analytics', icon: BarChart2 },
+  { href: '/dashboard/api-keys', label: 'API Keys', icon: Key },
   { href: '/dashboard/creator', label: 'Creator', icon: Star },
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ]
@@ -43,6 +49,7 @@ const adminNavItems = [
   { href: '/dashboard/admin', label: 'Overview', icon: Shield, exact: true },
   { href: '/dashboard/admin/creators', label: 'Creator Apps', icon: Star },
   { href: '/dashboard/admin/affiliate', label: 'Affiliate', icon: Compass },
+  { href: '/dashboard/admin/marketplace', label: 'Marketplace', icon: LayoutGrid },
   { href: '/dashboard/admin/system', label: 'System', icon: Settings },
 ]
 

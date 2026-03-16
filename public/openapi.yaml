@@ -1,0 +1,359 @@
+openapi: 3.0.3
+info:
+  title: WishlistCart REST API
+  description: The WishlistCart REST API lets you read and write wishlist data programmatically.
+  version: "1.0"
+  contact:
+    name: WishlistCart Support
+    url: https://wishlistcart.com
+servers:
+  - url: https://wishlistcart.com/api/v1
+    description: Production
+security:
+  - BearerAuth: []
+tags:
+  - name: Users
+    description: Current authenticated user
+  - name: Wishlists
+    description: Wishlist CRUD operations
+  - name: Items
+    description: Wishlist item operations
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: API key from your WishlistCart dashboard (starts with wlc_)
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Unauthorized
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        email:
+          type: string
+          format: email
+          example: you@example.com
+        name:
+          type: string
+          example: Jane Smith
+        username:
+          type: string
+          example: janesmith
+        plan:
+          type: string
+          enum: [FREE, PRO, CORPORATE]
+          example: PRO
+    Wishlist:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d4e5f6a7-b8c9-0123-def4-567890abcdef
+        name:
+          type: string
+          example: Birthday Wishlist
+        description:
+          type: string
+          nullable: true
+          example: Things I want for my birthday
+        privacy:
+          type: string
+          enum: [PRIVATE, SHARED, PUBLIC]
+          example: PUBLIC
+        slug:
+          type: string
+          example: birthday-wishlist
+        createdAt:
+          type: string
+          format: date-time
+          example: "2026-01-15T12:00:00.000Z"
+        _count:
+          type: object
+          properties:
+            items:
+              type: integer
+              example: 12
+    WishlistItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: j1k2l3m4-n5o6-7890-pqrs-tu1234567890
+        title:
+          type: string
+          example: Sony WH-1000XM5 Headphones
+        url:
+          type: string
+          nullable: true
+          example: https://www.amazon.com/dp/B09XS7JWHH
+        price:
+          type: number
+          nullable: true
+          example: 279.99
+        currency:
+          type: string
+          example: USD
+        priority:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 4
+        createdAt:
+          type: string
+          format: date-time
+          example: "2026-02-10T08:30:00.000Z"
+paths:
+  /me:
+    get:
+      summary: Get current user
+      operationId: getMe
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Current authenticated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                email: you@example.com
+                name: Jane Smith
+                username: janesmith
+                plan: PRO
+        "401":
+          description: Unauthorized — missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: Unauthorized
+  /wishlists:
+    get:
+      summary: List wishlists
+      operationId: listWishlists
+      tags:
+        - Wishlists
+      parameters:
+        - name: page
+          in: query
+          description: Page number (1-based)
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - name: limit
+          in: query
+          description: Number of results per page
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+      responses:
+        "200":
+          description: Paginated list of wishlists belonging to the authenticated user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Wishlist"
+                  page:
+                    type: integer
+                    example: 1
+                  limit:
+                    type: integer
+                    example: 20
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create wishlist
+      operationId: createWishlist
+      tags:
+        - Wishlists
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                  example: My New Wishlist
+                description:
+                  type: string
+                  maxLength: 500
+                  example: Things I want
+                privacy:
+                  type: string
+                  enum: [PRIVATE, SHARED, PUBLIC]
+                  default: PRIVATE
+                  example: PRIVATE
+      responses:
+        "201":
+          description: Wishlist created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Wishlist"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Validation error — missing required fields or invalid values
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "name is required"
+  /wishlists/{id}/items:
+    get:
+      summary: List items in wishlist
+      operationId: listItems
+      tags:
+        - Items
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: UUID of the wishlist
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: List of items in the specified wishlist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/WishlistItem"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Wishlist not found or does not belong to the authenticated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: Wishlist not found
+    post:
+      summary: Add item to wishlist
+      operationId: addItem
+      tags:
+        - Items
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: UUID of the wishlist
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+                  maxLength: 500
+                  example: Sony WH-1000XM5 Headphones
+                url:
+                  type: string
+                  format: uri
+                  example: https://www.amazon.com/dp/B09XS7JWHH
+                price:
+                  type: number
+                  example: 279.99
+                currency:
+                  type: string
+                  default: USD
+                  example: USD
+                notes:
+                  type: string
+                  maxLength: 1000
+                  example: Black colour please
+                priority:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  default: 3
+                  example: 4
+      responses:
+        "201":
+          description: Item added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/WishlistItem"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Wishlist not found or does not belong to the authenticated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: Wishlist not found
+        "422":
+          description: Validation error — missing required fields or invalid values
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "title is required"

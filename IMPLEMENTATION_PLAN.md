@@ -994,44 +994,44 @@ const AFFILIATE_CONFIG: Record<string, AffiliateNetwork> = {
 - [x] `/dashboard/widget` — widget management dashboard (create, configure, embed code)
 - [x] `/api/widget/[apiKey]/wishlists` — public API: returns user's public wishlists (CORS-enabled)
 - [x] `/api/widget/[apiKey]/add-item` — POST: add item to wishlist from external site
-- [ ] Embed snippet: `<script src="https://wishlistcart.com/widget.js" data-key="..."></script>`
-- [ ] `public/widget.js` — vanilla JS widget (no framework deps, < 10 KB gzipped)
-- [ ] Widget UI: floating "Add to WishlistCart" button + popover with wishlist select
+- [x] Embed snippet: `<script src="https://wishlistcart.com/widget.js" data-key="..."></script>`
+- [x] `public/widget.js` — vanilla JS widget (no framework deps, < 10 KB gzipped)
+- [x] Widget UI: floating "Add to WishlistCart" button + popover with wishlist select
 - [x] API key shown once on creation, stored as bcrypt hash
 - [x] `/widget-docs` marketing page — integration guide, code examples, pricing
 
 **Weeks 65–68: Marketplace MVP**
-- [ ] `MarketplaceProduct` model: `id`, `title`, `description`, `price`, `currency`, `imageUrl`, `storeUrl`, `tags` (String[]), `category`, `isFeatured`, `createdAt`
-- [ ] `/marketplace` page — curated product discovery grid (filter by category, price range)
-- [ ] `src/lib/actions/marketplace.ts`: `getMarketplaceProducts`, `searchMarketplace`
-- [ ] Admin: `addMarketplaceProduct`, `featureProduct` — admin-only actions
-- [ ] "Add to Wishlist" from marketplace → AddItemDialog pre-filled
-- [ ] Marketplace categories: Home, Tech, Fashion, Beauty, Kids, Books, Sports, Food
-- [ ] Marketplace items link through `/api/affiliate/redirect` for commission tracking
-- [ ] SEO: `/marketplace/[category]` pages with static generation + metadata
-- [ ] Sitemap updated with all marketplace category pages
+- [x] `MarketplaceProduct` model: `id`, `title`, `description`, `price`, `currency`, `imageUrl`, `storeUrl`, `tags` (String[]), `category`, `isFeatured`, `createdAt`
+- [x] `/marketplace` page — curated product discovery grid (filter by category, price range)
+- [x] `src/lib/actions/marketplace.ts`: `getMarketplaceProducts`, `searchMarketplace`
+- [x] Admin: `addMarketplaceProduct`, `featureProduct` — admin-only actions
+- [x] "Add to Wishlist" from marketplace → AddItemDialog pre-filled
+- [x] Marketplace categories: Home, Tech, Fashion, Beauty, Kids, Books, Sports, Food
+- [x] Marketplace items link through `/api/affiliate/redirect` for commission tracking
+- [x] SEO: `/marketplace/[category]` pages with static generation + metadata
+- [x] Sitemap updated with all marketplace category pages
 
 **Weeks 69–72: Advanced Analytics (Pro)**
-- [ ] `src/app/(app)/dashboard/analytics/page.tsx` — Pro-gated analytics hub
-- [ ] Wishlist view tracking: chart (7d/30d/90d), top wishlists by views
-- [ ] Affiliate click analytics: clicks per item, conversion estimate, top earners
-- [ ] Gift claim analytics: most-gifted items, claim rate per wishlist
-- [ ] Referral funnel: referral clicks → signups → conversions
-- [ ] CSV export: all analytics data as downloadable CSV
-- [ ] `src/lib/queries/analytics.ts` — aggregate queries with Prisma groupBy
-- [ ] Weekly analytics digest email (Pro only) — new Resend template
+- [x] `src/app/(app)/dashboard/analytics/page.tsx` — Pro-gated analytics hub
+- [x] Wishlist view tracking: chart (7d/30d/90d), top wishlists by views
+- [x] Affiliate click analytics: clicks per item, conversion estimate, top earners
+- [x] Gift claim analytics: most-gifted items, claim rate per wishlist
+- [x] Referral funnel: referral clicks → signups → conversions
+- [x] CSV export: all analytics data as downloadable CSV
+- [x] `src/lib/queries/analytics.ts` — aggregate queries with Prisma groupBy
+- [x] Weekly analytics digest email (Pro only) — new Resend template
 
 **Weeks 73–76: Partner Integrations & API**
-- [ ] Public REST API: `/api/v1/` — authenticated with user API keys
-- [ ] API key management: `ApiKey` model, `/dashboard/api-keys` page (create/revoke)
-- [ ] `/api/v1/wishlists` — GET (list), POST (create)
-- [ ] `/api/v1/wishlists/[id]/items` — GET (list), POST (add item)
-- [ ] `/api/v1/me` — GET current user profile
-- [ ] Rate limiting: 100 req/min (Free), 1000 req/min (Pro) via Upstash Redis
-- [ ] API docs page: `/developers` — OpenAPI spec viewer (Scalar or Redoc)
-- [ ] `openapi.yaml` in `public/` — machine-readable API spec
-- [ ] Zapier integration guide (webhook triggers: item-added, gift-claimed)
-- [ ] Partnership outreach page: `/partners` — embed + API CTAs for e-commerce stores
+- [x] Public REST API: `/api/v1/` — authenticated with user API keys
+- [x] API key management: `ApiKey` model, `/dashboard/api-keys` page (create/revoke)
+- [x] `/api/v1/wishlists` — GET (list), POST (create)
+- [x] `/api/v1/wishlists/[id]/items` — GET (list), POST (add item)
+- [x] `/api/v1/me` — GET current user profile
+- [x] Rate limiting: 100 req/min (Free), 1000 req/min (Pro) via Upstash Redis
+- [x] API docs page: `/developers` — OpenAPI spec viewer (Scalar or Redoc)
+- [x] `openapi.yaml` in `public/` — machine-readable API spec
+- [x] Zapier integration guide (webhook triggers: item-added, gift-claimed)
+- [x] Partnership outreach page: `/partners` — embed + API CTAs for e-commerce stores
 
 ---
 
