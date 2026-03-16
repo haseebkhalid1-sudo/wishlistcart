@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { Plus, Loader2 } from 'lucide-react'
-import { addMarketplaceProduct, MARKETPLACE_CATEGORIES } from '@/lib/actions/marketplace'
+import { addMarketplaceProduct } from '@/lib/actions/marketplace'
+import { MARKETPLACE_CATEGORIES } from '@/lib/marketplace-utils'
 
 export function AdminAddProductForm() {
   const [open, setOpen] = useState(false)

@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
 import type { MarketplaceProductRow } from '@/lib/actions/marketplace'
-import { MARKETPLACE_CATEGORIES } from '@/lib/actions/marketplace'
+import { MARKETPLACE_CATEGORIES } from '@/lib/marketplace-utils'
 import { MarketplaceProductCard } from './marketplace-product-card'
 
 interface MarketplaceGridProps {

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { ShoppingBag, Plus, ExternalLink } from 'lucide-react'
 import type { MarketplaceProductRow } from '@/lib/actions/marketplace'
-import { slugToLabel } from '@/lib/actions/marketplace'
+import { slugToLabel } from '@/lib/marketplace-utils'
 
 interface MarketplaceProductCardProps {
   product: MarketplaceProductRow
