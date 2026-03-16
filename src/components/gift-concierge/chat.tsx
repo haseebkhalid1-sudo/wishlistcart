@@ -150,7 +150,7 @@ function SaveToWishlistButton({
     try {
       const result = await saveRecommendationToWishlist({
         wishlistId,
-        name: productName,
+        title: productName,
         price: productPrice,
       })
       if (result.success) {
