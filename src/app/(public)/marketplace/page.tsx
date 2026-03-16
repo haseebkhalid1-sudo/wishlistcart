@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ShoppingBag } from 'lucide-react'
 import { getMarketplaceProducts } from '@/lib/actions/marketplace'
-import { MARKETPLACE_CATEGORIES } from '@/lib/actions/marketplace'
+import { MARKETPLACE_CATEGORIES } from '@/lib/marketplace-utils'
 import { MarketplaceGrid } from '@/components/marketplace/marketplace-grid'
 
 export const revalidate = 300

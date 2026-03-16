@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
-import { getMarketplaceProducts, MARKETPLACE_CATEGORIES, slugToLabel } from '@/lib/actions/marketplace'
+import { getMarketplaceProducts } from '@/lib/actions/marketplace'
+import { MARKETPLACE_CATEGORIES, slugToLabel } from '@/lib/marketplace-utils'
 import { MarketplaceGrid } from '@/components/marketplace/marketplace-grid'
 
 export const revalidate = 300

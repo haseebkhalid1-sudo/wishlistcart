@@ -5,13 +5,7 @@ import { createServerClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma/client'
 import type { ActionResult } from '@/types'
 import type { Prisma } from '@prisma/client'
-import { MARKETPLACE_CATEGORIES, slugToLabel } from '@/lib/marketplace-utils'
-
 export type MarketplaceProductRow = Prisma.MarketplaceProductGetPayload<Record<string, never>>
-
-// Re-export so existing server-side imports keep working
-export { MARKETPLACE_CATEGORIES, slugToLabel }
-export type { CategorySlug } from '@/lib/marketplace-utils'
 
 // ---------------------------------------------------------------------------
 // getMarketplaceProducts
