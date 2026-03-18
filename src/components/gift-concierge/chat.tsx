@@ -109,6 +109,7 @@ type Product = {
   name: string
   price: string
   priceNum: number
+  searchUrl: string
 }
 
 function extractProducts(content: string): Product[] {
@@ -123,7 +124,8 @@ function extractProducts(content: string): Product[] {
     const numMatch = /[\d,]+/.exec(price.replace(/[^0-9,]/g, ''))
     const priceNum = numMatch ? parseFloat(numMatch[0].replace(/,/g, '')) : 0
     if (name && price) {
-      results.push({ name, price, priceNum })
+      const searchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(name)}`
+      results.push({ name, price, priceNum, searchUrl })
     }
   }
 
@@ -135,10 +137,12 @@ function extractProducts(content: string): Product[] {
 function SaveToWishlistButton({
   productName,
   productPrice,
+  productUrl,
   wishlists,
 }: {
   productName: string
   productPrice: number
+  productUrl: string
   wishlists: Wishlist[]
 }) {
   const [saved, setSaved] = useState(false)
@@ -153,6 +157,8 @@ function SaveToWishlistButton({
         title: productName,
         price: productPrice,
         currency: 'USD',
+        url: productUrl,
+        notes: 'Recommended by AI Gift Concierge',
       })
       if (result.success) {
         setSaved(true)
@@ -228,11 +234,19 @@ function ProductCards({
           key={p.name}
           className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm"
         >
-          <span className="font-medium text-foreground">{p.name}</span>
+          <a
+            href={p.searchUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-foreground hover:underline underline-offset-2"
+          >
+            {p.name}
+          </a>
           <span className="text-muted-foreground">{p.price}</span>
           <SaveToWishlistButton
             productName={p.name}
             productPrice={p.priceNum}
+            productUrl={p.searchUrl}
             wishlists={wishlists}
           />
         </div>

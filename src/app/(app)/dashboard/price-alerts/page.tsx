@@ -34,7 +34,7 @@ export default async function PriceAlertsPage() {
           </div>
           <h2 className="text-lg font-semibold text-foreground">No active price alerts</h2>
           <p className="mt-2 max-w-xs text-sm text-muted-foreground">
-            Open any item on your wishlists and tap "Set price alert" to start tracking.
+            Open any wishlist item that has a price, then tap &ldquo;Set price alert&rdquo; in the detail panel to start tracking.
           </p>
         </div>
       </div>

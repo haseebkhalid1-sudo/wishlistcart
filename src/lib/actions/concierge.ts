@@ -72,6 +72,8 @@ const saveSchema = z.object({
   title: z.string().min(1).max(500).trim(),
   price: z.number().positive().optional().nullable(),
   currency: z.string().length(3).optional().default('USD'),
+  url: z.string().url().optional().nullable(),
+  notes: z.string().max(500).optional().nullable(),
 })
 
 export async function saveRecommendationToWishlist(
@@ -85,7 +87,7 @@ export async function saveRecommendationToWishlist(
     const validated = saveSchema.safeParse(input)
     if (!validated.success) return { success: false, error: 'Invalid input' }
 
-    const { wishlistId, title, price, currency } = validated.data
+    const { wishlistId, title, price, currency, url, notes } = validated.data
 
     // Ownership check
     const wishlist = await prisma.wishlist.findFirst({
@@ -101,6 +103,8 @@ export async function saveRecommendationToWishlist(
         title,
         price: price ?? null,
         currency,
+        url: url ?? null,
+        notes: notes ?? null,
         priority: 3,
         quantity: 1,
       },

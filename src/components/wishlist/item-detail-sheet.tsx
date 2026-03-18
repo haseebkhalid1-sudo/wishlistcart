@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useTransition } from 'react'
 import Image from 'next/image'
-import { ExternalLink, TrendingDown } from 'lucide-react'
+import { ExternalLink, TrendingDown, Pencil } from 'lucide-react'
 import type { WishlistItem } from '@prisma/client'
 import {
   Sheet,
@@ -166,16 +166,31 @@ export function ItemDetailSheet({ item, open, onOpenChange }: ItemDetailSheetPro
           </div>
         )}
 
-        {/* Price alert */}
-        {item.url && (
+        {/* Price alert — always show when item has a price */}
+        {price != null && (
           <div className="border-t border-border pt-4">
             <h3 className="mb-3 text-sm font-medium text-foreground">Price alert</h3>
-            <PriceAlertForm
-              itemId={item.id}
-              currentPrice={price}
-              existingAlertId={existingAlertId}
-              isPro={isPro}
-            />
+            {item.url ? (
+              <PriceAlertForm
+                itemId={item.id}
+                currentPrice={price}
+                existingAlertId={existingAlertId}
+                isPro={isPro}
+              />
+            ) : (
+              <div className="rounded-lg border border-border bg-subtle p-3 text-sm">
+                <p className="text-muted-foreground">
+                  Add a product URL to this item to enable automatic price tracking.
+                </p>
+                <button
+                  onClick={() => onOpenChange(false)}
+                  className="mt-2 flex items-center gap-1.5 text-xs font-medium text-foreground hover:underline underline-offset-2"
+                >
+                  <Pencil className="h-3 w-3" />
+                  Edit item to add a URL
+                </button>
+              </div>
+            )}
           </div>
         )}
 
