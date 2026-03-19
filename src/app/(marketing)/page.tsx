@@ -15,6 +15,7 @@ import {
 
 export const metadata: Metadata = {
   title: 'WishlistCart — Save Products from Any Store, Share with Everyone',
+  description: 'Create wishlists from any online store, track prices automatically, and coordinate gifts for every occasion. Free to start — no credit card required.',
   alternates: { canonical: 'https://wishlistcart.com' },
 }
 
@@ -30,7 +31,53 @@ export default function LandingPage() {
             '@type': 'Organization',
             name: 'WishlistCart',
             url: 'https://wishlistcart.com',
-            description: 'Universal wishlist and gift registry platform',
+            logo: 'https://wishlistcart.com/icons/icon-512.png',
+            description: 'Universal wishlist and gift registry platform. Save products from any store, track prices, and coordinate gifts.',
+            sameAs: [
+              'https://twitter.com/wishlistcart',
+            ],
+          }),
+        }}
+      />
+      {/* WebSite Schema — enables Google Sitelinks Search Box */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'WishlistCart',
+            url: 'https://wishlistcart.com',
+            description: 'Universal wishlist and gift registry. Save products from any store, track prices, and coordinate gifts for every occasion.',
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: {
+                '@type': 'EntryPoint',
+                urlTemplate: 'https://wishlistcart.com/search?q={search_term_string}',
+              },
+              'query-input': 'required name=search_term_string',
+            },
+          }),
+        }}
+      />
+      {/* SoftwareApplication Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'SoftwareApplication',
+            name: 'WishlistCart',
+            url: 'https://wishlistcart.com',
+            applicationCategory: 'LifestyleApplication',
+            operatingSystem: 'Web, iOS, Android',
+            description: 'Universal wishlist and gift registry. Save products from any store, track prices, and coordinate gifts.',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD',
+              description: 'Free plan available. Pro plan from $4.99/month.',
+            },
           }),
         }}
       />

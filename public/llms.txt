@@ -1,0 +1,56 @@
+# WishlistCart
+
+> WishlistCart is a universal wishlist and gift registry platform. Users can save products from any online store by pasting a URL, track prices automatically, coordinate gifts with friends and family, and create registries for any occasion — weddings, baby showers, birthdays, holidays, and more.
+
+WishlistCart is free to start with a Pro plan available for advanced features like unlimited price alerts, advanced analytics, and AI Gift Concierge.
+
+## Core Features
+
+- **Universal wishlist**: Add products from any online store (Amazon, Target, Etsy, IKEA, and thousands more) by pasting a URL
+- **Price tracking**: Automatic price monitoring with email alerts when items drop in price
+- **Gift coordination**: Share wishlists via a single link; friends can claim items privately without spoiling the surprise (Surprise Mode)
+- **Gift registries**: Create registries for weddings, baby showers, and any occasion with group gifting and cash fund support
+- **AI Gift Concierge**: Conversational AI advisor that recommends personalized gifts based on recipient, budget, and occasion
+- **Browser extension**: Chrome extension to add items to wishlists from any website
+- **Public API**: REST API for developers and e-commerce integrations
+
+## Key Pages
+
+- [Home](https://wishlistcart.com) — Product overview, features, and sign up
+- [Pricing](https://wishlistcart.com/pricing) — Free vs Pro plan comparison
+- [Gift Marketplace](https://wishlistcart.com/marketplace) — Curated product discovery by category
+- [Explore](https://wishlistcart.com/explore) — Discover public wishlists from the community
+- [Gift Finder](https://wishlistcart.com/gift-finder) — AI-powered gift recommendation quiz
+- [Developers](https://wishlistcart.com/developers) — Public REST API documentation
+- [For Business](https://wishlistcart.com/corporate) — Corporate gifting and team features
+- [Browser Extension](https://wishlistcart.com/browser-extension) — Chrome extension for one-click saving
+
+## Gift Guides
+
+WishlistCart publishes curated gift guides for every occasion and recipient:
+
+- [Gifts for Mom](https://wishlistcart.com/gift-ideas/for/mom)
+- [Gifts for Dad](https://wishlistcart.com/gift-ideas/for/dad)
+- [Gifts for Wife](https://wishlistcart.com/gift-ideas/for/wife)
+- [Gifts for Husband](https://wishlistcart.com/gift-ideas/for/husband)
+- [Wedding Registry Ideas](https://wishlistcart.com/gift-ideas/for/wedding)
+- [Baby Shower Gifts](https://wishlistcart.com/gift-ideas/for/baby-shower)
+- [Birthday Gift Ideas](https://wishlistcart.com/gift-ideas/for/birthday)
+- [Christmas Gifts](https://wishlistcart.com/gift-ideas/for/christmas)
+- [Gifts Under $50](https://wishlistcart.com/gift-ideas/under/50)
+- [Gifts Under $100](https://wishlistcart.com/gift-ideas/under/100)
+
+## Blog
+
+- [How to Create a Wishlist Online](https://wishlistcart.com/blog/how-to-create-a-wishlist)
+- [Wedding Registry Checklist 2026](https://wishlistcart.com/blog/wedding-registry-checklist-2026)
+- [Baby Registry Must-Haves 2026](https://wishlistcart.com/blog/baby-registry-must-haves-2026)
+- [Price Tracking on Wishlists](https://wishlistcart.com/blog/price-tracking-wishlists-2026)
+- [Best Registry Apps 2026](https://wishlistcart.com/blog/best-registry-apps-2026)
+- [Gift Ideas for People Who Have Everything](https://wishlistcart.com/blog/gift-ideas-for-people-who-have-everything)
+
+## Do Not Index
+
+- /dashboard/ — Private user dashboard (requires authentication)
+- /api/ — Internal API endpoints
+- /onboarding/ — New user onboarding flow

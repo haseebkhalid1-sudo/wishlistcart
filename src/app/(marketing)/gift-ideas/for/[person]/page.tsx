@@ -2212,7 +2212,7 @@ export async function generateMetadata({ params }: { params: Promise<{ person: s
       title: guide.title,
       description: guide.description,
       url: `https://wishlistcart.com/gift-ideas/for/${person}`,
-      type: 'article',
+      type: 'website',
     },
   }
 }
@@ -2248,10 +2248,21 @@ export default async function GiftGuidePage({ params }: { params: Promise<{ pers
     })),
   }
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wishlistcart.com' },
+      { '@type': 'ListItem', position: 2, name: 'Gift Ideas', item: 'https://wishlistcart.com/gift-ideas/for/mom' },
+      { '@type': 'ListItem', position: 3, name: guide.title, item: `https://wishlistcart.com/gift-ideas/for/${person}` },
+    ],
+  }
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       <div className="mx-auto max-w-3xl px-4 py-16 md:py-24">
         {/* Breadcrumb */}

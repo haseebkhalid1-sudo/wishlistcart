@@ -34,12 +34,26 @@ const articleSchema = {
   },
 }
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://wishlistcart.com' },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://wishlistcart.com/blog' },
+    { '@type': 'ListItem', position: 3, name: title, item: 'https://wishlistcart.com/blog/best-registry-apps-2026' },
+  ],
+}
+
 export default function BestRegistryApps2026Post() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-20 md:px-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       {/* Back link */}
